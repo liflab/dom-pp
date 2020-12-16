@@ -1,0 +1,31 @@
+{
+    "name": "koalati-test",
+    "version": "1.0.0",
+    "description": "Test",
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/amadouba9/koalati-test.git"
+    },
+    "author": "",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/amadouba9/koalati-test/issues"
+    },
+    "homepage": "https://github.com/amadouba9/koalati-test#readme",
+    "devDependencies": {
+        "fs": "0.0.1-security",
+        "global-jsdom": "7.0.0",
+        "jsdom": "16.4.0",
+        "jsdom-global": "3.0.2"
+    },
+    "dependencies": {
+        "chai": "^4.2.0",
+        "chai-dom": "^1.8.2",
+        "mocha": "^8.2.1",
+        "puppeteer": "^5.5.0"
+    }
+}
