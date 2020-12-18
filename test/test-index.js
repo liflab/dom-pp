@@ -6,6 +6,6 @@ let index = require("..");
 
 describe("Test Hello World", function () {
   it("Test should return hello world", function () {
-    assert.equal(index(), "Hello World");
+    assert.equal(index(), "Hello World!");
   });
 });
