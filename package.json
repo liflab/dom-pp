@@ -1,6 +1,6 @@
 {
-    "name": "koalati-test",
-    "version": "1.0.0",
+    "name": "koalati-dompp",
+    "version": "0.0.1",
     "description": "Test",
     "main": "index.js",
     "scripts": {
@@ -8,14 +8,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/amadouba9/koalati-test.git"
+        "url": "git+https://github.com/liflab/dom-pp.git"
     },
     "author": "",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/amadouba9/koalati-test/issues"
+        "url": "https://github.com/liflab/dom-pp/issues"
     },
-    "homepage": "https://github.com/amadouba9/koalati-test#readme",
+    "homepage": "https://github.com/liflab/dom-pp#readme",
     "devDependencies": {
         "fs": "0.0.1-security",
         "global-jsdom": "7.0.0",
