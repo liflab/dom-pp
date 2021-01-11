@@ -44,6 +44,21 @@ Value.prototype.getValue = function()
 };
 
 /**
+ * Queries the provenance of a value.
+ * @param type The type of lineage relationship
+ * @param d A designator representing the part of the object that is the
+ * subject of the query
+ * @param root The node to which the rsults of the query should be appended
+ * as children
+ * @param A factory to produce traceability nodes
+ * @return The list of terminal traceability nodes produced by this query
+ */
+Value.prototype.query = function(type, d, root, factory)
+{
+	// To be overridden by descendants
+};
+
+/**
  * Converts an arbitrary object into a {@link Value}.
  * @param o The object to convert. If o is a {@link Value}, it is returned as
  * is. Otherwise, o is converted into a {@link ConstantValue} that returns o.
