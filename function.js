@@ -84,7 +84,7 @@ AbstractFunction.prototype.setTo = function(variable, value)
  */
 function ReturnValue()
 {
-	AtomicDesignator.call();
+	AtomicDesignator.call(this);
 };
 
 ReturnValue.prototype.toString = function()
@@ -111,14 +111,14 @@ InputArgument.prototype.toString = function()
 
 /**
  * Function that performs a direct computation on its input arguments. This is
- * opposed to a {@link ComposedFunction} that calls other functions to produce
+ * opposed to a {@link ComposedFunction} that call(this)s other functions to produce
  * its return value.
  * @param arity The input arity of the function
  */
 function AtomicFunction(arity)
 {
 	// Inherit from AbstractFunction
-	AbstractFunction.call();
+	AbstractFunction.call(this);
 	
 	/**
 	 * The input arity of the function
@@ -168,13 +168,13 @@ AtomicFunction.prototype.getValue = function()
 };
 
 /**
- * Value obtained as the output produced by an atomic function call.
+ * Value obtained as the output produced by an atomic function call(this).
  * @param arguments An output value followed by the function's input arguments
  */
 function AtomicFunctionReturnValue()
 {
 	// Inherit from Value
-	Value.call();
+	Value.call(this);
 	
 	/**
 	 * The output value produced by the function

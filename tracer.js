@@ -134,7 +134,7 @@ TraceabilityNode.addChild = function(n)
 function AndNode()
 {
 	// Inherit from TraceabilityNode
-	TraceabilityNode.call();
+	TraceabilityNode.call(this);
 };
 
 AndNode.prototype.toString = function()
@@ -174,7 +174,7 @@ AndNode.prototype.addChild = function(n)
 function OrNode()
 {
 	// Inherit from TraceabilityNode
-	TraceabilityNode.call();
+	TraceabilityNode.call(this);
 };
 
 OrNode.prototype.toString = function()
@@ -214,7 +214,7 @@ OrNode.prototype.addChild = function(n)
 function UnknownNode()
 {
 	// Inherit from TraceabilityNode
-	TraceabilityNode.call();
+	TraceabilityNode.call(this);
 };
 
 UnknownNode.prototype.toString = function()
@@ -309,4 +309,5 @@ DesignatedObject.prototype.sameContext = function(cdo)
 	}
 	return true;
 };
+
 // :wrap=soft:tabSize=2:

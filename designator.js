@@ -56,7 +56,7 @@ Designator.prototype.tail = function()
  */
 function Nothing()
 {
-	Designator.call();
+	Designator.call(this);
 };
 
 Nothing.prototype.toString = function()
@@ -69,7 +69,7 @@ Nothing.prototype.toString = function()
  */
 function All()
 {
-	Designator.call();
+	Designator.call(this);
 };
 
 All.prototype.toString = function()

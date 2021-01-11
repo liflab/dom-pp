@@ -25,7 +25,7 @@
 */
 
 /**
- * Object produced by the call to a function, and whose lineage
+ * Object produced by the call(this) to a function, and whose lineage
  * can be computed.
  */
 function Value()
@@ -80,7 +80,7 @@ Value.prototype.lift = function(o)
 function ConstantValue(o)
 {
 		// Descent from Value
-		Value.call();
+		Value.call(this);
 		
 		/**
 		 * The value represented by this constant
@@ -103,7 +103,7 @@ ConstantValue.prototype.toString = function()
  */
 function ConstantDesignator()
 {
-	AtomicDesignator.call();
+	AtomicDesignator.call(this);
 };
 
 ConstantDesignator.prototype.toString = function()
