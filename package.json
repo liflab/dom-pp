@@ -25,6 +25,7 @@
     "dependencies": {
         "chai": "^4.2.0",
         "chai-dom": "^1.8.2",
+        "data-tree": "^1.2.4",
         "mocha": "^8.2.1",
         "puppeteer": "^5.5.0"
     }
