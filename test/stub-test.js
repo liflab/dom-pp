@@ -55,6 +55,13 @@ describe("Stub tests", () => {
       expect(root).not.to.be.null;
       expect(root.data().type).to.equal("OR");
     });
+    
+    it("Calling the plugin with two conditions produces two trees", () => {
+    	var conditions = ["foo", "bar"]; // Dummy condition
+    	const trees = index(document, conditions);
+    	// The tree is not empty, and its root is an "OR" node
+    	expect(trees).to.have.length(2);
+    });
   });
 });
 
