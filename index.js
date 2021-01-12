@@ -25,6 +25,11 @@
 */
 
 /**
+ * Imports
+ */
+require("data-tree");
+
+/**
  * Export
  */
 module.exports = evaluateDom;
@@ -66,26 +71,26 @@ function getVerdict(root, condition)
 	var tree = dataTree.create();
 	var n1 = tree.insert({
 		type: "OR"});
-	var n2 = tree.insertTo(n1, {
+	var n2 = tree.insertToNode(n1, {
 		type: "object",
 	  part: ["width"],
 	  subject: "body[1]/section[2]/div[1]"});
-	var n3 = tree.insertTo(n1, {
-		type: "AND"}););
-	var n4 = tree.insertTo(n3, {
+	var n3 = tree.insertToNode(n1, {
+		type: "AND"});
+	var n4 = tree.insertToNode(n3, {
 		type: "object",
 	  part: ["characters 2-10", "text"],
 	  subject: "body[1]/div[2]"});
-	var n5 = tree.insertTo(n3, "OR");
-	var n6 = tree.insertTo(n5, {
+	var n5 = tree.insertToNode(n3, "OR");
+	var n6 = tree.insertToNode(n5, {
 		type: "object",
 	  part: ["value of"],
 	  subject: "constant 100"});
-	var n7 = tree.insertTo(n5, {
+	var n7 = tree.insertToNode(n5, {
 		type: "object",
 	  part: ["width"],
 	  subject: "body[1]/section[2]/div[1]"});
-	var n8 = tree.insertTo(n3, {
+	var n8 = tree.insertToNode(n3, {
 		type: "object",
 	  part: ["width"],
 	  subject: "body[1]/section[2]/div[1]"});
