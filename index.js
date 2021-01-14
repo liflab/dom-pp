@@ -134,6 +134,8 @@ class Designator
  */
 class Nothing extends Designator
 {
+	static instance = new Nothing();
+
 	constructor()
 	{
 		super();
@@ -150,6 +152,8 @@ class Nothing extends Designator
  */
 class All extends Designator
 {
+	static instance = new All();
+
 	constructor()
 	{
 		super();
@@ -175,7 +179,6 @@ class CompoundDesignator extends Designator
 		{
 			this.add(arguments[i]);
 		}
-		console.log("DONE");
 	}
 	
 	/**
@@ -212,7 +215,7 @@ class CompoundDesignator extends Designator
 	{
 		if (this.elements.length == 0)
 		{
-			return Nothing();
+			return new Nothing();
 		}
 		return this.elements[this.elements.length - 1];
 	}
@@ -221,13 +224,13 @@ class CompoundDesignator extends Designator
 	{
 		if (this.elements.length == 0)
 		{
-			return All();
+			return new All();
 		}
 		if (this.elements.length == 1)
 		{
 			return this.elements[0];
 		}
-		var new_d = CompundDesignator();
+		var new_d = new CompoundDesignator();
 		for (var i = 0; i < this.elements.length - 1; i++)
 		{
 			new_d.add(this.elements[i]);
