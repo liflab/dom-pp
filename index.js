@@ -349,6 +349,14 @@ class InputArgument extends Designator
 	}
 }
 
+/*class Addition extends AtomicFunction
+{
+	constructor()
+	{
+		super();
+	}
+}*/
+
 /**
  * Object produced by the call(this) to a function, and whose lineage
  * can be computed.
@@ -391,13 +399,13 @@ class Value
 	 * is. Otherwise, o is converted into a {@link ConstantValue} that returns o.
 	 * @return The converted value
 	 */
-	lift(o)
+	static lift(o)
 	{
 		if (o instanceof Value)
 		{
 			return o;
 		}
-		return ConstantValue(o);
+		return new ConstantValue(o);
 	}
 }
 
@@ -424,7 +432,7 @@ class AtomicFunction extends AbstractFunction
 		var values = [];
 		for (var i = 0; i < arguments.length; i++)
 		{
-			values[i] = Value.prototype.lift(arguments[i]);
+			values[i] = Value.lift(arguments[i]);
 		}
 		return this.compute(values);
 	}
@@ -437,7 +445,7 @@ class AtomicFunction extends AbstractFunction
 	 */
 	compute()
 	{
-		if (values.length != this.arity)
+		if (arguments.length != this.arity)
 		{
 			throw "Invalid number of arguments";
 		}
@@ -451,7 +459,7 @@ class AtomicFunction extends AbstractFunction
 		{
 			return o;
 		}
-		return AtomicFunctionReturnValue(o, arguments);
+		return new AtomicFunctionReturnValue(o, arguments);
 	}
 
 	getValue()
@@ -506,7 +514,7 @@ class AtomicFunctionReturnValue extends Value
  */
 class ConstantValue extends Value
 {
-	constructor()
+	constructor(o)
 	{
 		super();
 
@@ -889,8 +897,11 @@ module.exports =
 {
 		evaluateDom,
 		All,
+		AtomicFunction,
+		AtomicFunctionReturnValue,
 		CompoundDesignator,
 		Nothing,
-		Tracer
+		Tracer,
+		Value
 };
 // :wrap=soft:tabSize=2:

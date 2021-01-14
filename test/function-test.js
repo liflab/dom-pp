@@ -35,59 +35,21 @@ const plugin = require("..");
  * Local namespace imports
  */
 All = plugin.All;
+AtomicFunction = plugin.AtomicFunction;
 CompoundDesignator = plugin.CompoundDesignator;
 Nothing = plugin.Nothing;
+Value = plugin.Value;
 
-describe("Designator tests", () => {
+describe("Function tests", () => {
 
-	describe("Compound designator", () => {
-    it("Size 0", () => {
-			var d = new CompoundDesignator();
-      expect(d.head() instanceof Nothing);
-      expect(d.tail() instanceof Nothing);
-      expect(d.size()).to.equal(0);
+	describe("Atomic function", () => {
+        it("Incorrect arity", () => {
+            var f = new AtomicFunction(2);
+            // Why does the expected exception cause the test to fail nevertheless?
+            expect(f.evaluate(0)).to.throw(new Error("Invalid number of arguments"));
+        });
     });
-
-		it("Size 1", () => {
-			var d = new CompoundDesignator(All.instance);
-      expect(d.head() instanceof All);
-      expect(d.tail() instanceof Nothing);
-      expect(d.size()).to.equal(1);
-    });
-
-    it("Size 2", () => {
-			var d = new CompoundDesignator(All.instance, All.instance);
-      expect(d.head() instanceof All);
-      expect(d.tail() instanceof All);
-      expect(d.size()).to.equal(2);
-    });
-    
-    it("Size 3", () => {
-			var d = new CompoundDesignator(All.instance, All.instance, All.instance);
-      expect(d.head() instanceof All);
-      var tail = d.tail();
-      expect(tail instanceof CompoundDesignator);
-      expect(d.size()).to.equal(3);
-      expect(tail.size()).to.equal(2);
-    });
-    
-    it("Add atomic", () => {
-      var d = new CompoundDesignator();
-      d.add(All.instance);
-      expect(d.head() instanceof All);
-      expect(d.tail() instanceof Nothing);
-      expect(d.size()).to.equal(1);
-    });
-
-    it("Add compound", () => {
-      var d = new CompoundDesignator();
-      var d2 = new plugin.CompoundDesignator(All.instance);
-      d.add(d2);
-      expect(d.head() instanceof All);
-      expect(d.tail() instanceof Nothing);
-      expect(d.size()).to.equal(1);
-    });
-	});
 });
+
 
 // :wrap=soft:tabSize=2:indentWidth=2:
