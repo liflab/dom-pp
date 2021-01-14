@@ -28,11 +28,9 @@
  * Imports
  */
 require("data-tree");
-
-/**
- * Export
- */
-module.exports = evaluateDom;
+const des = require("./src/designator");
+const fun = require("./src/function");
+const val = require("./src/value");
 
 /**
  * Evaluates a set of conditions on a DOM tree
@@ -67,6 +65,10 @@ function evaluateDom(root, conditions = [])
  */
 function getVerdict(root, condition)
 {
+	if (root == null)
+	{
+		return null;
+	}
 	// Create a "fake" data tree
 	var tree = dataTree.create();
 	var n1 = tree.insert({
@@ -97,4 +99,14 @@ function getVerdict(root, condition)
 	return tree;
 };
 
+/**
+ * Export public API
+ */
+module.exports = 
+{
+		evaluateDom : evaluateDom,
+		All : des.All,
+		CompoundDesignator : des.CompoundDesignator,
+		Nothing : des.Nothing
+};
 // :wrap=soft:tabSize=2:
