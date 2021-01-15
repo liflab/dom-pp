@@ -81,11 +81,46 @@ describe("Designator tests", () => {
 
     it("Add compound", () => {
       var d = new CompoundDesignator();
-      var d2 = new plugin.CompoundDesignator(All.instance);
+      var d2 = new CompoundDesignator(All.instance);
       d.add(d2);
       expect(d.head() instanceof All);
       expect(d.tail() instanceof Nothing);
       expect(d.size()).to.equal(1);
+    });
+
+    it("Two identical designators of length 1", () => {
+      var d1 = new CompoundDesignator(All.instance);
+      var d2 = new CompoundDesignator(All.instance);
+      expect(d1.equals(d2));
+      expect(d2.equals(d1));
+    });
+
+    it("Two identical designators of length 2", () => {
+      var d1 = new CompoundDesignator(All.instance, Nothing.instance);
+      var d2 = new CompoundDesignator(All.instance, Nothing.instance);
+      expect(d1.equals(d2));
+      expect(d2.equals(d1));
+    });
+
+    it("Two different designators of length 1", () => {
+      var d1 = new CompoundDesignator(All.instance);
+      var d2 = new CompoundDesignator(Nothing.instance);
+      expect(d1.equals(d2)).to.be.false;
+      expect(d2.equals(d1)).to.be.false;
+    });
+
+    it("Two different designators of length 2", () => {
+      var d1 = new CompoundDesignator(All.instance, All.instance);
+      var d2 = new CompoundDesignator(Nothing.instance, All.instance);
+      expect(d1.equals(d2)).to.be.false;
+      expect(d2.equals(d1)).to.be.false;
+    });
+
+    it("Two different designators of different length", () => {
+      var d1 = new CompoundDesignator(All.instance, All.instance);
+      var d2 = new CompoundDesignator(Nothing.instance);
+      expect(d1.equals(d2)).to.be.false;
+      expect(d2.equals(d1)).to.be.false;
     });
 	});
 });

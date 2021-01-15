@@ -127,6 +127,15 @@ class Designator
 	{
 		return new Nothing();
 	}
+
+	equals(o)
+	{
+		if (o == null || !(o instanceof Designator))
+		{
+			return false;
+		}
+		return true;
+	}
 }
 
 /**
@@ -145,6 +154,15 @@ class Nothing extends Designator
 	{
 		return "Nothing";
 	}
+
+	equals(o)
+	{
+		if (o == null || !(o instanceof Nothing))
+		{
+			return false;
+		}
+		return true;
+	}
 }
 
 /**
@@ -162,6 +180,15 @@ class All extends Designator
 	toString()
 	{
 		return "All";
+	}
+
+	equals(o)
+	{
+		if (o == null || !(o instanceof All))
+		{
+			return false;
+		}
+		return true;
 	}
 }
 
@@ -250,6 +277,26 @@ class CompoundDesignator extends Designator
 			s += this.elements[i].toString();
 		}
 		return s;
+	}
+
+	equals(o)
+	{
+		if (o == null || !(o instanceof CompoundDesignator))
+		{
+			return false;
+		}
+		if (o.size() != this.size())
+		{
+			return false;
+		}
+		for (var i = 0; i < this.elements.length; i++)
+		{
+			if (!this.elements[i].equals(o.elements[i]))
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 }
 
@@ -532,7 +579,16 @@ class ConstantValue extends Value
 	toString()
 	{
 		return this.value.toString();
-	}	
+	}
+
+	equals(o)
+	{
+		if (o == null || !(o instanceof Value))
+		{
+			return false;
+		}
+		return o.getValue() == this.value;
+	}
 }
 /**
  * Atomic designator that points to the value of a constant.
@@ -585,7 +641,7 @@ class Tracer
 		{
 			return map_get(this.nodes, dob);
 		}
-		var on = ConcreteObjectNode(dob);
+		var on = new ObjectNode(dob);
 		map_put(this.nodes, dob, on);
 		return on;
 	}
@@ -596,7 +652,7 @@ class Tracer
 	 */
 	getAndNode()
 	{
-		return AndNode();
+		return new AndNode();
 	}
 
 	/**
@@ -605,7 +661,7 @@ class Tracer
 	 */
 	getOrNode()
 	{
-		return OrNode();
+		return new OrNode();
 	}
 
 	/**
@@ -614,7 +670,7 @@ class Tracer
 	 */
 	getUnknownNode()
 	{
-		return UnknownNode();
+		return new UnknownNode();
 	}
 }
 
@@ -633,7 +689,7 @@ class TraceabilityNode
 		/**
 		 * The node's unique ID
 		 */
-		this.id = TN_ID_COUNTER++;
+		this.id = TraceabilityNode.TN_ID_COUNTER++;
 		
 		/**
 		 * The node's children
@@ -761,6 +817,23 @@ class UnknownNode extends TraceabilityNode
 }
 
 /**
+ * An "object" node.
+ */
+class ObjectNode extends TraceabilityNode
+{
+	constructor()
+	{
+		super();
+		this.designatedObject = null;
+	}
+
+	toString()
+	{
+		return this.designatedObject.toString();
+	}
+}
+
+/**
  * Association between a designator, and object and an optional context.
  */
 class DesignatedObject
@@ -789,6 +862,10 @@ class DesignatedObject
 		if (arguments.length >= 3)
 		{
 			this.context = context;
+		}
+		else
+		{
+			this.context = [];
 		}
 	}
 
@@ -827,7 +904,7 @@ class DesignatedObject
 		}
 		return (this.object == null && cdo.object == null)
 			|| (this.object != null && this.object.equals(cdo.object)
-					&& this.designator.equals(cdo.designator) && sameContext(cdo));
+					&& this.designator.equals(cdo.designator) && this.sameContext(cdo));
 	}
 
 	/**
@@ -883,11 +960,11 @@ function map_put(m, k, v)
 	{
 		if (key.equals(k))
 		{
-			map.set(key, v);
+			m.set(key, v);
 			return;
 		}
 	}
-	map.set(k, v);
+	m.set(k, v);
 }
 
 /**
@@ -897,11 +974,16 @@ module.exports =
 {
 		evaluateDom,
 		All,
+		AndNode,
 		AtomicFunction,
 		AtomicFunctionReturnValue,
 		CompoundDesignator,
+		DesignatedObject,
 		Nothing,
+		ObjectNode,
+		OrNode,
 		Tracer,
+		UnknownNode,
 		Value
 };
 // :wrap=soft:tabSize=2:

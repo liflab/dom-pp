@@ -43,11 +43,15 @@ Value = plugin.Value;
 describe("Function tests", () => {
 
 	describe("Atomic function", () => {
-        it("Incorrect arity", () => {
+        it("Too few arguments", () => {
             var f = new AtomicFunction(2);
-            // Why does the expected exception cause the test to fail nevertheless?
-            expect(f.evaluate(0)).to.throw(new Error("Invalid number of arguments"));
+            expect(() => f.evaluate(0)).to.throw();
         });
+
+        it("Too many arguments", () => {
+          var f = new AtomicFunction(2);
+          expect(() => f.evaluate(0, 0, 0)).to.throw();
+      });
     });
 });
 
