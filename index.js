@@ -873,6 +873,49 @@ class BooleanNot extends BooleanConnective
 }
 
 /**
+ * Function that checks the equality between two objects. Two objects o1 and o2
+ * are equal if one of these conditions hold:
+ * <ul>
+ * <li>they are both null</li>
+ * <li>they are both non-null and:
+ * <ol>
+ *   <li>they represent the same numeric value, or</li>
+ *   <li>they are the same string</li>
+ * </ol></li>
+ * </ul>
+ */
+class IsEqualTo extends AtomicFunction
+{
+	constructor()
+	{
+		super(2);
+	}
+
+	getValue()
+	{
+		var o1 = arguments[0];
+		var o2 = arguments[1];
+		if (o1 == null && o2 == null)
+		{
+			return true;
+		}
+		if ((o1 == null && o2 != null) || (o1 != null && o2 == null))
+		{
+			return false;
+		}
+		if (typeof(o1) == "number" && typeof(o2) == "number")
+		{
+			return o1 == o2;
+		}
+		if (typeof(o1) == "string" && typeof(o2) == "string")
+		{
+			return o1 == o2;
+		}
+		return false;
+	}
+}
+
+/**
  * Manages the nodes of a designation and-or graph.
  * @param arguments An optional stack corresponding to the tracer's context.
  */
