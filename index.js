@@ -166,6 +166,33 @@ class Nothing extends Designator
 }
 
 /**
+ * A special designator that designates "unknown".
+ */
+class Unknown extends Designator
+{
+	static instance = new Unknown();
+
+	constructor()
+	{
+		super();
+	}
+	
+	toString()
+	{
+		return "Unknown";
+	}
+
+	equals(o)
+	{
+		if (o == null || !(o instanceof Unknown))
+		{
+			return false;
+		}
+		return true;
+	}
+}
+
+/**
  * A special designator that designates all of an object.
  */
 class All extends Designator
@@ -720,6 +747,65 @@ class Tracer
 	getUnknownNode()
 	{
 		return new UnknownNode();
+	}
+
+	/**
+	 * Gets an instance of a sub-tracer from this tracer.
+	 * @param {Object} o An object to append at the end of the current
+	 * tracer's context
+	 */
+	getSubTracer(o)
+	{
+		var con = [];
+		con.push(this.tracerContext);
+		con.push(o);
+		return new Tracer(con);
+	}
+
+	getTree(q, d, o)
+	{
+		var visited = [];
+		var tn = this.getObjectNode(d, o);
+		this.getChildren(q, tn, visited);
+		return tn;
+	}
+
+	getChildren(q, root, visited)
+	{
+		if (set_contains(visited, root))
+		{
+			// This node has already been expanded
+			return;
+		}
+		visited.push(root);
+		if (!(root instanceof ObjectNode))
+		{
+			// Nothing to expand
+			return;
+		}
+		var dob = root.getObject();
+		var o = dob.getObject();
+		var d = dob.getDesignator();
+		if (d instanceof All || d instanceof Nothing || d instanceof Unknown)
+		{
+			// Trivial designator: nothing to expand
+			return;
+		}
+		if (typeof o.query == "function") // Object is queryable
+		{
+			// Send the query and create nodes from its result
+			var leaves = o.query(q, d, root, this);
+			for (var i = 0; i < leaves.length; i++)
+			{
+				this.getChildren(q, leaves[i], visited);
+			}
+		}
+		else
+		{
+			// Query is non-trivial, and object is not trackable: nothing to do
+			var n = this.getObjectNode(Unknown.instance, o);
+			root.addChild(n);
+		}
 	}
 }
 
