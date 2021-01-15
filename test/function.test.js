@@ -43,16 +43,23 @@ Value = plugin.Value;
 describe("Function tests", () => {
 
 	describe("Atomic function", () => {
-        it("Too few arguments", () => {
-            var f = new AtomicFunction(2);
-            expect(() => f.evaluate(0)).to.throw();
-        });
-
-        it("Too many arguments", () => {
-          var f = new AtomicFunction(2);
-          expect(() => f.evaluate(0, 0, 0)).to.throw();
-      });
+    it("Too few arguments", () => {
+        var f = new AtomicFunction(2);
+        expect(() => f.evaluate(0)).to.throw();
     });
+
+    it("Too many arguments", () => {
+        var f = new AtomicFunction(2);
+        expect(() => f.evaluate(0, 0, 0)).to.throw();
+    });
+
+    it("Enough arguments", () => {
+      var f = new AtomicFunction(2);
+      var v = f.evaluate(0, 0);
+      expect(v).not.to.be.null;
+      expect(v instanceof Value);
+  });
+  });
 });
 
 

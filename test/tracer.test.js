@@ -107,6 +107,18 @@ describe("Tracer tests", () => {
             expect(node2 instanceof ObjectNode);
             expect(node1.getId()).not.to.equal(node2.getId());
         });
+
+        it("Add children", () => {
+            var tracer = new Tracer();
+            var and = tracer.getAndNode();
+            expect(and.getChildren().length).to.equal(0);
+            var dob1 = new DesignatedObject(All.instance, Value.lift(0));
+            var node1 = tracer.getObjectNode(dob1);
+            and.addChild(node1);
+            expect(and.getChildren().length).to.equal(1);
+            and.addChild(node1);
+            expect(and.getChildren().length).to.equal(2);
+        });
     });
 });
 

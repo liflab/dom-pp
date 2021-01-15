@@ -481,7 +481,7 @@ class AtomicFunction extends AbstractFunction
 		{
 			values[i] = Value.lift(arguments[i]);
 		}
-		return this.compute(values);
+		return this.compute(...values);
 	}
 
 	/**
@@ -496,17 +496,17 @@ class AtomicFunction extends AbstractFunction
 		{
 			throw "Invalid number of arguments";
 		}
-		args = [];
+		var args = [];
 		for (var i = 0; i < arguments.length; i++)
 		{
 			args[i] = arguments[i];
 		}
-		var o = getValue(args);
+		var o = this.getValue(args);
 		if (o instanceof Value)
 		{
 			return o;
 		}
-		return new AtomicFunctionReturnValue(o, arguments);
+		return new AtomicFunctionReturnValue(o, ...arguments);
 	}
 
 	getValue()
@@ -540,7 +540,7 @@ class AtomicFunctionReturnValue extends Value
 		this.inputValue = [];
 		for (var i = 1; i < arguments.length; i++)
 		{
-			this.inputvalue[i - 1] = arguments[i];
+			this.inputValue.push(arguments[i]);
 		}
 	}
 
@@ -698,21 +698,30 @@ class TraceabilityNode
 	}
 
 	/**
-	 * Gets the node'is unique ID
+	 * Gets the node'is unique ID.
 	 * @return The node's ID
 	 */
-	getId = function()
+	getId()
 	{
 		return this.id;
 	}
 
 	/**
-	 * Adds a child to the node
+	 * Adds a child to the node.
 	 * @return The node to add
 	 */
-	addChild = function(n)
+	addChild(n)
 	{
 		this.children.push(n);
+	}
+
+	/**
+	 * Gets the children of this node.
+	 * @return The list of children
+	 */
+	getChildren()
+	{
+		return this.children;
 	}
 }
 
