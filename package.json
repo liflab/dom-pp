@@ -1,26 +1,28 @@
 {
     "name": "koalati-dompp",
     "version": "0.0.1",
-    "description": "Test",
+    "description": "A traceability library for DOM trees",
     "main": "index.js",
     "scripts": {
-        "test": "mocha"
+        "test": "mocha",
+        "coverage": "nyc npm run test"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/liflab/dom-pp.git"
     },
-    "author": "",
+    "author": "Sylvain Hallé, Amadou Ba",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/liflab/dom-pp/issues"
     },
-    "homepage": "https://github.com/liflab/dom-pp#readme",
+    "homepage": "https://github.com/liflab/dom-pp",
     "devDependencies": {
         "fs": "0.0.1-security",
         "global-jsdom": "7.0.0",
         "jsdom": "16.4.0",
-        "jsdom-global": "3.0.2"
+        "jsdom-global": "3.0.2",
+        "nyc": "^15.1.0"
     },
     "dependencies": {
         "chai": "^4.2.0",
