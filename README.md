@@ -1,4 +1,7 @@
-# Test
+A traceability library for DOM trees
+====================================
+
+![Build status](https://api.travis-ci.org/liflab/dom-pp.svg?branch=main)
 
 ## Git Clone
 
