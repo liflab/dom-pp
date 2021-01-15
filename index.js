@@ -1167,6 +1167,18 @@ function map_put(m, k, v)
 	m.set(k, v);
 }
 
+function set_contains(s, x)
+{
+	for (var i = 0; i < s.length; i++)
+	{
+		if (s[i].equals(x))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 /**
  * Export public API
  */
