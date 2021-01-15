@@ -34,11 +34,38 @@ const plugin = require("..");
 /**
  * Local namespace imports
  */
+Addition = plugin.Addition;
 All = plugin.All;
+AndNode = plugin.AndNode;
 AtomicFunction = plugin.AtomicFunction;
+AtomicFunctionReturnValue = plugin.AtomicFunctionReturnValue;
 CompoundDesignator = plugin.CompoundDesignator;
+InputArgument = plugin.InputArgument;
 Nothing = plugin.Nothing;
+ObjectNode = plugin.ObjectNode;
+OrNode = plugin.OrNode;
+ReturnValue = plugin.ReturnValue;
+Tracer = plugin.Tracer;
+UnknownNode = plugin.UnknownNode;
 Value = plugin.Value;
+
+/**
+ * A "dummy" function used to test traceability of all functions that do not
+ * override {@link AtomicFunction}'s compute() method. This avoids the tedious
+ * testing of traceability for each such function individually.
+ */
+class DummyAtomicFunction extends AtomicFunction
+{
+  constructor(arity)
+  {
+    super(arity);
+  }
+
+  get()
+  {
+    return 0;
+  }
+}
 
 describe("Function tests", () => {
 
@@ -58,7 +85,51 @@ describe("Function tests", () => {
       var v = f.evaluate(0, 0);
       expect(v).not.to.be.null;
       expect(v instanceof Value);
+    });
+
+    it("Lineage", () => {
+      var f = new DummyAtomicFunction(2);
+      var v = f.evaluate(1, 2);
+      var t = new Tracer();
+      var root = t.getUnknownNode();
+      var leaves = v.query(null, ReturnValue.instance, root, t);
+      expect(leaves.length).to.equal(2);
+      expect(root.getChildren().length).to.equal(1);
+      var under = root.getChildren()[0];
+      expect(under instanceof ObjectNode);
+      var do0 = under.getDesignatedObject();
+      expect(do0.getObject()).to.equal(f);
+      expect(do0.getDesignator() instanceof ReturnValue);
+      expect(under.getChildren().length).to.equal(1);
+      var under2 = under.getChildren()[0];
+      expect(under2 instanceof AndNode);
+      expect(under2.getChildren().length).to.equal(2);
+      var n1 = under2.getChildren()[0];
+      expect(n1 instanceof ObjectNode);
+      var do1 = n1.getDesignatedObject();
+      expect(do1.getDesignator() instanceof InputArgument);
+      var n2 = under2.getChildren()[0];
+      expect(n2 instanceof ObjectNode);
+      var do2 = n1.getDesignatedObject();
+      expect(do2.getDesignator() instanceof InputArgument);
+    });
+
   });
+
+  describe("Addition", () => {
+    it("With numbers", () => {
+        var f = new Addition(2);
+        var v = f.evaluate(1, 2);
+        expect(v instanceof AtomicFunctionReturnValue);
+        var o = v.getValue();
+        expect(o).to.equal(3);
+    });
+
+    it("With non-numbers", () => {
+      var f = new Addition(2);
+      expect(() => f.evaluate(1, "foo")).to.throw();
+    });
+
   });
 });
 

@@ -49,7 +49,7 @@ function evaluateDom(root, conditions = [])
 		}
 	}
 	return verdicts;
-};
+}
 
 /**
  * Evaluates a single condition on a DOM tree. <strong>This is a stub for
@@ -121,11 +121,11 @@ class Designator
 
 	/**
 	 * Extracts the designator made of the tail of a composition. For designators
-	 * that are atomic, returns the special designator {@link Nothing}.
+	 * that are atomic, returns null.
 	 */
 	tail() 
 	{
-		return new Nothing();
+		return null;
 	}
 
 	equals(o)
@@ -212,20 +212,25 @@ class CompoundDesignator extends Designator
 	 * Adds a designator to the composition.
    	 * @param d The designator to add. If it is compound, each of its elements are
    	 * added individually. This helps keeping the compound designators "flat".
+	 * If d is null, the input is simply ignored and nothing happens.
    	 */
 	add(d)
 	{
-			if (d instanceof CompoundDesignator)
+		if (d == null)
+		{
+			return;
+		}
+		if (d instanceof CompoundDesignator)
+		{
+			for (var j = 0; j < d.elements.length; j++)
 			{
-					for (var j = 0; j < d.elements.length; j++)
-					{
-							this.elements.push(d.elements[j]);
-					}
+				this.add(d.elements[j]);
 			}
-			else
-			{
-					this.elements.push(d);
-			}
+		}
+		else
+		{
+			this.elements.push(d);
+		}
 	}
 	
 	/**
@@ -249,13 +254,9 @@ class CompoundDesignator extends Designator
 	
 	tail()
 	{
-		if (this.elements.length == 0)
+		if (this.elements.length <= 1)
 		{
-			return new All();
-		}
-		if (this.elements.length == 1)
-		{
-			return this.elements[0];
+			return null;
 		}
 		var new_d = new CompoundDesignator();
 		for (var i = 0; i < this.elements.length - 1; i++)
@@ -356,6 +357,15 @@ class AbstractFunction
 	{
 		return 0;
 	}
+
+	equals(o)
+	{
+		if (o == null || !(o instanceof AbstractFunction))
+		{
+			return false;
+		}
+		return typeof(o) == typeof(this);
+	}
 }
 
 /**
@@ -363,6 +373,8 @@ class AbstractFunction
  */
 class ReturnValue extends Designator
  {
+	static instance = new ReturnValue();
+
 	constructor()
 	{
 		super();
@@ -395,14 +407,6 @@ class InputArgument extends Designator
 		return "@" + this.index;
 	}
 }
-
-/*class Addition extends AtomicFunction
-{
-	constructor()
-	{
-		super();
-	}
-}*/
 
 /**
  * Object produced by the call(this) to a function, and whose lineage
@@ -501,12 +505,12 @@ class AtomicFunction extends AbstractFunction
 		{
 			args[i] = arguments[i];
 		}
-		var o = this.getValue(args);
+		var o = this.getValue(...args);
 		if (o instanceof Value)
 		{
 			return o;
 		}
-		return new AtomicFunctionReturnValue(o, ...arguments);
+		return new AtomicFunctionReturnValue(this, o, ...arguments);
 	}
 
 	getValue()
@@ -514,6 +518,7 @@ class AtomicFunction extends AbstractFunction
 		// To be overridden by descendants
 		return null;
 	}
+
 }
 
 /**
@@ -530,15 +535,20 @@ class AtomicFunctionReturnValue extends Value
 		super();
 
 		/**
+		 * The function instance this value comes from
+		 */
+		this.referenceFunction = arguments[0];
+
+		/**
 		 * The output value produced by the function
 		 */
-		this.outputValue = arguments[0];
+		this.outputValue = arguments[1];
 
 		/**
 		 * The function's input arguments
 		 */
 		this.inputValue = [];
-		for (var i = 1; i < arguments.length; i++)
+		for (var i = 2; i < arguments.length; i++)
 		{
 			this.inputValue.push(arguments[i]);
 		}
@@ -552,6 +562,37 @@ class AtomicFunctionReturnValue extends Value
 	toString()
 	{
 		return this.outputValue.toString();
+	}
+
+	/*@Override*/
+	query(type, d, root, factory)
+	{
+		var leaves = [];
+		var n = factory.getAndNode();
+		for (var i = 0; i < this.inputValue.length; i++)
+		{
+			if (this.inputValue[i] == null)
+			{
+				continue;
+			}
+			var new_d = new CompoundDesignator(d.tail(), new InputArgument(i));
+			var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
+			var sub_leaves = [];
+			sub_leaves = this.inputValue[i].query(type, d, root, factory);
+			leaves.push(sub_leaves);
+			n.addChild(sub_root);
+		}
+		var f_root = factory.getObjectNode(d, this.referenceFunction);
+		if (n.getChildren().length == 1)
+		{
+			f_root.addChild(n.getChildren()[0]);
+		}
+		else
+		{
+			f_root.addChild(n);
+		}
+		root.addChild(f_root);
+		return leaves;
 	}
 }
 
@@ -635,8 +676,16 @@ class Tracer
 	 * @return The object node. If an object node already exists for this
 	 * designated object, it is reused. Otherwise, a new object node is created.
 	 */
-	getObjectNode(dob)
+	getObjectNode(d, o)
 	{
+		if (d instanceof DesignatedObject)
+		{
+			var dob = d;
+		}
+		else
+		{
+			var dob = new DesignatedObject(d, o);
+		}
 		if (map_contains(this.nodes, dob))
 		{
 			return map_get(this.nodes, dob);
@@ -830,10 +879,30 @@ class UnknownNode extends TraceabilityNode
  */
 class ObjectNode extends TraceabilityNode
 {
-	constructor()
+	/**
+	 * Creates a new object node.
+	 * @param {Designator|DesignatedObject} d The designator
+	 * @param {Object} o The object that is designated
+	 */
+	constructor(d, o)
 	{
 		super();
-		this.designatedObject = null;
+		if (d instanceof DesignatedObject)
+		{
+			this.designatedObject = d;
+		}
+		else
+		{
+			this.designatedObject = new DesignatedObject(d, o);
+		}
+	}
+
+	/**
+	 * Gets the designated object contained inside this node.
+	 */
+	getDesignatedObject()
+	{
+		return this.designatedObject;
 	}
 
 	toString()
@@ -911,9 +980,9 @@ class DesignatedObject
 		{
 			return false;
 		}
-		return (this.object == null && cdo.object == null)
-			|| (this.object != null && this.object.equals(cdo.object)
-					&& this.designator.equals(cdo.designator) && this.sameContext(cdo));
+		return (this.object == null && cdo.object == null) ||
+			(this.object != null && this.object.equals(cdo.object) &&
+					this.designator.equals(cdo.designator) && this.sameContext(cdo));
 	}
 
 	/**
@@ -936,6 +1005,42 @@ class DesignatedObject
 			}
 		}
 		return true;
+	}
+
+	toString()
+	{
+		return this.designator.toString() + " of " + this.object.toString();
+	}
+}
+
+/**
+ * Function that adds numbers.
+ */
+class Addition extends AtomicFunction
+{
+	constructor(arity)
+	{
+		super(arity);
+	}
+
+	getValue()
+	{
+		var sum = 0;
+		for (var i = 0; i < this.arity; i++)
+		{
+			var o = arguments[i].getValue();
+			if (typeof(o) != "number")
+			{
+				throw "Invalid argument type";
+			}
+			sum += o;
+		}
+		return sum;
+	}
+
+	toString()
+	{
+		return "Addition";
 	}
 }
 
@@ -984,13 +1089,16 @@ module.exports =
 		evaluateDom,
 		All,
 		AndNode,
+		Addition,
 		AtomicFunction,
 		AtomicFunctionReturnValue,
 		CompoundDesignator,
 		DesignatedObject,
+		InputArgument,
 		Nothing,
 		ObjectNode,
 		OrNode,
+		ReturnValue,
 		Tracer,
 		UnknownNode,
 		Value
