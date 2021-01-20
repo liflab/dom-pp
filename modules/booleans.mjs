@@ -25,8 +25,8 @@
 */
 
 // Local imports
-import {AtomicFunction} from "./atomic-function.js";
-import {NaryValue} from "./value.js";
+import {AtomicFunction} from "./atomic-function.mjs";
+import {NaryValue} from "./value.mjs";
 
 /**
  * Abstract class representing the binary Boolean connectives "and" and "or".

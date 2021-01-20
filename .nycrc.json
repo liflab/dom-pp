@@ -1,7 +1,6 @@
 {
-	"all": true,
-	"include": [
-		"**/*.js"
+	"extension": [
+		".mjs"
 	  ],
 	"reporter" : "html"
 }

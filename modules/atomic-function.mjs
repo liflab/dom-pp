@@ -25,9 +25,9 @@
 */
 
 // Local imports
-import {CompoundDesignator} from "./designator.js";
-import {AbstractFunction, InputArgument} from "./function.js";
-import {Value} from "./value.js";
+import {CompoundDesignator} from "./designator.mjs";
+import {AbstractFunction, InputArgument} from "./function.mjs";
+import {Value} from "./value.mjs";
 
 /**
  * Function that performs a direct computation on its input arguments. This is

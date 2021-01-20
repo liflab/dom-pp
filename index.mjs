@@ -32,13 +32,13 @@
 import "data-tree";
 
 // Local imports
-import { All, CompoundDesignator, Designator, Nothing, Unknown } from "./modules/designator.js";
-import { AbstractFunction, InputArgument, ReturnValue } from "./modules/function.js";
-import { ConstantValue, NaryValue, Value } from "./modules/value.js";
-import { AtomicFunction, AtomicFunctionReturnValue } from "./modules/atomic-function.js";
-import { BooleanAnd, BooleanOr, BooleanNot, NaryConjunctiveVerdict, NaryDisjunctiveVerdict } from "./modules/booleans.js";
-import { Tracer, AndNode, DesignatedObject, ObjectNode, OrNode, UnknownNode } from "./modules/tracer.js";
-import { Addition, IsEqualTo } from "./modules/numbers.js";
+import { All, CompoundDesignator, Designator, Nothing, Unknown } from "./modules/designator.mjs";
+import { AbstractFunction, InputArgument, ReturnValue } from "./modules/function.mjs";
+import { ConstantValue, NaryValue, Value } from "./modules/value.mjs";
+import { AtomicFunction, AtomicFunctionReturnValue } from "./modules/atomic-function.mjs";
+import { BooleanAnd, BooleanOr, BooleanNot, NaryConjunctiveVerdict, NaryDisjunctiveVerdict } from "./modules/booleans.mjs";
+import { Tracer, AndNode, DesignatedObject, ObjectNode, OrNode, UnknownNode } from "./modules/tracer.mjs";
+import { Addition, IsEqualTo } from "./modules/numbers.mjs";
 
 /**
  * Evaluates a set of conditions on a DOM tree

@@ -33,7 +33,7 @@ import pkg_chai from "chai";
 const { expect } = pkg_chai;
 
 // Local imports
-import {All, CompoundDesignator, Designator, Nothing} from "../index.js";
+import {All, CompoundDesignator, Designator, Nothing} from "../index.mjs";
 
 describe("Designator tests", () => {
 

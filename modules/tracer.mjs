@@ -25,8 +25,8 @@
 */
 
 // Local imports
-import {All, Nothing, Unknown} from "./designator.js";
-import {map_contains, map_get, map_put} from "./util.js";
+import {All, Nothing, Unknown} from "./designator.mjs";
+import {map_contains, map_get, map_put} from "./util.mjs";
 
 /**
  * Manages the nodes of a designation and-or graph.

@@ -25,7 +25,7 @@
 */
 
 // Local imports
-import {Designator} from "./designator.js";
+import {Designator} from "./designator.mjs";
 
 /**
  * Object produced by the call(this) to a function, and whose lineage

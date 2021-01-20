@@ -25,7 +25,7 @@
 */
 
 // Local imports
-import {AtomicFunction} from "./atomic-function.js";
+import {AtomicFunction} from "./atomic-function.mjs";
 
 /**
  * Function that checks the equality between two objects. Two objects o1 and o2

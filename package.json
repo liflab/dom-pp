@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "test": "mocha",
-        "coverage": "NODE_ENV=test nyc mocha test/*.js"
+        "coverage": "NODE_ENV=test c8 mocha test/*.test.js"
     },
     "repository": {
         "type": "git",
@@ -26,6 +26,7 @@
         "nyc": "^15.1.0"
     },
     "dependencies": {
+        "c8": "^7.4.0",
         "chai": "^4.2.0",
         "chai-dom": "^1.8.2",
         "data-tree": "^1.2.4",

@@ -41,7 +41,7 @@ import pkg_datatree from "data-tree";
 const { dataTree } = pkg_datatree;
 
 // Local imports
-import {evaluateDom} from "../index.js";
+import {evaluateDom} from "../index.mjs";
 
 describe("Stub tests", () => {
   beforeEach((done) => {

@@ -34,7 +34,7 @@ const { expect } = pkg_chai;
 // Local imports
 import {Addition, All, AndNode, AtomicFunction, AtomicFunctionReturnValue,
   CompoundDesignator, InputArgument, Nothing, ObjectNode, OrNode, ReturnValue,
-  Tracer, UnknownNode, Value} from "../index.js";
+  Tracer, UnknownNode, Value} from "../index.mjs";
 
 /**
  * A "dummy" function used to test traceability of all functions that do not

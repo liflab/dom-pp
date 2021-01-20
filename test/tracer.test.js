@@ -34,7 +34,7 @@ const { expect } = pkg_chai;
 
 // Local imports
 import {All, AndNode, AtomicFunction, CompoundDesignator, DesignatedObject,
-    Nothing, ObjectNode, OrNode, Tracer, UnknownNode, Value} from "../index.js";
+    Nothing, ObjectNode, OrNode, Tracer, UnknownNode, Value} from "../index.mjs";
 
 describe("Tracer tests", () => {
 

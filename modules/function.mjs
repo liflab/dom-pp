@@ -25,7 +25,7 @@
 */
 
 // Local imports
-import { Designator } from "./designator.js";
+import { Designator } from "./designator.mjs";
 
 /**
  * Abstract class representing a function.
