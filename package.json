@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "description": "A traceability library for DOM trees",
     "main": "index.js",
+    "type": "module",
     "scripts": {
         "test": "mocha",
         "coverage": "nyc npm run test"

@@ -27,13 +27,21 @@
 /**
  * Imports
  */
-const { expect } = require("chai");
-const chai = require("chai");
-const { JSDOM } = require("jsdom");
-chai.use(require("chai-dom"));
-require("jsdom-global")();
-require("data-tree");
-const plugin = require("..");
+// Chai for assertions
+import pkg_chai from "chai";
+const { expect } = pkg_chai;
+
+// JSDOM for DOM trees
+import pkg_jsdom from "jsdom";
+const { JSDOM } = pkg_jsdom;
+import "jsdom-global";
+
+// DataTree for tree management
+import pkg_datatree from "data-tree";
+const { dataTree } = pkg_datatree;
+
+// Local imports
+import {evaluateDom} from "../index.js";
 
 describe("Stub tests", () => {
   beforeEach((done) => {
@@ -46,14 +54,14 @@ describe("Stub tests", () => {
 
 	it("Calling the plugin with a null page should return no tree", () => {
 		var conditions = ["foo"]; // Dummy condition
-		const trees = plugin.evaluateDom(null, conditions);
+		const trees = evaluateDom(null, conditions);
 		// The tree is not empty, and its root is an "OR" node
 		expect(trees).to.have.length(0);
 	});
 	
 	it("Calling the plugin with a page should return a tree", () => {
 		var conditions = ["foo"]; // Dummy condition
-		const trees = plugin.evaluateDom(document, conditions);
+		const trees = evaluateDom(document, conditions);
 		// The tree is not empty, and its root is an "OR" node
 		expect(trees).to.have.length(1);
 		const tree = trees[0];
@@ -64,7 +72,7 @@ describe("Stub tests", () => {
 	
 	it("Calling the plugin with two conditions produces two trees", () => {
 		var conditions = ["foo", "bar"]; // Dummy condition
-		const trees = plugin.evaluateDom(document, conditions);
+		const trees = evaluateDom(document, conditions);
 		// The tree is not empty, and its root is an "OR" node
 		expect(trees).to.have.length(2);
 	});

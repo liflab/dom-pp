@@ -27,16 +27,13 @@
 /**
  * Imports
  */
-const { expect } = require("chai");
-const chai = require("chai");
-const plugin = require("..");
 
-/**
- * Local namespace imports
- */
-All = plugin.All;
-CompoundDesignator = plugin.CompoundDesignator;
-Nothing = plugin.Nothing;
+// Chai for assertions
+import pkg_chai from "chai";
+const { expect } = pkg_chai;
+
+// Local imports
+import {All, CompoundDesignator, Designator, Nothing} from "../index.js";
 
 describe("Designator tests", () => {
 

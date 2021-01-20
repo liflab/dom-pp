@@ -27,24 +27,14 @@
 /**
  * Imports
  */
-const { expect } = require("chai");
-const chai = require("chai");
-const plugin = require("..");
 
-/**
- * Local namespace imports
- */
-All = plugin.All;
-AndNode = plugin.AndNode;
-AtomicFunction = plugin.AtomicFunction;
-CompoundDesignator = plugin.CompoundDesignator;
-DesignatedObject = plugin.DesignatedObject;
-Nothing = plugin.Nothing;
-ObjectNode = plugin.ObjectNode;
-OrNode = plugin.OrNode;
-Tracer = plugin.Tracer;
-UnknownNode = plugin.UnknownNode;
-Value = plugin.Value;
+// Chai for assertions
+import pkg_chai from "chai";
+const { expect } = pkg_chai;
+
+// Local imports
+import {All, AndNode, AtomicFunction, CompoundDesignator, DesignatedObject,
+    Nothing, ObjectNode, OrNode, Tracer, UnknownNode, Value} from "../index.js";
 
 describe("Tracer tests", () => {
 

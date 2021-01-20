@@ -27,27 +27,14 @@
 /**
  * Imports
  */
-const { expect } = require("chai");
-const chai = require("chai");
-const plugin = require("..");
+// Chai for assertions
+import pkg_chai from "chai";
+const { expect } = pkg_chai;
 
-/**
- * Local namespace imports
- */
-Addition = plugin.Addition;
-All = plugin.All;
-AndNode = plugin.AndNode;
-AtomicFunction = plugin.AtomicFunction;
-AtomicFunctionReturnValue = plugin.AtomicFunctionReturnValue;
-CompoundDesignator = plugin.CompoundDesignator;
-InputArgument = plugin.InputArgument;
-Nothing = plugin.Nothing;
-ObjectNode = plugin.ObjectNode;
-OrNode = plugin.OrNode;
-ReturnValue = plugin.ReturnValue;
-Tracer = plugin.Tracer;
-UnknownNode = plugin.UnknownNode;
-Value = plugin.Value;
+// Local imports
+import {Addition, All, AndNode, AtomicFunction, AtomicFunctionReturnValue,
+  CompoundDesignator, InputArgument, Nothing, ObjectNode, OrNode, ReturnValue,
+  Tracer, UnknownNode, Value} from "../index.js";
 
 /**
  * A "dummy" function used to test traceability of all functions that do not
