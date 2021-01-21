@@ -36,6 +36,25 @@ const { expect } = pkg_chai;
 import {All, CompoundDesignator, Designator, Nothing} from "../index.mjs";
 
 describe("Designator tests", () => {
+  describe("All", () => {
+    it("Static instance", () => {
+      expect(All.instance instanceof All);
+    });
+
+    it("toString", () => {
+      expect(All.instance.toString()).to.equal("All");
+    });
+  });
+
+  describe("Nothing", () => {
+    it("Static instance", () => {
+      expect(Nothing.instance instanceof Nothing);
+    });
+
+    it("toString", () => {
+      expect(Nothing.instance.toString()).to.equal("Nothing");
+    });
+  });
 
 	describe("Compound designator", () => {
     it("Size 0", () => {

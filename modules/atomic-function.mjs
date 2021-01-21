@@ -72,7 +72,7 @@ class AtomicFunction extends AbstractFunction
 		var args = [];
 		for (var i = 0; i < arguments.length; i++)
 		{
-			args[i] = arguments[i];
+			args.push(arguments[i].getValue());
 		}
 		var o = this.getValue(...args);
 		if (o instanceof Value)

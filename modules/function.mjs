@@ -25,7 +25,8 @@
 */
 
 // Local imports
-import { Designator } from "./designator.mjs";
+import {Designator} from "./designator.mjs";
+import {Value} from "./value.mjs";
 
 /**
  * Abstract class representing a function.
@@ -38,6 +39,22 @@ class AbstractFunction
 	}
 
 	/**
+	 * Converts an arbitrary object into a {@link Function}.
+	 * @param o The object to convert. If o is a function, it is returned as is.
+	 * Otherwise, o is converted into a {@link ConstantFunction} that returns
+	 * the {@link Value} lifted from o.
+	 * @return The converted function
+	 */
+	static lift(o) 
+	{
+		if (o instanceof AbstractFunction)
+		{
+			return o;
+		}
+		return new ConstantFunction(Value.lift(o));
+	}
+
+	/**
 	 * Computes the return value of the function from its provided input
 	 * arguments.
 	 * @param arguments A variable number of input arguments
@@ -47,22 +64,6 @@ class AbstractFunction
 	{
 		// To be overridden by descendants
 		return null;
-	}
-
-	/**
-	 * Converts an arbitrary object into a {@link Function}.
-	 * @param o The object to convert. If o is a function, it is returned as is.
-	 * Otherwise, o is converted into a {@link ConstantFunction} that returns
-	 * the {@link Value} lifted from o.
-	 * @return The converted function
-	 */
-	lift(o) 
-	{
-		if (o instanceof AbstractFunction)
-		{
-			return o;
-		}
-		return ConstantFunction(Value.prototype.lift(o));
 	}
 
 	/**
@@ -135,6 +136,37 @@ class InputArgument extends Designator
 }
 
 /**
+ * Function or arity 0 that always returns the same object.
+ */
+class ConstantFunction extends AbstractFunction
+{
+	/**
+	 * Creates a new instance of constant function.
+	 * @param o The object to return
+	 */
+	constructor(o)
+	{
+		super();
+		this.value = Value.lift(o);
+	}
+
+	evaluate()
+	{
+		return this.value;
+	}
+
+	getArity()
+	{
+		return 0;
+	}
+
+	set(variable, value)
+	{
+		return this;
+	}
+}
+
+/**
  * Module exports
  */
-export {AbstractFunction, InputArgument, ReturnValue};
+export {AbstractFunction, ConstantFunction, InputArgument, ReturnValue};

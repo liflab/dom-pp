@@ -75,7 +75,7 @@ class IsEqualTo extends AtomicFunction
  */
 class Addition extends AtomicFunction
 {
-	constructor(arity)
+	constructor(arity = 2)
 	{
 		super(arity);
 	}
@@ -85,7 +85,7 @@ class Addition extends AtomicFunction
 		var sum = 0;
 		for (var i = 0; i < this.arity; i++)
 		{
-			var o = arguments[i].getValue();
+			var o = arguments[i];
 			if (typeof(o) != "number")
 			{
 				throw "Invalid argument type";

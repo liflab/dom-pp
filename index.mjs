@@ -33,12 +33,14 @@ import "data-tree";
 
 // Local imports
 import { All, CompoundDesignator, Designator, Nothing, Unknown } from "./modules/designator.mjs";
-import { AbstractFunction, InputArgument, ReturnValue } from "./modules/function.mjs";
+import { AbstractFunction, ConstantFunction, InputArgument, ReturnValue } from "./modules/function.mjs";
 import { ConstantValue, NaryValue, Value } from "./modules/value.mjs";
 import { AtomicFunction, AtomicFunctionReturnValue } from "./modules/atomic-function.mjs";
 import { BooleanAnd, BooleanOr, BooleanNot, NaryConjunctiveVerdict, NaryDisjunctiveVerdict } from "./modules/booleans.mjs";
 import { Tracer, AndNode, DesignatedObject, ObjectNode, OrNode, UnknownNode } from "./modules/tracer.mjs";
 import { Addition, IsEqualTo } from "./modules/numbers.mjs";
+import {Argument, ArgumentValue, ComposedFunction, ComposedFunctionValue,
+    FunctionNamedArgument, NamedArgument, NamedArgumentValue} from "./modules/composed-function.mjs";
 
 /**
  * Evaluates a set of conditions on a DOM tree
@@ -113,19 +115,29 @@ function getVerdict(root, condition)
 export
 {
 		evaluateDom,
+		AbstractFunction,
+		Addition,
 		All,
 		AndNode,
-		Addition,
+		Argument,
+		ArgumentValue,
 		AtomicFunction,
 		AtomicFunctionReturnValue,
 		BooleanAnd,
 		BooleanNot,
 		BooleanOr,
+		ComposedFunction,
+		ComposedFunctionValue,
 		CompoundDesignator,
+		ConstantFunction,
+		ConstantValue,
 		Designator,
 		DesignatedObject,
+		FunctionNamedArgument,
 		InputArgument,
 		IsEqualTo,
+		NamedArgument,
+		NamedArgumentValue,
 		NaryConjunctiveVerdict,
 		NaryDisjunctiveVerdict,
 		NaryValue,
@@ -138,4 +150,5 @@ export
 		UnknownNode,
 		Value
 };
+
 // :wrap=soft:tabSize=2:
