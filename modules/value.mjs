@@ -25,7 +25,7 @@
 */
 
 // Local imports
-import {Designator} from "./designator.mjs";
+import {CompoundDesignator, Designator} from "./designator.mjs";
 
 /**
  * Object produced by the call(this) to a function, and whose lineage
@@ -90,12 +90,15 @@ class NaryValue extends Value
 	 * @param {Object} value The value to produce
 	 * @param {Array} values An array of {@link Value}s that are linked to
 	 * this value
+	 * @param {Array} positions An array of integers with the position of 
+	 * each input value in the function's arguments
 	 */
-	constructor(value, values = [])
+	constructor(value, values = [], positions = [])
 	{
 		super();
 		this.value = value;
 		this.values = values;
+		this.positions = positions;
 	}
 
 	getValue()
@@ -118,6 +121,16 @@ class ConstantValue extends Value
 		 * The value represented by this constant
 		 */
 		this.value = o;
+	}
+
+	query(q, d, root, factory)
+	{
+		var leaves = [];
+		var new_d = CompoundDesignator.create(new ConstantDesignator(), d);
+		var n = factory.getObjectNode(new_d, this.value);
+		root.addChild(n);
+		leaves.push(n);
+		return leaves;
 	}
 
 	getValue()

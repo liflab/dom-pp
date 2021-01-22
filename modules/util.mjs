@@ -24,6 +24,34 @@
   SOFTWARE.
 */
 
+/**
+ * Checks if two objects are equal. This is a surrogate to simulate the
+ * behavior of Object.equals in Java. If the first object has an equals()
+ * method, it is called; otherwise, standard equality between JavaScript
+ * objects is used.
+ * @param o1 The first object
+ * @param o2 The second object
+ * @return true if the two objects are equal, false otherwise
+ */
+function same_object(o1, o2)
+{
+	if (o1 == null && o2 == null)
+	{
+		return true;
+	}
+	if ((o1 == null && o2 != null) || (o1 != null && o2 == null))
+	{
+		return false;
+	}
+	// assert: o1 != null && o2 != null
+	if (typeof(o1).equals === "function")
+	{
+		// Two objects that implement equals
+		return o1.equals(o2);
+	}
+	return o1 == o2;
+}
+
 function map_get(m, k)
 {
 	for (const [key, value] of m)
@@ -40,7 +68,7 @@ function map_contains(m, k)
 {
 	for (const [key, value] of m)
 	{
-		if (key.equals(k))
+		if (same_object(key, k))
 		{
 			return true;
 		}
@@ -52,7 +80,7 @@ function map_put(m, k, v)
 {
 	for (const [key, value] of m)
 	{
-		if (key.equals(k))
+		if (same_object(key, k))
 		{
 			m.set(key, v);
 			return;
@@ -76,4 +104,4 @@ function set_contains(s, x)
 /**
  * Package exports
  */
-export {map_contains, map_get, map_put, set_contains};
+export {map_contains, map_get, map_put, same_object, set_contains};

@@ -26,7 +26,7 @@
 
 // Local imports
 import {All, Nothing, Unknown} from "./designator.mjs";
-import {map_contains, map_get, map_put} from "./util.mjs";
+import {map_contains, map_get, map_put, same_object} from "./util.mjs";
 
 /**
  * Manages the nodes of a designation and-or graph.
@@ -420,9 +420,8 @@ class DesignatedObject
 		{
 			return false;
 		}
-		return (this.object == null && cdo.object == null) ||
-			(this.object != null && this.object.equals(cdo.object) &&
-					this.designator.equals(cdo.designator) && this.sameContext(cdo));
+		return ((this.object == null && cdo.object == null) || (this.object != null && same_object(this.object, cdo.object)))
+			 &&	(this.designator.equals(cdo.designator) && this.sameContext(cdo));
 	}
 
 	/**

@@ -172,13 +172,13 @@ class ComposedFunctionValue extends Value
                 {
                     var fia = des.head();
                     var index = fia.getIndex();
-                    new_sub_leaves.push(this.inputValues[index].query(q, new_d, sub_leaf, factory));
+                    new_sub_leaves.push(...this.inputValues[index].query(q, new_d, sub_leaf, factory));
                     continue;
                 }
             }
             new_sub_leaves.add(sub_leaf);
         }
-        leaves.push(new_sub_leaves);
+        leaves.push(...new_sub_leaves);
         root.addChild(sub_root);
         return leaves;
     }
@@ -260,7 +260,7 @@ class NamedArgumentValue extends Value
     query(q, d, root, factory)
     {
         var leaves = [];
-        var new_d = new CompoundDesignator(d.tail(), new FunctionNamedArgument(this.name, this.value));
+        var new_d = CompoundDesignator.create(d.tail(), new FunctionNamedArgument(this.name, this.value));
         var n = factory.getObjectNode(new_d, this.value);
         var sub_leaves = this.value.query(q, d, n, factory);
         for (var i = 0; i < sub_leaves.length; i++)
@@ -269,7 +269,7 @@ class NamedArgumentValue extends Value
             var to_add = factory.getObjectNode(new_d, this.value);
             sub_leaf.addChild(to_add);
         }
-        leaves.push(sub_leaves);
+        leaves.push(...sub_leaves);
         root.addChild(n);
         return leaves;
     }

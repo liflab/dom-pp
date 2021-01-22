@@ -26,7 +26,7 @@
 
 // Local imports
 import {CompoundDesignator} from "./designator.mjs";
-import {AbstractFunction, InputArgument} from "./function.mjs";
+import {AbstractFunction, InputArgument, ReturnValue} from "./function.mjs";
 import {Value} from "./value.mjs";
 
 /**
@@ -116,10 +116,10 @@ class AtomicFunctionReturnValue extends Value
 		/**
 		 * The function's input arguments
 		 */
-		this.inputValue = [];
+		this.inputValues = [];
 		for (var i = 2; i < arguments.length; i++)
 		{
-			this.inputValue.push(arguments[i]);
+			this.inputValues.push(arguments[i]);
 		}
 	}
 
@@ -138,17 +138,17 @@ class AtomicFunctionReturnValue extends Value
 	{
 		var leaves = [];
 		var n = factory.getAndNode();
-		for (var i = 0; i < this.inputValue.length; i++)
+		for (var i = 0; i < this.inputValues.length; i++)
 		{
-			if (this.inputValue[i] == null)
+			if (this.inputValues[i] == null)
 			{
 				continue;
 			}
-			var new_d = new CompoundDesignator(d.tail(), new InputArgument(i));
+			var new_d = CompoundDesignator.create(d.tail(), new InputArgument(i));
 			var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
 			var sub_leaves = [];
-			sub_leaves = this.inputValue[i].query(type, d, root, factory);
-			leaves.push(sub_leaves);
+			sub_leaves = this.inputValues[i].query(type, ReturnValue.instance, sub_root, factory);
+			leaves.push(...sub_leaves);
 			n.addChild(sub_root);
 		}
 		var f_root = factory.getObjectNode(d, this.referenceFunction);

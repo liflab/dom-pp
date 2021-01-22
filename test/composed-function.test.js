@@ -41,7 +41,7 @@ describe("Composed function tests", () => {
             var cf = new ComposedFunction(new Addition(), 1, 2);
             expect(cf.getArity()).to.equal(0);
             var r = cf.evaluate();
-            expect(r instanceof ComposedFunctionValue);
+            expect(r).to.be.an.instanceof(ComposedFunctionValue);
             var v = r.getValue();
             expect(v).to.equal(3);
         });
@@ -53,7 +53,7 @@ describe("Composed function tests", () => {
             var cf = new ComposedFunction(new Addition(), "@0", 2);
             expect(cf.getArity()).to.equal(1);
             var r = cf.evaluate(3);
-            expect(r instanceof ComposedFunctionValue);
+            expect(r).to.be.an.instanceof(ComposedFunctionValue);
             var v = r.getValue();
             expect(v).to.equal(5);
         });
@@ -65,9 +65,11 @@ describe("Composed function tests", () => {
             var cf = new ComposedFunction(new Addition(), "$x", 2);
             expect(cf.getArity()).to.equal(1);
             var r = cf.evaluate(3);
-            expect(r instanceof ComposedFunctionValue);
+            expect(r).to.be.an.instanceof(ComposedFunctionValue);
             var v = r.getValue();
             expect(v).to.equal(5);
         });
     });
 });
+
+// :wrap=soft:tabSize=2:indentWidth=2:

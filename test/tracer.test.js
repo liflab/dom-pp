@@ -42,27 +42,27 @@ describe("Tracer tests", () => {
         it("Get And node", () => {
             var tracer = new Tracer();
             var node1 = tracer.getAndNode();
-            expect(node1 instanceof AndNode);
+            expect(node1).to.be.an.instanceof(AndNode);
             var node2 = tracer.getAndNode();
-            expect(node2 instanceof AndNode);
+            expect(node2).to.be.an.instanceof(AndNode);
             expect(node1.getId()).not.to.equal(node2.getId());
         });
 
         it("Get Or node", () => {
             var tracer = new Tracer();
             var node1 = tracer.getOrNode();
-            expect(node1 instanceof OrNode);
+            expect(node1).to.be.an.instanceof(OrNode);
             var node2 = tracer.getOrNode();
-            expect(node2 instanceof OrNode);
+            expect(node2).to.be.an.instanceof(OrNode);
             expect(node1.getId()).not.to.equal(node2.getId());
         });
 
         it("Get Unknown node", () => {
             var tracer = new Tracer();
             var node1 = tracer.getUnknownNode();
-            expect(node1 instanceof UnknownNode);
+            expect(node1).to.be.an.instanceof(UnknownNode);
             var node2 = tracer.getUnknownNode();
-            expect(node2 instanceof UnknownNode);
+            expect(node2).to.be.an.instanceof(UnknownNode);
             expect(node1.getId()).not.to.equal(node2.getId());
         });
 
@@ -70,9 +70,9 @@ describe("Tracer tests", () => {
             var tracer = new Tracer();
             var dob = new DesignatedObject(All.instance, Value.lift(0));
             var node1 = tracer.getObjectNode(dob);
-            expect(node1 instanceof ObjectNode);
+            expect(node1).to.be.an.instanceof(ObjectNode);
             var node2 = tracer.getObjectNode(dob);
-            expect(node2 instanceof ObjectNode);
+            expect(node2).to.be.an.instanceof(ObjectNode);
             expect(node1.getId()).to.equal(node2.getId());
         });
 
@@ -80,10 +80,10 @@ describe("Tracer tests", () => {
             var tracer = new Tracer();
             var dob1 = new DesignatedObject(All.instance, Value.lift(0));
             var node1 = tracer.getObjectNode(dob1);
-            expect(node1 instanceof ObjectNode);
+            expect(node1).to.be.an.instanceof(ObjectNode);
             var dob2 = new DesignatedObject(Nothing.instance, Value.lift(0));
             var node2 = tracer.getObjectNode(dob2);
-            expect(node2 instanceof ObjectNode);
+            expect(node2).to.be.an.instanceof(ObjectNode);
             expect(node1.getId()).not.to.equal(node2.getId());
         });
 
@@ -91,10 +91,10 @@ describe("Tracer tests", () => {
             var tracer = new Tracer();
             var dob1 = new DesignatedObject(All.instance, Value.lift(0));
             var node1 = tracer.getObjectNode(dob1);
-            expect(node1 instanceof ObjectNode);
+            expect(node1).to.be.an.instanceof(ObjectNode);
             var dob2 = new DesignatedObject(All.instance, Value.lift(1));
             var node2 = tracer.getObjectNode(dob2);
-            expect(node2 instanceof ObjectNode);
+            expect(node2).to.be.an.instanceof(ObjectNode);
             expect(node1.getId()).not.to.equal(node2.getId());
         });
 

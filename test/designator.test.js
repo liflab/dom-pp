@@ -38,7 +38,7 @@ import {All, CompoundDesignator, Designator, Nothing} from "../index.mjs";
 describe("Designator tests", () => {
   describe("All", () => {
     it("Static instance", () => {
-      expect(All.instance instanceof All);
+      expect(All.instance).to.be.an.instanceof(All);
     });
 
     it("toString", () => {
@@ -48,7 +48,7 @@ describe("Designator tests", () => {
 
   describe("Nothing", () => {
     it("Static instance", () => {
-      expect(Nothing.instance instanceof Nothing);
+      expect(Nothing.instance).to.be.an.instanceof(Nothing);
     });
 
     it("toString", () => {
@@ -59,30 +59,30 @@ describe("Designator tests", () => {
 	describe("Compound designator", () => {
     it("Size 0", () => {
 			var d = new CompoundDesignator();
-      expect(d.head() instanceof Nothing);
-      expect(d.tail() instanceof Nothing);
+      expect(d.head()).to.be.an.instanceof(Nothing);
+      expect(d.tail()).to.be.null;
       expect(d.size()).to.equal(0);
     });
 
 		it("Size 1", () => {
 			var d = new CompoundDesignator(All.instance);
-      expect(d.head() instanceof All);
-      expect(d.tail() instanceof Nothing);
+      expect(d.head()).to.be.an.instanceof(All);
+      expect(d.tail()).to.be.null;
       expect(d.size()).to.equal(1);
     });
 
     it("Size 2", () => {
 			var d = new CompoundDesignator(All.instance, All.instance);
-      expect(d.head() instanceof All);
-      expect(d.tail() instanceof All);
+      expect(d.head()).to.be.an.instanceof(All);
+      expect(d.tail()).to.be.an.instanceof(All);
       expect(d.size()).to.equal(2);
     });
     
     it("Size 3", () => {
 			var d = new CompoundDesignator(All.instance, All.instance, All.instance);
-      expect(d.head() instanceof All);
+      expect(d.head()).to.be.an.instanceof(All);
       var tail = d.tail();
-      expect(tail instanceof CompoundDesignator);
+      expect(tail).to.be.an.instanceof(CompoundDesignator);
       expect(d.size()).to.equal(3);
       expect(tail.size()).to.equal(2);
     });
@@ -90,8 +90,8 @@ describe("Designator tests", () => {
     it("Add atomic", () => {
       var d = new CompoundDesignator();
       d.add(All.instance);
-      expect(d.head() instanceof All);
-      expect(d.tail() instanceof Nothing);
+      expect(d.head()).to.be.an.instanceof(All);
+      expect(d.tail()).to.be.null;
       expect(d.size()).to.equal(1);
     });
 
@@ -99,8 +99,8 @@ describe("Designator tests", () => {
       var d = new CompoundDesignator();
       var d2 = new CompoundDesignator(All.instance);
       d.add(d2);
-      expect(d.head() instanceof All);
-      expect(d.tail() instanceof Nothing);
+      expect(d.head()).to.be.an.instanceof(All);
+      expect(d.tail()).to.be.null;
       expect(d.size()).to.equal(1);
     });
 

@@ -25,6 +25,12 @@
 */
 
 /**
+ * Imports
+ */
+// Local imports
+import {same_object} from "./util.mjs";
+
+/**
  * Abstract class representing all functions that extract parts of an
  * object.
  */
@@ -153,6 +159,42 @@ class All extends Designator
  */
 class CompoundDesignator extends Designator
 {
+	/**
+	 * Creates a flat compound designator from a list of other designators.
+	 */
+	static create()
+	{
+		if (arguments.length == 0)
+		{
+			return Nothing.instance;
+		}
+		var designators = [];
+		for (var i = 0; i < arguments.length; i++)
+		{
+			if (arguments[i] == null)
+			{
+				continue;
+			}
+			if (arguments[i] instanceof CompoundDesignator)
+			{
+				designators.push(...arguments[i].elements);
+			}
+			else
+			{
+				designators.push(arguments[i]);
+			}
+		}
+		if (designators.length == 0)
+		{
+			return Nothing.instance;
+		}
+		if (designators.length == 1)
+		{
+			return designators[0];
+		}
+		return new CompoundDesignator(...designators);
+	}
+
 	constructor()
 	{
 		super();
@@ -213,6 +255,10 @@ class CompoundDesignator extends Designator
 		{
 			return null;
 		}
+		if (this.elements.length == 2)
+		{
+			return this.elements[0];
+		}
 		var new_d = new CompoundDesignator();
 		for (var i = 0; i < this.elements.length - 1; i++)
 		{
@@ -247,7 +293,7 @@ class CompoundDesignator extends Designator
 		}
 		for (var i = 0; i < this.elements.length; i++)
 		{
-			if (!this.elements[i].equals(o.elements[i]))
+			if (!same_object(this.elements[i], o.elements[i]))
 			{
 				return false;
 			}

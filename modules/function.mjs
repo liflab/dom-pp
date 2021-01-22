@@ -111,6 +111,15 @@ class ReturnValue extends Designator
 	{
 		return "!";
 	}
+
+	equals(o)
+	{
+		if (o == null || !(o instanceof ReturnValue))
+		{
+			return false;
+		}
+		return true;
+	}
 }
 
 /**
@@ -129,9 +138,26 @@ class InputArgument extends Designator
 		this.index = index;
 	}
 
+	/**
+	 * Gets the index of this argument.
+	 */
+	getIndex()
+	{
+		return this.index;
+	}
+
 	toString()
 	{
 		return "@" + this.index;
+	}
+
+	equals(o)
+	{
+		if (o == null || !(o instanceof InputArgument))
+		{
+			return false;
+		}
+		return o.getIndex() == this.index;
 	}
 }
 

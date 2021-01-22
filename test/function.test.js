@@ -71,10 +71,53 @@ describe("Function tests", () => {
       var f = new AtomicFunction(2);
       var v = f.evaluate(0, 0);
       expect(v).not.to.be.null;
-      expect(v instanceof Value);
+      expect(v).to.be.an.instanceof(Value);
     });
 
-    it("Lineage", () => {
+    /**
+     * Tests lineage for a generic atomic function of one argument. Querying
+     * for the lineage of the function's return value should produce a tree
+     * of the following form:
+     * <pre>
+     * ReturnValue
+     *  |
+     *  +-- Input argument 1
+     * </pre>
+     */
+    it("Lineage arity 1", () => {
+      var f = new DummyAtomicFunction(1);
+      var v = f.evaluate(1);
+      var t = new Tracer();
+      var root = t.getUnknownNode();
+      var leaves = v.query(null, ReturnValue.instance, root, t);
+      expect(leaves.length).to.equal(1);
+      expect(root.getChildren().length).to.equal(1);
+      var under = root.getChildren()[0];
+      expect(under).to.be.an.instanceof(ObjectNode);
+      var do0 = under.getDesignatedObject();
+      expect(do0.getObject()).to.equal(f);
+      expect(do0.getDesignator()).to.be.an.instanceof(ReturnValue);
+      expect(under.getChildren().length).to.equal(1);
+      var n1 = under.getChildren()[0];
+      expect(n1).to.be.an.instanceof(ObjectNode);
+      var do1 = n1.getDesignatedObject();
+      expect(do1.getDesignator()).to.be.an.instanceof(InputArgument);
+    });
+
+    /**
+     * Tests lineage for a generic atomic function of two arguments. Querying
+     * for the lineage of the function's return value should produce a tree
+     * of the following form:
+     * <pre>
+     * ReturnValue
+     *  |
+     *  +-- And
+     *       |
+     *       +-- Input argument 1
+     * *     +-- Input argument 2
+     * </pre>
+     */
+    it("Lineage arity 2", () => {
       var f = new DummyAtomicFunction(2);
       var v = f.evaluate(1, 2);
       var t = new Tracer();
@@ -83,31 +126,58 @@ describe("Function tests", () => {
       expect(leaves.length).to.equal(2);
       expect(root.getChildren().length).to.equal(1);
       var under = root.getChildren()[0];
-      expect(under instanceof ObjectNode);
+      expect(under).to.be.an.instanceof(ObjectNode);
       var do0 = under.getDesignatedObject();
       expect(do0.getObject()).to.equal(f);
-      expect(do0.getDesignator() instanceof ReturnValue);
+      expect(do0.getDesignator()).to.be.an.instanceof(ReturnValue);
       expect(under.getChildren().length).to.equal(1);
       var under2 = under.getChildren()[0];
-      expect(under2 instanceof AndNode);
+      expect(under2).to.be.an.instanceof(AndNode);
       expect(under2.getChildren().length).to.equal(2);
       var n1 = under2.getChildren()[0];
-      expect(n1 instanceof ObjectNode);
+      expect(n1).to.be.an.instanceof(ObjectNode);
       var do1 = n1.getDesignatedObject();
-      expect(do1.getDesignator() instanceof InputArgument);
+      expect(do1.getDesignator()).to.be.an.instanceof(InputArgument);
       var n2 = under2.getChildren()[0];
-      expect(n2 instanceof ObjectNode);
+      expect(n2).to.be.an.instanceof(ObjectNode);
       var do2 = n1.getDesignatedObject();
-      expect(do2.getDesignator() instanceof InputArgument);
+      expect(do2.getDesignator()).to.be.an.instanceof(InputArgument);
     });
 
+  });
+
+  describe("Input argument", () => {
+
+    it("Equal designators", () => {
+        var d1 = new InputArgument(2);
+        var d2 = new InputArgument(2);
+        expect(d1.equals(d2)).to.be.true;
+        expect(d2.equals(d1)).to.be.true;
+    });
+
+    it("Different designators", () => {
+      var d1 = new InputArgument(2);
+      var d2 = new InputArgument(3);
+      expect(d1.equals(d2)).to.be.false;
+      expect(d2.equals(d1)).to.be.false;
+    });
+  });
+
+  describe("Return value", () => {
+
+    it("Equal designators", () => {
+        var d1 = new ReturnValue();
+        var d2 = new ReturnValue();
+        expect(d1.equals(d2)).to.be.true;
+        expect(d2.equals(d1)).to.be.true;
+    });
   });
 
   describe("Addition", () => {
     it("With numbers", () => {
         var f = new Addition(2);
         var v = f.evaluate(1, 2);
-        expect(v instanceof AtomicFunctionReturnValue);
+        expect(v).to.be.an.instanceof(AtomicFunctionReturnValue);
         var o = v.getValue();
         expect(o).to.equal(3);
     });
