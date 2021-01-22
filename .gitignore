@@ -13,3 +13,6 @@ test/*.log
 
 .vscode/
 coverage/
+
+# Sylvain's script to count lines
+lines.sh

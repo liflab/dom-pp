@@ -39,6 +39,7 @@ import { AtomicFunction, AtomicFunctionReturnValue } from "./modules/atomic-func
 import { BooleanAnd, BooleanOr, BooleanNot, NaryConjunctiveVerdict, NaryDisjunctiveVerdict } from "./modules/booleans.mjs";
 import { Tracer, AndNode, DesignatedObject, ObjectNode, OrNode, UnknownNode } from "./modules/tracer.mjs";
 import { Addition, IsEqualTo } from "./modules/numbers.mjs";
+import { Enumerate, EnumeratedValue, NthItem } from "./modules/enumerate.mjs";
 import {Argument, ArgumentValue, ComposedFunction, ComposedFunctionValue,
     FunctionNamedArgument, NamedArgument, NamedArgumentValue} from "./modules/composed-function.mjs";
 
@@ -133,6 +134,8 @@ export
 		ConstantValue,
 		Designator,
 		DesignatedObject,
+		Enumerate,
+		EnumeratedValue,
 		FunctionNamedArgument,
 		InputArgument,
 		IsEqualTo,
@@ -141,6 +144,7 @@ export
 		NaryConjunctiveVerdict,
 		NaryDisjunctiveVerdict,
 		NaryValue,
+		NthItem,
 		Nothing,
 		ObjectNode,
 		OrNode,

@@ -224,7 +224,7 @@ describe("Boolean tests", () => {
      *  +-- Input argument 1
      * </pre>
      */
-    it("First false argument", () => {
+    it("First true argument", () => {
       var op = new BooleanOr();
       var v = op.evaluate(true, false);
       expect(v).to.be.an.instanceof(NaryDisjunctiveVerdict);
@@ -251,7 +251,7 @@ describe("Boolean tests", () => {
      *  +-- Input argument 2
      * </pre>
      */
-    it("Second false argument", () => {
+    it("Second true argument", () => {
       var op = new BooleanOr();
       var v = op.evaluate(false, true);
       expect(v).to.be.an.instanceof(NaryDisjunctiveVerdict);
