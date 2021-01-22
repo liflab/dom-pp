@@ -31,7 +31,7 @@
 // Chai for assertions
 import pkg_chai from "chai";
 const { expect } = pkg_chai;
-import { Addition, ComposedFunction, ComposedFunctionValue } from "../index.mjs";
+import { Addition, ComposedFunction, ComposedFunctionValue, ObjectNode, ReturnValue, Tracer } from "../index.mjs";
 
 describe("Composed function tests", () => {
 
@@ -68,6 +68,22 @@ describe("Composed function tests", () => {
             expect(r).to.be.an.instanceof(ComposedFunctionValue);
             var v = r.getValue();
             expect(v).to.equal(5);
+        });
+
+        it("Set", () => {
+            var cf = new ComposedFunction(new Addition(), "$x", 2).set("$x", 3);
+            var r = cf.evaluate(10);
+            expect(r).to.be.an.instanceof(ComposedFunctionValue);
+            var v = r.getValue();
+            expect(v).to.equal(5);
+            var t = new Tracer();
+            var root = t.getUnknownNode();
+            var leaves = r.query(null, ReturnValue.instance, root, t);
+            expect(leaves.length).to.equal(2);
+            var leaf1 = leaves[0];
+            var leaf2 = leaves[1];
+            expect(leaf1.getChildren().length).to.equal(0);
+            expect(leaf2.getChildren().length).to.equal(0);
         });
     });
 });

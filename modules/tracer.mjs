@@ -45,9 +45,9 @@ class Tracer
 		 * The context in which the tracer operates (a stack).
 		 */
 		this.tracerContext = [];
-		if (arguments.length == 1)
+		if (arguments.length > 0)
 		{
-			this.tracerContext = arguments[0];
+			this.tracerContext = arguments;
 		}
 	}
 
@@ -111,9 +111,9 @@ class Tracer
 	getSubTracer(o)
 	{
 		var con = [];
-		con.push(this.tracerContext);
+		con.push(...this.tracerContext);
 		con.push(o);
-		return new Tracer(con);
+		return new Tracer(...con);
 	}
 
 	getTree(q, d, o)

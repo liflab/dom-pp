@@ -76,7 +76,7 @@ class EnumeratedValue extends Value
         var new_d = CompoundDesignator.create(d.tail(), new NthItem(this.index));
         var n_it = factory.getObjectNode(new_d, this.inputList);
         root.addChild(n_it);
-        var v = this.inputList[i];
+        var v = this.inputList[this.index];
         var sub_leaves = v.query(q, new_d, n_it, factory);
         leaves.push(...sub_leaves);
         return leaves;
@@ -90,6 +90,15 @@ class EnumeratedValue extends Value
     toString()
     {
         return this.inputList[this.index].getValue().toString();
+    }
+
+    equals(o)
+    {
+        if (o == null || !(o instanceof EnumeratedValue))
+        {
+            return false;
+        }
+        return this.index == o.index && this.inputList == o.inputList;
     }
 }
 

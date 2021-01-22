@@ -34,14 +34,16 @@ import "data-tree";
 // Local imports
 import { All, CompoundDesignator, Designator, Nothing, Unknown } from "./modules/designator.mjs";
 import { AbstractFunction, ConstantFunction, InputArgument, ReturnValue } from "./modules/function.mjs";
-import { ConstantValue, NaryValue, Value } from "./modules/value.mjs";
-import { AtomicFunction, AtomicFunctionReturnValue } from "./modules/atomic-function.mjs";
+import { ConstantDesignator, ConstantValue, NaryValue, Value } from "./modules/value.mjs";
+import { AtomicFunction, AtomicFunctionReturnValue, Identity } from "./modules/atomic-function.mjs";
 import { BooleanAnd, BooleanOr, BooleanNot, NaryConjunctiveVerdict, NaryDisjunctiveVerdict } from "./modules/booleans.mjs";
 import { Tracer, AndNode, DesignatedObject, ObjectNode, OrNode, UnknownNode } from "./modules/tracer.mjs";
 import { Addition, IsEqualTo } from "./modules/numbers.mjs";
 import { Enumerate, EnumeratedValue, NthItem } from "./modules/enumerate.mjs";
 import {Argument, ArgumentValue, ComposedFunction, ComposedFunctionValue,
-    FunctionNamedArgument, NamedArgument, NamedArgumentValue} from "./modules/composed-function.mjs";
+	FunctionNamedArgument, NamedArgument, NamedArgumentValue} from "./modules/composed-function.mjs";
+import {ExistentialQuantifier, Quantifier, QuantifierConjunctiveVerdict, 
+	QuantifierDisjunctiveVerdict, QuantifierVerdict, UniversalQuantifier} from "./modules/quantifier.mjs";
 
 /**
  * Evaluates a set of conditions on a DOM tree
@@ -131,12 +133,15 @@ export
 		ComposedFunctionValue,
 		CompoundDesignator,
 		ConstantFunction,
+		ConstantDesignator,
 		ConstantValue,
 		Designator,
 		DesignatedObject,
 		Enumerate,
 		EnumeratedValue,
+		ExistentialQuantifier,
 		FunctionNamedArgument,
+		Identity,
 		InputArgument,
 		IsEqualTo,
 		NamedArgument,
@@ -148,8 +153,13 @@ export
 		Nothing,
 		ObjectNode,
 		OrNode,
+		Quantifier,
+		QuantifierConjunctiveVerdict,
+		QuantifierDisjunctiveVerdict,
+		QuantifierVerdict,
 		ReturnValue,
 		Tracer,
+		UniversalQuantifier,
 		Unknown,
 		UnknownNode,
 		Value

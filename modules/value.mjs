@@ -171,4 +171,4 @@ class ConstantDesignator extends Designator
 /**
  * Package exports
  */
-export {ConstantValue, NaryValue, Value};
+export {ConstantDesignator, ConstantValue, NaryValue, Value};

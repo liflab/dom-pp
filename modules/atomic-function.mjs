@@ -88,6 +88,10 @@ class AtomicFunction extends AbstractFunction
 		return null;
 	}
 
+	set()
+	{
+		return this;
+	}
 }
 
 /**
@@ -166,6 +170,22 @@ class AtomicFunctionReturnValue extends Value
 }
 
 /**
+ * Function that returns its single input argument as is.
+ */
+class Identity extends AtomicFunction
+{
+	constructor()
+	{
+		super(1);
+	}
+
+	getValue()
+	{
+		return arguments[0];
+	}
+}
+
+/**
  * Package exports
  */
-export {AtomicFunction, AtomicFunctionReturnValue};
+export {AtomicFunction, AtomicFunctionReturnValue, Identity};
