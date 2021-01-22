@@ -172,6 +172,142 @@ describe("Boolean tests", () => {
     });
 
   });
+
+  describe("Disjunction", () => {
+
+    /**
+     * Tests lineage for disjunction with two false arguments. Querying
+     * for the lineage of the function's return value should produce a tree
+     * of the following form:
+     * <pre>
+     * ReturnValue
+     *  |
+     *  +-- And
+     *       |
+     *       +-- Input argument 1
+     *       +-- Input argument 2
+     * </pre>
+     */
+    it("Two false arguments", () => {
+        var op = new BooleanOr();
+        var v = op.evaluate(false, false);
+        expect(v).to.be.an.instanceof(NaryConjunctiveVerdict);
+        expect(v.getValue()).to.be.false;
+        var t = new Tracer();
+        var root = t.getUnknownNode();
+        var leaves = v.query(null, ReturnValue.instance, root, t);
+        var children1 = root.getChildren();
+        expect(children1.length).to.equal(1);
+        var or = children1[0];
+        expect(or).to.be.an.instanceof(AndNode);
+        var children2 = or.getChildren();
+        expect(children2.length).to.equal(2);
+        var ch1 = children2[0];
+        expect(ch1).to.be.an.instanceof(ObjectNode);
+        var d1 = ch1.getDesignatedObject().getDesignator();
+        expect(d1).to.be.an.instanceof(InputArgument);
+        expect(d1.getIndex()).to.equal(0);
+        var ch2 = children2[1];
+        expect(ch2).to.be.an.instanceof(ObjectNode);
+        var d2 = ch2.getDesignatedObject().getDesignator();
+        expect(d2).to.be.an.instanceof(InputArgument);
+        expect(d2.getIndex()).to.equal(1);
+      });
+
+    /**
+     * Tests lineage for disjunction with the first argument being true.
+     * Querying for the lineage of the function's return value should produce
+     * a tree of the following form:
+     * <pre>
+     * ReturnValue
+     *  |
+     *  +-- Input argument 1
+     * </pre>
+     */
+    it("First false argument", () => {
+      var op = new BooleanOr();
+      var v = op.evaluate(true, false);
+      expect(v).to.be.an.instanceof(NaryDisjunctiveVerdict);
+      expect(v.getValue()).to.be.true;
+      var t = new Tracer();
+      var root = t.getUnknownNode();
+      var leaves = v.query(null, ReturnValue.instance, root, t);
+      var children1 = root.getChildren();
+      expect(children1.length).to.equal(1);
+      var ch1 = children1[0];
+      expect(ch1).to.be.an.instanceof(ObjectNode);
+      var d1 = ch1.getDesignatedObject().getDesignator();
+      expect(d1).to.be.an.instanceof(InputArgument);
+      expect(d1.getIndex()).to.equal(0);
+    });
+
+    /**
+     * Tests lineage for disjunction with the second argument being true.
+     * Querying for the lineage of the function's return value should produce
+     * a tree of the following form:
+     * <pre>
+     * ReturnValue
+     *  |
+     *  +-- Input argument 2
+     * </pre>
+     */
+    it("Second false argument", () => {
+      var op = new BooleanOr();
+      var v = op.evaluate(false, true);
+      expect(v).to.be.an.instanceof(NaryDisjunctiveVerdict);
+      expect(v.getValue()).to.be.true;
+      var t = new Tracer();
+      var root = t.getUnknownNode();
+      var leaves = v.query(null, ReturnValue.instance, root, t);
+      var children1 = root.getChildren();
+      expect(children1.length).to.equal(1);
+      var ch1 = children1[0];
+      expect(ch1).to.be.an.instanceof(ObjectNode);
+      var d1 = ch1.getDesignatedObject().getDesignator();
+      expect(d1).to.be.an.instanceof(InputArgument);
+      expect(d1.getIndex()).to.equal(1);
+    });
+
+    /**
+     * Tests lineage for disjunction with two false arguments. Querying
+     * for the lineage of the function's return value should produce a tree
+     * of the following form:
+     * <pre>
+     * ReturnValue
+     *  |
+     *  +-- And
+     *       |
+     *       +-- Input argument 1
+     *       +-- Input argument 2
+     * </pre>
+     */
+    it("Two true arguments", () => {
+      var op = new BooleanOr();
+      var v = op.evaluate(true, true);
+      expect(v).to.be.an.instanceof(NaryDisjunctiveVerdict);
+      expect(v.getValue()).to.be.true;
+      var t = new Tracer();
+      var root = t.getUnknownNode();
+      var leaves = v.query(null, ReturnValue.instance, root, t);
+      var children1 = root.getChildren();
+      expect(children1.length).to.equal(1);
+      var or = children1[0];
+      expect(or).to.be.an.instanceof(OrNode);
+      var children2 = or.getChildren();
+      expect(children2.length).to.equal(2);
+      var ch1 = children2[0];
+      expect(ch1).to.be.an.instanceof(ObjectNode);
+      var d1 = ch1.getDesignatedObject().getDesignator();
+      expect(d1).to.be.an.instanceof(InputArgument);
+      expect(d1.getIndex()).to.equal(0);
+      var ch2 = children2[1];
+      expect(ch2).to.be.an.instanceof(ObjectNode);
+      var d2 = ch2.getDesignatedObject().getDesignator();
+      expect(d2).to.be.an.instanceof(InputArgument);
+      expect(d2.getIndex()).to.equal(1);
+    });
+
+  });
 });
 
 // :wrap=soft:tabSize=2:indentWidth=2:
