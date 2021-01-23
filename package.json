@@ -23,10 +23,9 @@
         "global-jsdom": "7.0.0",
         "jsdom": "16.4.0",
         "jsdom-global": "3.0.2",
-        "nyc": "^15.1.0"
+        "c8": "^7.4.0"
     },
     "dependencies": {
-        "c8": "^7.4.0",
         "chai": "^4.2.0",
         "chai-dom": "^1.8.2",
         "data-tree": "^1.2.4",
