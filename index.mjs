@@ -44,6 +44,7 @@ import {Argument, ArgumentValue, ComposedFunction, ComposedFunctionValue,
 	FunctionNamedArgument, NamedArgument, NamedArgumentValue} from "./modules/composed-function.mjs";
 import {ExistentialQuantifier, Quantifier, QuantifierConjunctiveVerdict, 
 	QuantifierDisjunctiveVerdict, QuantifierVerdict, UniversalQuantifier} from "./modules/quantifier.mjs";
+import {DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, WebElementFunction} from "./modules/web-element.mjs";
 
 /**
  * Evaluates a set of conditions on a DOM tree
@@ -137,6 +138,10 @@ export
 		ConstantValue,
 		Designator,
 		DesignatedObject,
+		DimensionHeight,
+		DimensionWidth,
+		ElementAttribute,
+		ElementAttributeValue,
 		Enumerate,
 		EnumeratedValue,
 		ExistentialQuantifier,
@@ -162,7 +167,8 @@ export
 		UniversalQuantifier,
 		Unknown,
 		UnknownNode,
-		Value
+		Value,
+		WebElementFunction
 };
 
 // :wrap=soft:tabSize=2:
