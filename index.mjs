@@ -44,7 +44,7 @@ import {Argument, ArgumentValue, ComposedFunction, ComposedFunctionValue,
 	FunctionNamedArgument, NamedArgument, NamedArgumentValue} from "./modules/composed-function.mjs";
 import {ExistentialQuantifier, Quantifier, QuantifierConjunctiveVerdict, 
 	QuantifierDisjunctiveVerdict, QuantifierVerdict, UniversalQuantifier} from "./modules/quantifier.mjs";
-import {DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, WebElementFunction} from "./modules/web-element.mjs";
+import {DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, Path, PathValue, WebElementFunction} from "./modules/web-element.mjs";
 
 /**
  * Evaluates a set of conditions on a DOM tree
@@ -145,6 +145,7 @@ export
 		Enumerate,
 		EnumeratedValue,
 		ExistentialQuantifier,
+		FindBySelector,
 		FunctionNamedArgument,
 		Identity,
 		InputArgument,
@@ -158,6 +159,8 @@ export
 		Nothing,
 		ObjectNode,
 		OrNode,
+		Path,
+		PathValue,
 		Quantifier,
 		QuantifierConjunctiveVerdict,
 		QuantifierDisjunctiveVerdict,

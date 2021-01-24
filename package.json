@@ -19,11 +19,11 @@
     },
     "homepage": "https://github.com/liflab/dom-pp",
     "devDependencies": {
+        "c8": "^7.4.0",
         "fs": "0.0.1-security",
         "global-jsdom": "7.0.0",
         "jsdom": "16.4.0",
-        "jsdom-global": "3.0.2",
-        "c8": "^7.4.0"
+        "jsdom-global": "3.0.2"
     },
     "dependencies": {
         "chai": "^4.2.0",

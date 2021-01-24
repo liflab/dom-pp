@@ -30,8 +30,7 @@
 import { CompoundDesignator, Designator } from "./designator.mjs";
 import { AtomicFunction } from "./atomic-function.mjs";
 import { Value } from "./value.mjs";
-import { Enumerate } from "../index.mjs";
-import { EnumeratedValue } from "../index.mjs";
+import { Enumerate, EnumeratedValue } from "./enumerate.mjs";
 import { AtomicFunctionReturnValue } from "./atomic-function.mjs";
 
 class WebElementFunction extends AtomicFunction
@@ -44,7 +43,7 @@ class WebElementFunction extends AtomicFunction
 
     compute()
     {
-        var val = get(arguments[0]);
+        var val = this.get(arguments[0].getValue());
         return new ElementAttributeValue(this.name, arguments[0], val);
     }
 
@@ -54,8 +53,15 @@ class WebElementFunction extends AtomicFunction
     }
 }
 
+/**
+ * Designator that points to the value of an attribute for some DOM node.
+ */
 class ElementAttribute extends Designator
 {
+    /**
+     * Creates a ne instance of the designator.
+     * @param name {String} The name of the attribute
+     */
     constructor(name)
     {
         super();
@@ -68,8 +74,18 @@ class ElementAttribute extends Designator
     }
 }
 
+/**
+ * The value of an attribute for some DOM node.
+ */
 class ElementAttributeValue extends Value
 {
+    /**
+     * Creates a new instance of the value.
+     * @param name {String} The name of the attribute in the DOM node
+     * @param input {Object|Value} The DOM node, or a value containing the
+     * DOM node
+     * @param v {Object|Value} The value of the attribute in the DOM node
+     */
     constructor(name, input, v)
     {
         super();
@@ -78,7 +94,7 @@ class ElementAttributeValue extends Value
         this.value = Value.lift(v);
     }
 
-    get()
+    getValue()
     {
         return this.value.getValue();
     }
@@ -104,6 +120,9 @@ class ElementAttributeValue extends Value
  */
 class DimensionWidth extends WebElementFunction
 {
+    /**
+     * Creates a new instance of the function.
+     */
     constructor()
     {
         super("width");
@@ -121,6 +140,9 @@ class DimensionWidth extends WebElementFunction
  */
 class DimensionHeight extends WebElementFunction
 {
+    /**
+     * Creates a new instance of the function.
+     */
     constructor()
     {
         super("height");
@@ -133,10 +155,19 @@ class DimensionHeight extends WebElementFunction
     }
 }
 
+/**
+ * Designator that points to an element in a DOM tree based on
+ * an XPath expression.
+ */
 class Path extends Designator
 {
+    /**
+     * Creates a new instance of the designator.
+     * @param path {String} A string containing an XPath expression
+     */
     constructor(path)
     {
+        super();
         this.path = path;
     }
 
@@ -206,7 +237,7 @@ class FindBySelector extends Enumerate
         for (var i = 0; i < elm_list.length; i++)
         {
             var path = FindBySelector.getPathTo(elm_list[i]);
-            var pv = new PathValue(path, root, elm_list[i]);
+            var pv = new PathValue(new Path(path), root, elm_list[i]);
             val_list.push(pv);
         }
         for (var i = 0; i < val_list.length; i++)
@@ -238,6 +269,6 @@ class FindBySelector extends Enumerate
 /**
  * Package exports
  */
-export {DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, WebElementFunction};
+export {DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, Path, PathValue, WebElementFunction};
 
 // :wrap=soft:tabSize=2:indentWidth=2:
