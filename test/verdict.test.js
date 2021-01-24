@@ -38,8 +38,7 @@ const { JSDOM } = pkg_jsdom;
 import "jsdom-global";
 
 // Local imports
-import { ComposedFunction, GreaterThan, TestCondition, TestDriver, TestResult } from "../index.mjs";
-import { DimensionWidth } from "../modules/web-element.mjs";
+import { ComposedFunction, DimensionWidth, FindBySelector, GreaterThan, TestCondition, TestDriver, TestResult, UniversalQuantifier } from "../index.mjs";
 
 /**
  * Tests for arithmetic functions. Since none of these functions override
@@ -49,7 +48,7 @@ import { DimensionWidth } from "../modules/web-element.mjs";
  */
 describe("Verdict tests", () => {
 
-    it("Simple condition true", async () => {
+    it.skip("Simple condition true", async () => {
         var f = new ComposedFunction(new GreaterThan(), "@0", 50);
         var cond = new TestCondition("A condition", f);
         var driver = new TestDriver(cond);
@@ -65,7 +64,7 @@ describe("Verdict tests", () => {
         expect(witness.length).to.equal(2);
     });
 
-    it("Simple condition false", async () => {
+    it.skip("Simple condition false", async () => {
         var f = new ComposedFunction(new GreaterThan(), "@0", 50);
         var cond = new TestCondition("A condition", f);
         var driver = new TestDriver(cond);
@@ -81,7 +80,7 @@ describe("Verdict tests", () => {
         expect(witness.length).to.equal(2);
     });
 
-    it("Condition on web element", async () => {
+    it.skip("Condition on web element", async () => {
         var dom = await load_dom("./test/pages/stub-1.html");
         var body = dom.window.document.body;
         var h2 = dom.window.document.querySelector("#h2");
@@ -100,6 +99,28 @@ describe("Verdict tests", () => {
         expect(witness.length).to.equal(2);
         var dob1 = witness[0];
         expect(dob1.getObject().constructor.name).to.equal("HTMLHeadingElement");
+        var dob2 = witness[1];
+        expect(dob2.getObject()).to.equal(50);
+    });
+
+    it("Condition on a page element", async () => {
+        var dom = await load_dom("./test/pages/stub-1.html");
+        var body = dom.window.document.body;
+        var f = new UniversalQuantifier("$x", new FindBySelector("#h2"), new ComposedFunction(new GreaterThan(), new ComposedFunction(new DimensionWidth(), "$x"), 50));
+        var cond = new TestCondition("h2's width > 50", f);
+        var driver = new TestDriver(cond);
+        driver.evaluateAll(body);
+        var result = driver.getResult();
+        expect(result).to.be.an.instanceof(TestResult);
+        expect(result.getResult()).to.be.true;
+        var verdicts = result.getVerdicts();
+        expect(verdicts.length).to.equal(1);
+        var verdict = verdicts[0];
+        var witness = verdict.getWitness();
+        expect(Array.isArray(witness)).to.be.true;
+        expect(witness.length).to.equal(2);
+        var dob1 = witness[0];
+        expect(dob1.getObject().constructor.name).to.equal("HTMLBodyElement");
         var dob2 = witness[1];
         expect(dob2.getObject()).to.equal(50);
     });
