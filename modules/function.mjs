@@ -91,7 +91,7 @@ class AbstractFunction
 		{
 			return false;
 		}
-		return typeof(o) == typeof(this);
+		return o == this;
 	}
 }
 

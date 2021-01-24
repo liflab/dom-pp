@@ -30,11 +30,16 @@
 
 // Chai for assertions
 import pkg_chai from "chai";
-import { Explainer } from "../index.mjs";
 const { expect } = pkg_chai;
+
+// JSDOM for DOM trees
+import pkg_jsdom from "jsdom";
+const { JSDOM } = pkg_jsdom;
+import "jsdom-global";
 
 // Local imports
 import { ComposedFunction, GreaterThan, TestCondition, TestDriver, TestResult } from "../index.mjs";
+import { DimensionWidth } from "../modules/web-element.mjs";
 
 /**
  * Tests for arithmetic functions. Since none of these functions override
@@ -68,8 +73,50 @@ describe("Verdict tests", () => {
         var result = driver.getResult();
         expect(result).to.be.an.instanceof(TestResult);
         expect(result.getResult()).to.be.false;
+        var verdicts = result.getVerdicts();
+        expect(verdicts.length).to.equal(1);
+        var verdict = verdicts[0];
+        var witness = verdict.getWitness();
+        expect(Array.isArray(witness)).to.be.true;
+        expect(witness.length).to.equal(2);
+    });
+
+    it("Condition on web element", async () => {
+        var dom = await load_dom("./test/pages/stub-1.html");
+        var body = dom.window.document.body;
+        var h2 = dom.window.document.querySelector("#h2");
+        var f = new ComposedFunction(new GreaterThan(), new ComposedFunction(new DimensionWidth(), "@0"), 50);
+        var cond = new TestCondition("h2's width > 50", f);
+        var driver = new TestDriver(cond);
+        driver.evaluateAll(h2);
+        var result = driver.getResult();
+        expect(result).to.be.an.instanceof(TestResult);
+        expect(result.getResult()).to.be.true;
+        var verdicts = result.getVerdicts();
+        expect(verdicts.length).to.equal(1);
+        var verdict = verdicts[0];
+        var witness = verdict.getWitness();
+        expect(Array.isArray(witness)).to.be.true;
+        expect(witness.length).to.equal(2);
+        var dob1 = witness[0];
+        expect(dob1.getObject().constructor.name).to.equal("HTMLHeadingElement");
+        var dob2 = witness[1];
+        expect(dob2.getObject()).to.equal(50);
     });
     
 });
+
+/**
+ * Reads a DOM from a file. This function is only meant to avoid cluttering
+ * the code with promises and anonymous functions in every test case.
+ * @param {String} filename The name of the local file to read from
+ * @param A promise which, when fulfilled, returns the DOM object.
+ */
+async function load_dom(filename)
+{
+  return JSDOM.fromFile(filename).then(
+      (dom) => {return dom;}
+  );
+}
 
 // :wrap=soft:tabSize=2:indentWidth=2:

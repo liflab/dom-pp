@@ -172,8 +172,8 @@ class Tracer
 		else
 		{
 			// Query is non-trivial, and object is not trackable: nothing to do
-			var n = this.getObjectNode(Unknown.instance, o);
-			root.addChild(n);
+			//var n = this.getObjectNode(Unknown.instance, o);
+			//root.addChild(n);
 		}
 	}
 }
@@ -216,6 +216,10 @@ class TraceabilityNode
 	 */
 	addChild(n)
 	{
+		if (n == this)
+		{
+			return;
+		}
 		this.children.push(n);
 	}
 

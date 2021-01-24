@@ -159,7 +159,7 @@ class ComposedFunctionValue extends Value
             return leaves;
         }
         var new_d = CompoundDesignator.create(ReturnValue.instance, d.tail());
-        var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
+        var sub_root = factory.getObjectNode(new_d, this.referenceFunction.operator);
         var sub_leaves = this.returnValue.query(q, d, sub_root, factory);
         var new_sub_leaves = [];
         for (var i = 0; i < sub_leaves.length; i++)
@@ -382,16 +382,10 @@ class ArgumentValue extends Value
     query(q, d, root, factory)
     {
         var leaves = [];
-        var new_d = CompoundDesignator.create(new InputArgument(this.index), d.tail());
-        var n = factory.getObjectNode(new_d, this.referenceFunction);
+        var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.index, this.value));
+        var n = factory.getObjectNode(new_d, this.value);
         var sub_leaves = this.value.query(q, d, n, factory);
-        for (var i = 0; i < sub_leaves.length; i++)
-        {
-            var sub_leaf = sub_leaves[i];
-            var to_add = factory.getObjectNode(new_d, this.referenceFunction);
-            sub_leaf.addChild(to_add);
-            leaves.push(to_add);
-        }
+        leaves.push(...sub_leaves);
         root.addChild(n);
         return leaves;
     }

@@ -56,6 +56,10 @@ describe("Composed function tests", () => {
             expect(r).to.be.an.instanceof(ComposedFunctionValue);
             var v = r.getValue();
             expect(v).to.equal(5);
+            var t = new Tracer();
+            var root = t.getUnknownNode();
+            var leaves = r.query(null, ReturnValue.instance, root, t);
+            expect(leaves.length).to.equal(2);
         });
     });
 
@@ -68,6 +72,10 @@ describe("Composed function tests", () => {
             expect(r).to.be.an.instanceof(ComposedFunctionValue);
             var v = r.getValue();
             expect(v).to.equal(5);
+            var t = new Tracer();
+            var root = t.getUnknownNode();
+            var leaves = r.query(null, ReturnValue.instance, root, t);
+            expect(leaves.length).to.equal(2);
         });
 
         it("Set", () => {

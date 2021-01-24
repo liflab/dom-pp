@@ -68,7 +68,7 @@ class Designator
 		{
 			return false;
 		}
-		return true;
+		return o == this;
 	}
 }
 
