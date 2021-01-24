@@ -93,7 +93,7 @@ function set_contains(s, x)
 {
 	for (var i = 0; i < s.length; i++)
 	{
-		if (s[i].equals(x))
+		if (same_object(s[i], x))
 		{
 			return true;
 		}

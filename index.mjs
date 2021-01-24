@@ -37,7 +37,7 @@ import { AbstractFunction, ConstantFunction, InputArgument, ReturnValue } from "
 import { ConstantDesignator, ConstantValue, NaryValue, Value } from "./modules/value.mjs";
 import { AtomicFunction, AtomicFunctionReturnValue, Identity } from "./modules/atomic-function.mjs";
 import { BooleanAnd, BooleanOr, BooleanNot, NaryConjunctiveVerdict, NaryDisjunctiveVerdict } from "./modules/booleans.mjs";
-import { Tracer, AndNode, DesignatedObject, ObjectNode, OrNode, UnknownNode } from "./modules/tracer.mjs";
+import { AndNode, Explainer, DesignatedObject, ObjectNode, OrNode, Tracer, UnknownNode } from "./modules/tracer.mjs";
 import { Addition, GreaterOrEqual, GreaterThan, IsEqualTo } from "./modules/numbers.mjs";
 import { Enumerate, EnumeratedValue, NthItem } from "./modules/enumerate.mjs";
 import {Argument, ArgumentValue, ComposedFunction, ComposedFunctionValue,
@@ -45,6 +45,7 @@ import {Argument, ArgumentValue, ComposedFunction, ComposedFunctionValue,
 import {ExistentialQuantifier, Quantifier, QuantifierConjunctiveVerdict, 
 	QuantifierDisjunctiveVerdict, QuantifierVerdict, UniversalQuantifier} from "./modules/quantifier.mjs";
 import {DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, Path, PathValue, WebElementFunction} from "./modules/web-element.mjs";
+import {TestCondition, TestDriver, TestResult, Verdict} from "./modules/verdict.mjs";
 
 /**
  * Evaluates a set of conditions on a DOM tree
@@ -145,6 +146,7 @@ export
 		Enumerate,
 		EnumeratedValue,
 		ExistentialQuantifier,
+		Explainer,
 		FindBySelector,
 		FunctionNamedArgument,
 		GreaterOrEqual,
@@ -168,11 +170,15 @@ export
 		QuantifierDisjunctiveVerdict,
 		QuantifierVerdict,
 		ReturnValue,
+		TestCondition,
+		TestDriver,
+		TestResult,
 		Tracer,
 		UniversalQuantifier,
 		Unknown,
 		UnknownNode,
 		Value,
+		Verdict,
 		WebElementFunction
 };
 

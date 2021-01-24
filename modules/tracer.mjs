@@ -26,7 +26,8 @@
 
 // Local imports
 import {All, Nothing, Unknown} from "./designator.mjs";
-import {map_contains, map_get, map_put, same_object} from "./util.mjs";
+import {ReturnValue} from "./function.mjs";
+import {map_contains, map_get, map_put, same_object, set_contains} from "./util.mjs";
 
 /**
  * Manages the nodes of a designation and-or graph.
@@ -49,6 +50,20 @@ class Tracer
 		{
 			this.tracerContext = arguments;
 		}
+
+		/**
+		 * Whether to simplify the trees
+		 */
+		this.simplify = true;
+	}
+
+	/**
+	 * Sets whether the trees produced by the tracer should be simplified.
+	 * @param b {boolean} Set to true to simplify trees, false otherwise
+	 */
+	setSimplify(b)
+	{
+		this.simplify = b;
 	}
 
 	/**
@@ -137,7 +152,7 @@ class Tracer
 			// Nothing to expand
 			return;
 		}
-		var dob = root.getObject();
+		var dob = root.getDesignatedObject();
 		var o = dob.getObject();
 		var d = dob.getDesignator();
 		if (d instanceof All || d instanceof Nothing || d instanceof Unknown)
@@ -453,6 +468,35 @@ class DesignatedObject
 }
 
 /**
+ * Front-end to explain the result of a calculation. This class provides a
+ * static method called <tt>explain</tt> that can be used to produce a
+ * lineage DAG from a {@link Value} returned by a function.
+ */
+class Explainer
+{
+    constructor()
+    {
+        // Nothing to do
+    }
+
+	/**
+	 * Explains the result of a calculation produced by an
+	 * {@link AbstractFunction}.
+	 * @param v {Value} The value to explain
+	 * @param simplify Set to <tt>true</tt> to produce a simplified DAG
+	 * (default), <tt>false</tt> to get a full DAG
+	 */
+    static explain(v, simplify = true)
+    {
+        var tracer = new Tracer();
+        tracer.setSimplify(simplify);
+        return tracer.getTree(null, ReturnValue.instance, v);
+    }
+}
+
+/**
  * Package exports
  */
-export { Tracer, AndNode, DesignatedObject, ObjectNode, OrNode, UnknownNode };
+export { Tracer, AndNode, DesignatedObject, Explainer, ObjectNode, OrNode, UnknownNode };
+
+// :wrap=soft:tabSize=2:indentWidth=2:

@@ -30,71 +30,46 @@
 
 // Chai for assertions
 import pkg_chai from "chai";
+import { Explainer } from "../index.mjs";
 const { expect } = pkg_chai;
 
 // Local imports
-import {GreaterThan, GreaterOrEqual} from "../index.mjs";
+import { ComposedFunction, GreaterThan, TestCondition, TestDriver, TestResult } from "../index.mjs";
 
 /**
  * Tests for arithmetic functions. Since none of these functions override
  * AtomicFunction#evaluate(), there is no need to check lineage. Only the
  * return values are necessary (barring a few exceptions which are listed
- * below).
+ * belo).
  */
-describe("Arithmetic function tests", () => {
+describe("Verdict tests", () => {
 
-  describe("Greater than", () => {
-
-      it("First greater", () => {
-        var f = new GreaterThan();
-        var v = f.evaluate(3, 2);
-        expect(v.getValue()).to.be.true;
-      });
-
-      it("Second greater", () => {
-        var f = new GreaterThan();
-        var v = f.evaluate(2, 3);
-        expect(v.getValue()).to.be.false;
-      });
-
-      it("Both equal", () => {
-        var f = new GreaterThan();
-        var v = f.evaluate(3, 3);
-        expect(v.getValue()).to.be.false;
-      });
-
-      it("Not a number", () => {
-        var f = new GreaterThan();
-        expect(() => {f.evaluate(3, "foo");}).to.throw;
-      });
-  });
-
-  describe("Greater or equal", () => {
-
-    it("First greater", () => {
-      var f = new GreaterOrEqual();
-      var v = f.evaluate(3, 2);
-      expect(v.getValue()).to.be.true;
+    it("Simple condition true", async () => {
+        var f = new ComposedFunction(new GreaterThan(), "@0", 50);
+        var cond = new TestCondition("A condition", f);
+        var driver = new TestDriver(cond);
+        driver.evaluateAll(100);
+        var result = driver.getResult();
+        expect(result).to.be.an.instanceof(TestResult);
+        expect(result.getResult()).to.be.true;
+        var verdicts = result.getVerdicts();
+        expect(verdicts.length).to.equal(1);
+        var verdict = verdicts[0];
+        var witness = verdict.getWitness();
+        expect(Array.isArray(witness)).to.be.true;
+        expect(witness.length).to.equal(2);
     });
 
-    it("Second greater", () => {
-      var f = new GreaterOrEqual();
-      var v = f.evaluate(2, 3);
-      expect(v.getValue()).to.be.false;
+    it("Simple condition false", async () => {
+        var f = new ComposedFunction(new GreaterThan(), "@0", 50);
+        var cond = new TestCondition("A condition", f);
+        var driver = new TestDriver(cond);
+        driver.evaluateAll(0);
+        var result = driver.getResult();
+        expect(result).to.be.an.instanceof(TestResult);
+        expect(result.getResult()).to.be.false;
     });
-
-    it("Both equal", () => {
-        var f = new GreaterOrEqual();
-        var v = f.evaluate(3, 3);
-        expect(v.getValue()).to.be.true;
-      });
-
-    it("Not a number", () => {
-      var f = new GreaterThan();
-      expect(() => {f.evaluate(3, "foo");}).to.throw;
-    });
-});
-
+    
 });
 
 // :wrap=soft:tabSize=2:indentWidth=2:

@@ -125,7 +125,7 @@ class ComposedFunction extends AbstractFunction
             values.push(this.operands[i].evaluate(...arguments));
         }
         var v = this.operator.evaluate(...values);
-        return new ComposedFunctionValue(this, v, values);
+        return new ComposedFunctionValue(this, v, ...values);
     }
 
     toString()
@@ -382,7 +382,7 @@ class ArgumentValue extends Value
     query(q, d, root, factory)
     {
         var leaves = [];
-        var new_d = new ComposedDesignator(new InputArgument(this.index), d.tail());
+        var new_d = CompoundDesignator.create(new InputArgument(this.index), d.tail());
         var n = factory.getObjectNode(new_d, this.referenceFunction);
         var sub_leaves = this.value.query(q, d, n, factory);
         for (var i = 0; i < sub_leaves.length; i++)
@@ -390,7 +390,7 @@ class ArgumentValue extends Value
             var sub_leaf = sub_leaves[i];
             var to_add = factory.getObjectNode(new_d, this.referenceFunction);
             sub_leaf.addChild(to_add);
-            leaves.add(to_add);
+            leaves.push(to_add);
         }
         root.addChild(n);
         return leaves;

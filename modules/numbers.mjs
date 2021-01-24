@@ -167,3 +167,5 @@ class GreaterOrEqual extends AtomicFunction
  * Package exports
  */
 export {Addition, GreaterThan, GreaterOrEqual, IsEqualTo};
+
+// :wrap=soft:tabSize=2:indentWidth=2:
