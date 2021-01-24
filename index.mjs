@@ -38,7 +38,7 @@ import { ConstantDesignator, ConstantValue, NaryValue, Value } from "./modules/v
 import { AtomicFunction, AtomicFunctionReturnValue, Identity } from "./modules/atomic-function.mjs";
 import { BooleanAnd, BooleanOr, BooleanNot, NaryConjunctiveVerdict, NaryDisjunctiveVerdict } from "./modules/booleans.mjs";
 import { Tracer, AndNode, DesignatedObject, ObjectNode, OrNode, UnknownNode } from "./modules/tracer.mjs";
-import { Addition, IsEqualTo } from "./modules/numbers.mjs";
+import { Addition, GreaterOrEqual, GreaterThan, IsEqualTo } from "./modules/numbers.mjs";
 import { Enumerate, EnumeratedValue, NthItem } from "./modules/enumerate.mjs";
 import {Argument, ArgumentValue, ComposedFunction, ComposedFunctionValue,
 	FunctionNamedArgument, NamedArgument, NamedArgumentValue} from "./modules/composed-function.mjs";
@@ -147,6 +147,8 @@ export
 		ExistentialQuantifier,
 		FindBySelector,
 		FunctionNamedArgument,
+		GreaterOrEqual,
+		GreaterThan,
 		Identity,
 		InputArgument,
 		IsEqualTo,

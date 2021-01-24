@@ -102,6 +102,68 @@ class Addition extends AtomicFunction
 }
 
 /**
+ * Function that compares two numbers and returns true if the first
+ * is greater than the second.
+ */
+class GreaterThan extends AtomicFunction
+{
+	/**
+	 * Creates a new instance of the function.
+	 */
+	constructor()
+	{
+		super(2);
+	}
+
+	getValue()
+	{
+		var o1 = arguments[0];
+		var o2 = arguments[1];
+		if (typeof(o1) != "number" || typeof(o2) != "number")
+		{
+			throw "Invalid argument type";
+		}
+		return o1 > o2;
+	}
+
+	toString()
+	{
+		return "&gt;";
+	}
+}
+
+/**
+ * Function that compares two numbers and returns true if the first
+ * is greater than or equal to the second.
+ */
+class GreaterOrEqual extends AtomicFunction
+{
+	/**
+	 * Creates a new instance of the function.
+	 */
+	constructor()
+	{
+		super(2);
+	}
+
+	getValue()
+	{
+		var o1 = arguments[0];
+		var o2 = arguments[1];
+		if (typeof(o1) != "number" || typeof(o2) != "number")
+		{
+			throw "Invalid argument type";
+		}
+		return o1 >= o2;
+	}
+
+	toString()
+	{
+		return "&ge;";
+	}
+}
+
+/**
  * Package exports
  */
-export {Addition, IsEqualTo};
+export {Addition, GreaterThan, GreaterOrEqual, IsEqualTo};
