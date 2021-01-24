@@ -60,8 +60,8 @@ describe("Quantifier tests", () => {
             expect(leaf1).to.be.an.instanceof(ObjectNode);
             var leaf1_d = leaf1.getDesignatedObject().getDesignator();
             expect(leaf1_d).to.be.an.instanceof(CompoundDesignator);
-            expect(leaf1_d.head()).to.be.an.instanceof(NthItem);
-            expect(leaf1_d.tail()).to.be.an.instanceof(ConstantDesignator);
+            expect(leaf1_d.tail()).to.be.an.instanceof(NthItem);
+            expect(leaf1_d.head()).to.be.an.instanceof(ConstantDesignator);
         });
     });
 });

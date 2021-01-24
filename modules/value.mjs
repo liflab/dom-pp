@@ -126,7 +126,7 @@ class ConstantValue extends Value
 	query(q, d, root, factory)
 	{
 		var leaves = [];
-		var new_d = CompoundDesignator.create(new ConstantDesignator(), d);
+		var new_d = CompoundDesignator.create(d, new ConstantDesignator());
 		var n = factory.getObjectNode(new_d, this.value);
 		root.addChild(n);
 		leaves.push(n);

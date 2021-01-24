@@ -78,10 +78,10 @@ describe("Web element tests", () => {
       expect(n).to.be.an.instanceof(ObjectNode);
       var d = n.getDesignatedObject().getDesignator();
       expect(d).to.be.an.instanceof(CompoundDesignator);
-      var head = d.head();
-      expect(head).to.be.an.instanceof(Path);
-      expect(head.toString()).to.equal("id(\"h2\")");
-      expect(d.tail()).to.be.an.instanceof(ConstantDesignator);
+      var tail = d.tail();
+      expect(tail).to.be.an.instanceof(Path);
+      expect(tail.toString()).to.equal("id(\"h2\")");
+      expect(d.head()).to.be.an.instanceof(ConstantDesignator);
     });
   });
 

@@ -48,7 +48,7 @@ import { ComposedFunction, DimensionWidth, FindBySelector, GreaterThan, TestCond
  */
 describe("Verdict tests", () => {
 
-    it.skip("Simple condition true", async () => {
+    it("Simple condition true", async () => {
         var f = new ComposedFunction(new GreaterThan(), "@0", 50);
         var cond = new TestCondition("A condition", f);
         var driver = new TestDriver(cond);
@@ -64,7 +64,7 @@ describe("Verdict tests", () => {
         expect(witness.length).to.equal(2);
     });
 
-    it.skip("Simple condition false", async () => {
+    it("Simple condition false", async () => {
         var f = new ComposedFunction(new GreaterThan(), "@0", 50);
         var cond = new TestCondition("A condition", f);
         var driver = new TestDriver(cond);
@@ -80,7 +80,7 @@ describe("Verdict tests", () => {
         expect(witness.length).to.equal(2);
     });
 
-    it.skip("Condition on web element", async () => {
+    it("Condition on web element", async () => {
         var dom = await load_dom("./test/pages/stub-1.html");
         var body = dom.window.document.body;
         var h2 = dom.window.document.querySelector("#h2");
