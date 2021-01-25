@@ -2,6 +2,7 @@ A traceability library for DOM trees
 ====================================
 
 ![Build status](https://api.travis-ci.org/liflab/dom-pp.svg?branch=main)
+[SonarCloud Dashboard](https://sonarcloud.io/dashboard?id=liflab_dom-pp)
 
 ## Git Clone
 
