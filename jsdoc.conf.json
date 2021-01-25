@@ -17,7 +17,7 @@
     "sourceType": "module",
     "opts" : {
         "encoding": "utf8",
-        "destination": "./doc/jsdoc",
+        "destination": "./docs/jsdoc",
         "class-hierarchy": { "showList": true }
     },
     "plugins": [
