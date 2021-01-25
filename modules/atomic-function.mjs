@@ -34,6 +34,7 @@ import {Value} from "./value.mjs";
  * opposed to a {@link ComposedFunction} that call(this)s other functions to produce
  * its return value.
  * @param arity The input arity of the function
+ * @extends AbstractFunction
  */
 class AtomicFunction extends AbstractFunction
 {
@@ -96,6 +97,7 @@ class AtomicFunction extends AbstractFunction
 
 /**
  * Value obtained as the output produced by an atomic function call(this).
+ * @extends Value
  */
 class AtomicFunctionReturnValue extends Value
 {
