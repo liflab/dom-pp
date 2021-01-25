@@ -2,5 +2,5 @@
 	"extension": [
 		".mjs"
 	  ],
-	"reporter" : "html"
+	"reporter" : ["html", "lcov"]
 }
