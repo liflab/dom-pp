@@ -159,7 +159,7 @@ class QuantifierDisjunctiveVerdict extends QuantifierVerdict
     var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
     if (this.verdicts.length == 1)
     {
-      tn.addChild(n.getChildren()[0].getNode());
+      tn.addChild(n.getChildren()[0]);
     }
     else
     {
@@ -224,7 +224,7 @@ class UniversalQuantifier extends Quantifier
     {
       return new QuantifierConjunctiveVerdict(this, true, true_verdicts);
     }
-    return new QuantifierDisjunctiveVerdict(this, true, false_verdicts);
+    return new QuantifierDisjunctiveVerdict(this, false, false_verdicts);
   }
 
   toString()
@@ -254,7 +254,7 @@ class ExistentialQuantifier extends Quantifier
     {
       return new QuantifierDisjunctiveVerdict(this, true, true_verdicts);
     }
-    return new QuantifierConjunctiveVerdict(this, true, false_verdicts);
+    return new QuantifierConjunctiveVerdict(this, false, false_verdicts);
   }
 
   toString()
