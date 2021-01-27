@@ -206,7 +206,7 @@ class BooleanOr extends BooleanConnective
 /**
  * The Boolean "not" function.
  */
-class BooleanNot extends BooleanConnective
+class BooleanNot extends AtomicFunction
 {
 	constructor()
 	{

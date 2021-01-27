@@ -32,12 +32,27 @@
 import pkg_chai from "chai";
 const { expect } = pkg_chai;
 
+// Utilities
+import {expect_to_throw} from "./test-util.mjs";
+
 // Local imports
 import {AndNode, BooleanAnd, BooleanNot, BooleanOr, InputArgument, NaryConjunctiveVerdict, NaryDisjunctiveVerdict, ObjectNode, OrNode, ReturnValue, Tracer} from "../index.mjs";
 
 describe("Boolean tests", () => {
 
-    describe("Conjunction", () => {
+  describe("Conjunction", () => {
+
+    // Not a crucial test, but ensures coverage of these lines of code
+    it("toString", () => {
+      var op = new BooleanAnd();
+      expect(op.toString()).to.equal("And");
+    });
+
+    it("Non-Boolean argument", () => {
+      var op = new BooleanAnd();
+      var b = expect_to_throw(op.evaluate, "foo", false);
+      expect(b).to.be.true;
+    });
 
     /**
      * Tests lineage for conjunction with two false arguments. Querying
@@ -175,6 +190,18 @@ describe("Boolean tests", () => {
 
   describe("Disjunction", () => {
 
+    // Not a crucial test, but ensures coverage of these lines of code
+    it("toString", () => {
+      var op = new BooleanOr();
+      expect(op.toString()).to.equal("Or");
+    });
+
+    it("Non-Boolean argument", () => {
+      var op = new BooleanOr();
+      var b = expect_to_throw(op.evaluate, "foo", false);
+      expect(b).to.be.true;
+    });
+
     /**
      * Tests lineage for disjunction with two false arguments. Querying
      * for the lineage of the function's return value should produce a tree
@@ -307,6 +334,34 @@ describe("Boolean tests", () => {
       expect(d2.getIndex()).to.equal(1);
     });
 
+  });
+
+  describe("Negation", () => {
+
+    // Not a crucial test, but ensures coverage of these lines of code
+    it("toString", () => {
+      var op = new BooleanNot();
+      expect(op.toString()).to.equal("Not");
+    });
+
+    it("Non-Boolean argument", () => {
+      var op = new BooleanNot();
+      expect(expect_to_throw(op.evaluate, "foo")).to.be.true;
+    });
+
+    // No need to check lineage, as it does not override AtomicFunction#query
+    it("One true argument", () => {
+      var op = new BooleanNot();
+      var v = op.evaluate(true);
+      expect(v.getValue()).to.equal(false);
+    });
+
+    // No need to check lineage, as it does not override AtomicFunction#query
+    it("One false argument", () => {
+      var op = new BooleanNot();
+      var v = op.evaluate(false);
+      expect(v.getValue()).to.equal(true);
+    });
   });
 });
 

@@ -32,10 +32,8 @@
 import pkg_chai from "chai";
 const { expect } = pkg_chai;
 
-// JSDOM for DOM trees
-import pkg_jsdom from "jsdom";
-const { JSDOM } = pkg_jsdom;
-import "jsdom-global";
+// Utilities
+import {load_dom} from "./test-util.mjs";
 
 // Local imports
 import {CompoundDesignator, ConstantDesignator, DimensionHeight, DimensionWidth, ElementAttributeValue, EnumeratedValue, FindBySelector, ObjectNode, Path, PathValue, ReturnValue, Tracer} from "../index.mjs";
@@ -113,18 +111,5 @@ describe("Web element tests", () => {
     });
   });
 });
-
-/**
- * Reads a DOM from a file. This function is only meant to avoid cluttering
- * the code with promises and anonymous functions in every test case.
- * @param {String} filename The name of the local file to read from
- * @param A promise which, when fulfilled, returns the DOM object.
- */
-async function load_dom(filename)
-{
-  return JSDOM.fromFile(filename).then(
-      (dom) => {return dom;}
-  );
-}
 
 // :wrap=soft:tabSize=2:indentWidth=2:
