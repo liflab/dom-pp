@@ -34,6 +34,7 @@ const { expect } = pkg_chai;
 
 // Local imports
 import {GreaterThan, GreaterOrEqual} from "../index.mjs";
+import { expect_to_throw } from "./test-util.mjs";
 
 /**
  * Tests for arithmetic functions. Since none of these functions override
@@ -65,7 +66,7 @@ describe("Arithmetic function tests", () => {
 
       it("Not a number", () => {
         var f = new GreaterThan();
-        expect(() => {f.evaluate(3, "foo");}).to.throw;
+        expect(expect_to_throw(f, "evaluate", 3)).to.be.true;
       });
   });
 
@@ -91,7 +92,7 @@ describe("Arithmetic function tests", () => {
 
     it("Not a number", () => {
       var f = new GreaterThan();
-      expect(() => {f.evaluate(3, "foo");}).to.throw;
+      expect(expect_to_throw(f, "evaluate", 3, "foo")).to.be.true;
     });
 });
 

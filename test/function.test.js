@@ -31,10 +31,13 @@
 import pkg_chai from "chai";
 const { expect } = pkg_chai;
 
+import {expect_to_throw} from "./test-util.mjs";
+
 // Local imports
 import {Addition, All, AndNode, AtomicFunction, AtomicFunctionReturnValue,
   CompoundDesignator, InputArgument, Nothing, ObjectNode, OrNode, ReturnValue,
   Tracer, UnknownNode, Value} from "../index.mjs";
+
 
 /**
  * A "dummy" function used to test traceability of all functions that do not
@@ -59,12 +62,12 @@ describe("Function tests", () => {
 	describe("Atomic function", () => {
     it("Too few arguments", () => {
         var f = new AtomicFunction(2);
-        expect(() => f.evaluate(0)).to.throw();
+        expect(expect_to_throw(f, "evaluate", 0)).to.be.true;
     });
 
     it("Too many arguments", () => {
         var f = new AtomicFunction(2);
-        expect(() => f.evaluate(0, 0, 0)).to.throw();
+        expect(expect_to_throw(f, "evaluate", 0, 0, 0)).to.be.true;
     });
 
     it("Enough arguments", () => {
@@ -184,11 +187,10 @@ describe("Function tests", () => {
 
     it("With non-numbers", () => {
       var f = new Addition(2);
-      expect(() => f.evaluate(1, "foo")).to.throw();
+      expect(expect_to_throw(f, "evaluate", 1, "foo")).to.be.true;
     });
 
   });
 });
-
 
 // :wrap=soft:tabSize=2:indentWidth=2:

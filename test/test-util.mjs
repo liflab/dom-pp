@@ -44,12 +44,19 @@ import "jsdom-global";
  * @return <tt>true</tt> if an exception has been thrown, <tt>false</tt>
  * otherwise
  */
-function expect_to_throw(f, ...args)
+function expect_to_throw(o, f, ...args)
 {
     var thrown = false;
     try
     {
+      if (o != null)
+      {
+        o[f](...args);
+      }
+      else
+      {
         f(...args);
+      }
     }
     catch (e)
     {
@@ -72,3 +79,5 @@ async function load_dom(filename)
 }
 
 export {expect_to_throw, load_dom};
+
+// :wrap=soft:tabSize=2:indentWidth=2:
