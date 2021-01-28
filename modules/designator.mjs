@@ -28,231 +28,281 @@
  * Imports
  */
 // Local imports
-import { same_object } from "./util.mjs";
+import {same_object} from "./util.mjs";
 
 /**
  * Abstract class representing all functions that extract parts of an
  * object.
  */
-class Designator {
-    /**
-     * Creates a new instance of designator.
-     */
-    constructor() {
-        // Nothing to do
-    }
+class Designator
+{
+	/**
+	 * Creates a new instance of designator.
+	 */
+	constructor()
+	{
+		// Nothing to do
+	}
 
-    /**
-     * Extracts the designator at the head of a composition. For designators that
-     * are atomic, returns the designator itself.
-     */
-    head() {
-        return this;
-    }
+	/**
+	 * Extracts the designator at the head of a composition. For designators that
+	 * are atomic, returns the designator itself.
+	 */
+	head()
+	{
+		return this;
+	}
 
-    /**
-     * Extracts the designator made of the tail of a composition. For designators
-     * that are atomic, returns null.
-     */
-    tail() {
-        return null;
-    }
+	/**
+	 * Extracts the designator made of the tail of a composition. For designators
+	 * that are atomic, returns null.
+	 */
+	tail() 
+	{
+		return null;
+	}
 
-    equals(o) {
-        if (o == null || !(o instanceof Designator)) {
-            return false;
-        }
-        return o == this;
-    }
+	equals(o)
+	{
+		if (o == null || !(o instanceof Designator))
+		{
+			return false;
+		}
+		return o == this;
+	}
 }
 
 /**
  * A special designator that designates "nothing".
- * @extends Designator
  */
-class Nothing extends Designator {
-    static instance = new Nothing();
+class Nothing extends Designator
+{
+	static instance = new Nothing();
 
-    constructor() {
-        super();
-    }
+	constructor()
+	{
+		super();
+	}
+	
+	toString()
+	{
+		return "Nothing";
+	}
 
-    toString() {
-        return "Nothing";
-    }
-
-    equals(o) {
-        if (o == null || !(o instanceof Nothing)) {
-            return false;
-        }
-        return true;
-    }
+	equals(o)
+	{
+		if (o == null || !(o instanceof Nothing))
+		{
+			return false;
+		}
+		return true;
+	}
 }
 
 /**
  * A special designator that designates "unknown".
- * @extends Designator
  */
-class Unknown extends Designator {
-    static instance = new Unknown();
+class Unknown extends Designator
+{
+	static instance = new Unknown();
 
-    constructor() {
-        super();
-    }
+	constructor()
+	{
+		super();
+	}
+	
+	toString()
+	{
+		return "Unknown";
+	}
 
-    toString() {
-        return "Unknown";
-    }
-
-    equals(o) {
-        if (o == null || !(o instanceof Unknown)) {
-            return false;
-        }
-        return true;
-    }
+	equals(o)
+	{
+		if (o == null || !(o instanceof Unknown))
+		{
+			return false;
+		}
+		return true;
+	}
 }
 
 /**
  * A special designator that designates all of an object.
- * @extends Designator
  */
-class All extends Designator {
-    static instance = new All();
+class All extends Designator
+{
+	static instance = new All();
 
-    constructor() {
-        super();
-    }
+	constructor()
+	{
+		super();
+	}
+	
+	toString()
+	{
+		return "All";
+	}
 
-    toString() {
-        return "All";
-    }
-
-    equals(o) {
-        if (o == null || !(o instanceof All)) {
-            return false;
-        }
-        return true;
-    }
+	equals(o)
+	{
+		if (o == null || !(o instanceof All))
+		{
+			return false;
+		}
+		return true;
+	}
 }
 
 /**
  * Designator expressed as the composition of atomic designators.
  * @param Any number of designators
- * @extends Designator
  */
-class CompoundDesignator extends Designator {
-    /**
-     * Creates a flat compound designator from a list of other designators.
-     */
-    static create() {
-        if (arguments.length == 0) {
-            return Nothing.instance;
-        }
-        var designators = [];
-        for (var i = 0; i < arguments.length; i++) {
-            if (arguments[i] == null) {
-                continue;
-            }
-            if (arguments[i] instanceof CompoundDesignator) {
-                designators.push(...arguments[i].elements);
-            } else {
-                designators.push(arguments[i]);
-            }
-        }
-        if (designators.length == 0) {
-            return Nothing.instance;
-        }
-        if (designators.length == 1) {
-            return designators[0];
-        }
-        return new CompoundDesignator(...designators);
-    }
+class CompoundDesignator extends Designator
+{
+	/**
+	 * Creates a flat compound designator from a list of other designators.
+	 */
+	static create()
+	{
+		if (arguments.length == 0)
+		{
+			return Nothing.instance;
+		}
+		var designators = [];
+		for (var i = 0; i < arguments.length; i++)
+		{
+			if (arguments[i] == null)
+			{
+				continue;
+			}
+			if (arguments[i] instanceof CompoundDesignator)
+			{
+				designators.push(...arguments[i].elements);
+			}
+			else
+			{
+				designators.push(arguments[i]);
+			}
+		}
+		if (designators.length == 0)
+		{
+			return Nothing.instance;
+		}
+		if (designators.length == 1)
+		{
+			return designators[0];
+		}
+		return new CompoundDesignator(...designators);
+	}
 
-    constructor() {
-        super();
-        this.elements = [];
-        for (var i = 0; i < arguments.length; i++) {
-            this.add(arguments[i]);
-        }
-    }
+	constructor()
+	{
+		super();
+		this.elements = [];
+		for (var i = 0; i < arguments.length; i++)
+		{
+			this.add(arguments[i]);
+		}
+	}
+	
+	/**
+	 * Adds a designator to the composition.
+   	 * @param d The designator to add. If it is compound, each of its elements are
+   	 * added individually. This helps keeping the compound designators "flat".
+	 * If d is null, the input is simply ignored and nothing happens.
+   	 */
+	add(d)
+	{
+		if (d == null)
+		{
+			return;
+		}
+		if (d instanceof CompoundDesignator)
+		{
+			for (var j = 0; j < d.elements.length; j++)
+			{
+				this.add(d.elements[j]);
+			}
+		}
+		else
+		{
+			this.elements.push(d);
+		}
+	}
+	
+	/**
+	 * Gets the size (number of atomic designators) contained in this composite
+	 * designator.
+	 * @return The number of atomic designators
+	 */
+	size()
+	{
+		return this.elements.length;
+	}
+	
+	head()
+	{
+		if (this.elements.length == 0)
+		{
+			return new Nothing();
+		}
+		return this.elements[this.elements.length - 1];
+	}
+	
+	tail()
+	{
+		if (this.elements.length <= 1)
+		{
+			return null;
+		}
+		if (this.elements.length == 2)
+		{
+			return this.elements[0];
+		}
+		var new_d = new CompoundDesignator();
+		for (var i = 0; i < this.elements.length - 1; i++)
+		{
+			new_d.add(this.elements[i]);
+		}
+		return new_d;
+	}
+	
+	toString()
+	{
+		var s = "";
+		for (var i = 0; i < this.elements.length; i++)
+		{
+			if (i > 0)
+			{
+				s += " of ";
+			}
+			s += this.elements[i].toString();
+		}
+		return s;
+	}
 
-    /**
-     * Adds a designator to the composition.
-     * @param d The designator to add. If it is compound, each of its elements are
-     * added individually. This helps keeping the compound designators "flat".
-     * If d is null, the input is simply ignored and nothing happens.
-     */
-    add(d) {
-        if (d == null) {
-            return;
-        }
-        if (d instanceof CompoundDesignator) {
-            for (var j = 0; j < d.elements.length; j++) {
-                this.add(d.elements[j]);
-            }
-        } else {
-            this.elements.push(d);
-        }
-    }
-
-    /**
-     * Gets the size (number of atomic designators) contained in this composite
-     * designator.
-     * @return The number of atomic designators
-     */
-    size() {
-        return this.elements.length;
-    }
-
-    head() {
-        if (this.elements.length == 0) {
-            return new Nothing();
-        }
-        return this.elements[this.elements.length - 1];
-    }
-
-    tail() {
-        if (this.elements.length <= 1) {
-            return null;
-        }
-        if (this.elements.length == 2) {
-            return this.elements[0];
-        }
-        var new_d = new CompoundDesignator();
-        for (var i = 0; i < this.elements.length - 1; i++) {
-            new_d.add(this.elements[i]);
-        }
-        return new_d;
-    }
-
-    toString() {
-        var s = "";
-        for (var i = 0; i < this.elements.length; i++) {
-            if (i > 0) {
-                s += " of ";
-            }
-            s += this.elements[i].toString();
-        }
-        return s;
-    }
-
-    equals(o) {
-        if (o == null || !(o instanceof CompoundDesignator)) {
-            return false;
-        }
-        if (o.size() != this.size()) {
-            return false;
-        }
-        for (var i = 0; i < this.elements.length; i++) {
-            if (!same_object(this.elements[i], o.elements[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
+	equals(o)
+	{
+		if (o == null || !(o instanceof CompoundDesignator))
+		{
+			return false;
+		}
+		if (o.size() != this.size())
+		{
+			return false;
+		}
+		for (var i = 0; i < this.elements.length; i++)
+		{
+			if (!same_object(this.elements[i], o.elements[i]))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 }
 
 /**
  * Module exports
  */
-export { All, CompoundDesignator, Designator, Nothing, Unknown };
+export {All, CompoundDesignator, Designator, Nothing, Unknown};

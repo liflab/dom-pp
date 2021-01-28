@@ -28,10 +28,13 @@
 import { AndNode, Explainer, ObjectNode, OrNode } from "./tracer.mjs";
 import { set_contains } from "./util.mjs";
 
-class TestDriver {
-    constructor() {
+class TestDriver
+{
+    constructor()
+    {
         this.conditions = [];
-        if (arguments.length > 0) {
+        if (arguments.length > 0)
+        {
             this.conditions = arguments;
         }
         this.returnedValues = [];
@@ -40,34 +43,42 @@ class TestDriver {
     /**
      * Adds a condition to evaluate
      */
-    add() {
+    add()
+    {
         this.conditions.push(...arguments);
     }
 
-    evaluateAll(o) {
+    evaluateAll(o)
+    {
         this.returnedValues = [];
-        for (var i = 0; i < this.conditions.length; i++) {
+        for (var i = 0; i < this.conditions.length; i++)
+        {
             var v = this.conditions[i].evaluate(o);
             this.returnedValues.push(v);
         }
     }
 
-    getResult() {
+    getResult()
+    {
         var verdicts = [];
-        for (var i = 0; i < this.conditions.length; i++) {
+        for (var i = 0; i < this.conditions.length; i++)
+        {
             verdicts.push(new Verdict(this.returnedValues[i], this.conditions[i]));
         }
         return new TestResult(...verdicts);
     }
 }
 
-class TestCondition {
-    constructor(name, f) {
-        this.name = name;
+class TestCondition
+{
+    constructor(name, f)
+    {
+        this.name =  name;
         this.function = f;
     }
 
-    getName() {
+    getName()
+    {
         return this.name;
     }
 
@@ -76,39 +87,47 @@ class TestCondition {
      * @param e The web element on which to evaluate the test condition
      * @return {Verdict} The result of the evaluation of the condition
      */
-    evaluate(e) {
+    evaluate(e)
+    {
         return this.function.evaluate(e);
     }
 }
 
-class Verdict {
+class Verdict
+{
     /**
      * Creates a new verdict.
      * @param v {Value} The return value of the test condition
      * @param c {TestCondition} The test condition that was evaluated
      */
-    constructor(v, c) {
+    constructor(v, c)
+    {
         this.value = v;
         this.condition = c;
     }
 
-    getCondition() {
+    getCondition()
+    {
         return this.condition;
     }
 
-    getValue() {
+    getValue()
+    {
         return this.value;
     }
 
-    getResult() {
+    getResult()
+    {
         var o = this.value.getValue();
-        if (!o) {
+        if (!o)
+        {
             return false;
         }
         return true;
     }
 
-    getWitness() {
+    getWitness()
+    {
         var list = [];
         var root = Explainer.explain(this.value);
         Verdict.pick(root, list);
@@ -132,25 +151,38 @@ class Verdict {
      * @param n The current node
      * @param list A list to which nodes are added
      */
-    static pick(n, list, visited = []) {
-        if (set_contains(visited, n)) {
+    static pick(n, list, visited = [])
+    {
+        if (set_contains(visited, n))
+        {
             return;
         }
         visited.push(n);
-        if (n instanceof AndNode) {
-            for (var i = 0; i < n.getChildren().length; i++) {
+        if (n instanceof AndNode)
+        {
+            for (var i = 0; i < n.getChildren().length; i++)
+            {
                 Verdict.pick(n.getChildren()[i], list, visited);
             }
-        } else if (n instanceof OrNode) {
-            for (var i = 0; i < n.getChildren().length; i++) {
+        }
+        else if (n instanceof OrNode)
+        {
+            for (var i = 0; i < n.getChildren().length; i++)
+            {
                 Verdict.pick(n.getChildren()[i], list, visited);
                 break;
             }
-        } else if (n instanceof ObjectNode) {
-            if (n.getChildren().length == 0) {
+        }
+        else if (n instanceof ObjectNode)
+        {
+            if (n.getChildren().length == 0)
+            {
                 list.push(n.getDesignatedObject());
-            } else {
-                for (var i = 0; i < n.getChildren().length; i++) {
+            }
+            else
+            {
+                for (var i = 0; i < n.getChildren().length; i++)
+                {
                     Verdict.pick(n.getChildren()[i], list, visited);
                 }
             }
@@ -158,18 +190,24 @@ class Verdict {
     }
 }
 
-class TestResult {
-    constructor() {
+class TestResult
+{
+    constructor()
+    {
         this.verdicts = arguments;
     }
 
-    getVerdicts() {
+    getVerdicts()
+    {
         return this.verdicts;
     }
 
-    getResult() {
-        for (var i = 0; i < this.verdicts.length; i++) {
-            if (!this.verdicts[i].getResult()) {
+    getResult()
+    {
+        for (var i = 0; i < this.verdicts.length; i++)
+        {
+            if (!this.verdicts[i].getResult())
+            {
                 return false;
             }
         }
@@ -180,6 +218,6 @@ class TestResult {
 /**
  * Package exports
  */
-export { TestCondition, TestDriver, TestResult, Verdict };
+export {TestCondition, TestDriver, TestResult, Verdict};
 
 // :wrap=soft:tabSize=2:indentWidth=2:
