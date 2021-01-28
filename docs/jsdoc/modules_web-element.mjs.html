@@ -61,52 +61,50 @@ import { Value } from "./value.mjs";
 import { Enumerate, EnumeratedValue } from "./enumerate.mjs";
 import { AtomicFunctionReturnValue } from "./atomic-function.mjs";
 
-class WebElementFunction extends AtomicFunction
-{
-    constructor(name)
-    {
+/**
+ * 
+ * @extends AtomicFunction
+ */
+class WebElementFunction extends AtomicFunction {
+    constructor(name) {
         super(1);
         this.name = name;
     }
 
-    compute()
-    {
+    compute() {
         var val = this.get(arguments[0].getValue());
         return new ElementAttributeValue(this.name, arguments[0], val);
     }
 
-    get(e)
-    {
+    get(e) {
         return null; // To be overridden by descendants
     }
 }
 
 /**
  * Designator that points to the value of an attribute for some DOM node.
+ * @extends Designator
  */
-class ElementAttribute extends Designator
-{
+class ElementAttribute extends Designator {
     /**
-     * Creates a ne instance of the designator.
+     * Creates a new instance of the designator.
      * @param name {String} The name of the attribute
      */
-    constructor(name)
-    {
+    constructor(name) {
         super();
         this.name = name;
     }
 
-    toString()
-    {
+    toString() {
         return this.name;
     }
 }
 
 /**
  * The value of an attribute for some DOM node.
+ * @extends Value
  */
-class ElementAttributeValue extends Value
-{
+class ElementAttributeValue extends Value {
     /**
      * Creates a new instance of the value.
      * @param name {String} The name of the attribute in the DOM node
@@ -114,26 +112,22 @@ class ElementAttributeValue extends Value
      * DOM node
      * @param v {Object|Value} The value of the attribute in the DOM node
      */
-    constructor(name, input, v)
-    {
+    constructor(name, input, v) {
         super();
         this.name = name;
         this.input = Value.lift(input);
         this.value = Value.lift(v);
     }
 
-    getValue()
-    {
+    getValue() {
         return this.value.getValue();
     }
 
-    toString()
-    {
+    toString() {
         return this.value.getValue().toString();
     }
 
-    query(q, d, root, factory)
-    {
+    query(q, d, root, factory) {
         var leaves = [];
         var new_d = CompoundDesignator.create(new ElementAttribute(this.name), d);
         var n = factory.getObjectNode(new_d, this.input);
@@ -145,19 +139,17 @@ class ElementAttributeValue extends Value
 
 /**
  * Function that extracts the width of a DOM node.
+ * @extends WebElementFunction
  */
-class DimensionWidth extends WebElementFunction
-{
+class DimensionWidth extends WebElementFunction {
     /**
      * Creates a new instance of the function.
      */
-    constructor()
-    {
+    constructor() {
         super("width");
     }
 
-    get(e)
-    {
+    get(e) {
         var s = e.style.width;
         return parseFloat(s);
     }
@@ -165,58 +157,73 @@ class DimensionWidth extends WebElementFunction
 
 /**
  * Function that extracts the height of a DOM node.
+ * @extends WebElementFunction
  */
-class DimensionHeight extends WebElementFunction
-{
+class DimensionHeight extends WebElementFunction {
     /**
      * Creates a new instance of the function.
      */
-    constructor()
-    {
+    constructor() {
         super("height");
     }
 
-    get(e)
-    {
+    get(e) {
         var s = e.style.height;
         return parseFloat(s);
     }
 }
 
 /**
+ * Function that extracts the background color of a DOM.
+ * @extends Value
+ */
+class BackgroundColor extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("background");
+    }
+
+    get(e) {
+        var s = e.style.backgroundColor //e.style.backgroundColor = "yellow";
+        return s;
+    }
+}
+
+/**
  * Designator that points to an element in a DOM tree based on
  * an XPath expression.
+ * @extends Designator
  */
-class Path extends Designator
-{
+class Path extends Designator {
     /**
      * Creates a new instance of the designator.
      * @param path {String} A string containing an XPath expression
      */
-    constructor(path)
-    {
+    constructor(path) {
         super();
         this.path = path;
     }
 
-    toString()
-    {
+    toString() {
         return this.path;
     }
 }
 
-class PathValue extends Value
-{
-    constructor(p, root, value)
-    {
+/**
+ * The value of the path
+ * @extends Value
+ */
+class PathValue extends Value {
+    constructor(p, root, value) {
         super();
         this.value = Value.lift(value);
         this.root = Value.lift(root);
         this.path = p;
     }
 
-    query(q, d, root, factory)
-    {
+    query(q, d, root, factory) {
         var leaves = [];
         var new_d = CompoundDesignator.create(d.tail(), this.path);
         var n = factory.getObjectNode(new_d, this.root);
@@ -225,36 +232,31 @@ class PathValue extends Value
         return leaves;
     }
 
-    getValue()
-    {
+    getValue() {
         return this.value.getValue();
     }
 
-    toString()
-    {
+    toString() {
         return this.value.toString();
     }
 }
 
 /**
  * Function that produces a list of elements that match a given CSS selector.
+ * @extends Enumerate
  */
-class FindBySelector extends Enumerate
-{
+class FindBySelector extends Enumerate {
     /**
      * Creates a new instance of the function.
      * @param selector The CSS selector used to fetch elements
      */
-    constructor(selector)
-    {
+    constructor(selector) {
         super();
         this.selector = selector;
     }
 
-    evaluate()
-    {
-        if (arguments.length != 1)
-        {
+    evaluate() {
+        if (arguments.length != 1) {
             throw "Invalid number of arguments";
         }
         var v = Value.lift(arguments[0]);
@@ -262,33 +264,30 @@ class FindBySelector extends Enumerate
         var elm_list = root.querySelectorAll(this.selector);
         var val_list = [];
         var out_list = [];
-        for (var i = 0; i &lt; elm_list.length; i++)
-        {
+        for (var i = 0; i &lt; elm_list.length; i++) {
             var path = FindBySelector.getPathTo(elm_list[i]);
             var pv = new PathValue(new Path(path), root, elm_list[i]);
             val_list.push(pv);
         }
-        for (var i = 0; i &lt; val_list.length; i++)
-        {
+        for (var i = 0; i &lt; val_list.length; i++) {
             out_list.push(new EnumeratedValue(i, val_list));
         }
         return new AtomicFunctionReturnValue(this, out_list, v);
     }
 
-    static getPathTo(element)
-     {
-        if (element.id!=='')
-            return 'id("'+element.id+'")';
+    static getPathTo(element) {
+        if (element.id !== '')
+            return 'id("' + element.id + '")';
         if (element.tagName == "BODY")
             return element.tagName;
-    
-        var ix= 0;
-        var siblings= element.parentNode.childNodes;
-        for (var i= 0; i&lt;siblings.length; i++) {
-            var sibling= siblings[i];
-            if (sibling===element)
-                return getPathTo(element.parentNode)+'/'+element.tagName+'['+(ix+1)+']';
-            if (sibling.nodeType===1 &amp;&amp; sibling.tagName===element.tagName)
+
+        var ix = 0;
+        var siblings = element.parentNode.childNodes;
+        for (var i = 0; i &lt; siblings.length; i++) {
+            var sibling = siblings[i];
+            if (sibling === element)
+                return getPathTo(element.parentNode) + '/' + element.tagName + '[' + (ix + 1) + ']';
+            if (sibling.nodeType === 1 &amp;&amp; sibling.tagName === element.tagName)
                 ix++;
         }
     }
@@ -297,7 +296,7 @@ class FindBySelector extends Enumerate
 /**
  * Package exports
  */
-export {DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, Path, PathValue, WebElementFunction};
+export { BackgroundColor, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, Path, PathValue, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:</code></pre>
         </article>
@@ -309,13 +308,13 @@ export {DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractFunction.html">AbstractFunction</a></li><li><a href="Addition.html">Addition</a></li><li><a href="All.html">All</a></li><li><a href="AndNode.html">AndNode</a></li><li><a href="Argument.html">Argument</a></li><li><a href="ArgumentValue.html">ArgumentValue</a></li><li><a href="AtomicFunction.html">AtomicFunction</a></li><li><a href="AtomicFunctionReturnValue.html">AtomicFunctionReturnValue</a></li><li><a href="BooleanAnd.html">BooleanAnd</a></li><li><a href="BooleanConnective.html">BooleanConnective</a></li><li><a href="BooleanNot.html">BooleanNot</a></li><li><a href="BooleanOr.html">BooleanOr</a></li><li><a href="ComposedFunction.html">ComposedFunction</a></li><li><a href="ComposedFunctionValue.html">ComposedFunctionValue</a></li><li><a href="CompoundDesignator.html">CompoundDesignator</a></li><li><a href="ConstantDesignator.html">ConstantDesignator</a></li><li><a href="ConstantFunction.html">ConstantFunction</a></li><li><a href="ConstantValue.html">ConstantValue</a></li><li><a href="DesignatedObject.html">DesignatedObject</a></li><li><a href="Designator.html">Designator</a></li><li><a href="DimensionHeight.html">DimensionHeight</a></li><li><a href="DimensionWidth.html">DimensionWidth</a></li><li><a href="ElementAttribute.html">ElementAttribute</a></li><li><a href="ElementAttributeValue.html">ElementAttributeValue</a></li><li><a href="ExistentialQuantifier.html">ExistentialQuantifier</a></li><li><a href="Explainer.html">Explainer</a></li><li><a href="FindBySelector.html">FindBySelector</a></li><li><a href="FunctionNamedArgument.html">FunctionNamedArgument</a></li><li><a href="GreaterOrEqual.html">GreaterOrEqual</a></li><li><a href="GreaterThan.html">GreaterThan</a></li><li><a href="Identity.html">Identity</a></li><li><a href="InputArgument.html">InputArgument</a></li><li><a href="IsEqualTo.html">IsEqualTo</a></li><li><a href="NamedArgument.html">NamedArgument</a></li><li><a href="NaryConjunctiveVerdict.html">NaryConjunctiveVerdict</a></li><li><a href="NaryDisjunctiveVerdict.html">NaryDisjunctiveVerdict</a></li><li><a href="NaryValue.html">NaryValue</a></li><li><a href="Nothing.html">Nothing</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="OrNode.html">OrNode</a></li><li><a href="Path.html">Path</a></li><li><a href="Quantifier.html">Quantifier</a></li><li><a href="QuantifierConjunctiveVerdict.html">QuantifierConjunctiveVerdict</a></li><li><a href="QuantifierDisjunctiveVerdict.html">QuantifierDisjunctiveVerdict</a></li><li><a href="QuantifierVerdict.html">QuantifierVerdict</a></li><li><a href="ReturnValue.html">ReturnValue</a></li><li><a href="TraceabilityNode.html">TraceabilityNode</a></li><li><a href="Tracer.html">Tracer</a></li><li><a href="UniversalQuantifier.html">UniversalQuantifier</a></li><li><a href="Unknown.html">Unknown</a></li><li><a href="UnknownNode.html">UnknownNode</a></li><li><a href="Value.html">Value</a></li><li><a href="Verdict.html">Verdict</a></li></ul><h3>Global</h3><ul><li><a href="global.html#evaluateDom">evaluateDom</a></li><li><a href="global.html#getVerdict">getVerdict</a></li><li><a href="global.html#same_object">same_object</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractFunction.html">AbstractFunction</a></li><li><a href="Addition.html">Addition</a></li><li><a href="All.html">All</a></li><li><a href="AndNode.html">AndNode</a></li><li><a href="Argument.html">Argument</a></li><li><a href="ArgumentValue.html">ArgumentValue</a></li><li><a href="AtomicFunction.html">AtomicFunction</a></li><li><a href="AtomicFunctionReturnValue.html">AtomicFunctionReturnValue</a></li><li><a href="BackgroundColor.html">BackgroundColor</a></li><li><a href="BooleanAnd.html">BooleanAnd</a></li><li><a href="BooleanConnective.html">BooleanConnective</a></li><li><a href="BooleanNot.html">BooleanNot</a></li><li><a href="BooleanOr.html">BooleanOr</a></li><li><a href="ComposedFunction.html">ComposedFunction</a></li><li><a href="ComposedFunctionValue.html">ComposedFunctionValue</a></li><li><a href="CompoundDesignator.html">CompoundDesignator</a></li><li><a href="ConstantDesignator.html">ConstantDesignator</a></li><li><a href="ConstantFunction.html">ConstantFunction</a></li><li><a href="ConstantValue.html">ConstantValue</a></li><li><a href="DesignatedObject.html">DesignatedObject</a></li><li><a href="Designator.html">Designator</a></li><li><a href="DimensionHeight.html">DimensionHeight</a></li><li><a href="DimensionWidth.html">DimensionWidth</a></li><li><a href="Division.html">Division</a></li><li><a href="ElementAttribute.html">ElementAttribute</a></li><li><a href="ElementAttributeValue.html">ElementAttributeValue</a></li><li><a href="Enumerate.html">Enumerate</a></li><li><a href="EnumeratedValue.html">EnumeratedValue</a></li><li><a href="ExistentialQuantifier.html">ExistentialQuantifier</a></li><li><a href="Explainer.html">Explainer</a></li><li><a href="FindBySelector.html">FindBySelector</a></li><li><a href="FunctionNamedArgument.html">FunctionNamedArgument</a></li><li><a href="GreaterOrEqual.html">GreaterOrEqual</a></li><li><a href="GreaterThan.html">GreaterThan</a></li><li><a href="Identity.html">Identity</a></li><li><a href="InputArgument.html">InputArgument</a></li><li><a href="IsEqualTo.html">IsEqualTo</a></li><li><a href="LesserOrEqual.html">LesserOrEqual</a></li><li><a href="LesserThan.html">LesserThan</a></li><li><a href="Multiplication.html">Multiplication</a></li><li><a href="NamedArgument.html">NamedArgument</a></li><li><a href="NamedArgumentValue.html">NamedArgumentValue</a></li><li><a href="NaryConjunctiveVerdict.html">NaryConjunctiveVerdict</a></li><li><a href="NaryDisjunctiveVerdict.html">NaryDisjunctiveVerdict</a></li><li><a href="NaryValue.html">NaryValue</a></li><li><a href="Nothing.html">Nothing</a></li><li><a href="NthItem.html">NthItem</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="OrNode.html">OrNode</a></li><li><a href="Path.html">Path</a></li><li><a href="PathValue.html">PathValue</a></li><li><a href="Quantifier.html">Quantifier</a></li><li><a href="QuantifierConjunctiveVerdict.html">QuantifierConjunctiveVerdict</a></li><li><a href="QuantifierDisjunctiveVerdict.html">QuantifierDisjunctiveVerdict</a></li><li><a href="QuantifierVerdict.html">QuantifierVerdict</a></li><li><a href="ReturnValue.html">ReturnValue</a></li><li><a href="Substraction.html">Substraction</a></li><li><a href="TraceabilityNode.html">TraceabilityNode</a></li><li><a href="Tracer.html">Tracer</a></li><li><a href="UniversalQuantifier.html">UniversalQuantifier</a></li><li><a href="Unknown.html">Unknown</a></li><li><a href="UnknownNode.html">UnknownNode</a></li><li><a href="Value.html">Value</a></li><li><a href="Verdict.html">Verdict</a></li><li><a href="WebElementFunction.html">WebElementFunction</a></li></ul><h3>Global</h3><ul><li><a href="global.html#evaluateDom">evaluateDom</a></li><li><a href="global.html#getVerdict">getVerdict</a></li><li><a href="global.html#same_object">same_object</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 25 2021 08:44:50 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Jan 28 2021 09:08:21 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

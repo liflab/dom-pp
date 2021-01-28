@@ -53,48 +53,40 @@
 */
 
 // Local imports
-import {InputArgument, ReturnValue} from "./function.mjs";
-import {AtomicFunction} from "./atomic-function.mjs";
-import {NaryValue} from "./value.mjs";
-import {CompoundDesignator} from "./designator.mjs";
+import { InputArgument, ReturnValue } from "./function.mjs";
+import { AtomicFunction } from "./atomic-function.mjs";
+import { NaryValue } from "./value.mjs";
+import { CompoundDesignator } from "./designator.mjs";
 
 /**
  * Abstract class representing the binary Boolean connectives "and" and "or".
  * @extends AtomicFunction
  */
-class BooleanConnective extends AtomicFunction
-{
-	constructor(arity)
-	{
-		super(arity);
-	}
+class BooleanConnective extends AtomicFunction {
+    constructor(arity) {
+        super(arity);
+    }
 
-	compute()
-	{
-		var false_values = [];
-		var false_positions = [];
-		var true_values = [];
-		var true_positions = [];
-		for (var i = 0; i &lt; arguments.length; i++)
-		{
-			var o = arguments[i].getValue();
-			if (typeof(o) != "boolean")
-			{
-				throw "Invalid argument type";
-			}
-			if (o == true)
-			{
-				true_values.push(arguments[i]);
-				true_positions.push(i);
-			}
-			else
-			{
-				false_values.push(arguments[i]);
-				false_positions.push(i);
-			}
-		}
-		return this.getBooleanValue(false_values, true_values, false_positions, true_positions);
-	}
+    compute() {
+        var false_values = [];
+        var false_positions = [];
+        var true_values = [];
+        var true_positions = [];
+        for (var i = 0; i &lt; arguments.length; i++) {
+            var o = arguments[i].getValue();
+            if (typeof(o) != "boolean") {
+                throw "Invalid argument type";
+            }
+            if (o == true) {
+                true_values.push(arguments[i]);
+                true_positions.push(i);
+            } else {
+                false_values.push(arguments[i]);
+                false_positions.push(i);
+            }
+        }
+        return this.getBooleanValue(false_values, true_values, false_positions, true_positions);
+    }
 }
 
 /**
@@ -102,37 +94,30 @@ class BooleanConnective extends AtomicFunction
  * node.
  * @extends NaryValue
  */
-class NaryDisjunctiveVerdict extends NaryValue
-{
-	constructor(value, values, positions)
-	{
-		super(value, values, positions);
-	}
+class NaryDisjunctiveVerdict extends NaryValue {
+    constructor(value, values, positions) {
+        super(value, values, positions);
+    }
 
-	query(q, d, root, factory)
-	{
-		var leaves = [];
-		var n = factory.getOrNode();
-		for (var i = 0; i &lt; this.values.length; i++)
-		{
-			var v = this.values[i];
-			var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
-			var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
-			var sub_leaves = [];
-			sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
-			leaves.push(...sub_leaves);
-			n.addChild(sub_root);
-		}
-		if (n.getChildren().length == 1)
-		{
-			root.addChild(n.getChildren()[0]);
-		}
-		else
-		{
-			root.addChild(n);
-		}
-		return leaves;
-	}
+    query(q, d, root, factory) {
+        var leaves = [];
+        var n = factory.getOrNode();
+        for (var i = 0; i &lt; this.values.length; i++) {
+            var v = this.values[i];
+            var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
+            var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
+            var sub_leaves = [];
+            sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
+            leaves.push(...sub_leaves);
+            n.addChild(sub_root);
+        }
+        if (n.getChildren().length == 1) {
+            root.addChild(n.getChildren()[0]);
+        } else {
+            root.addChild(n);
+        }
+        return leaves;
+    }
 }
 
 /**
@@ -140,126 +125,106 @@ class NaryDisjunctiveVerdict extends NaryValue
  * node.
  * @extends NaryValue
  */
-class NaryConjunctiveVerdict extends NaryValue
-{
-	constructor(value, values = [], positions = [])
-	{
-		super(value, values, positions);
-	}
+class NaryConjunctiveVerdict extends NaryValue {
+    constructor(value, values = [], positions = []) {
+        super(value, values, positions);
+    }
 
-	query(q, d, root, factory)
-	{
-		var leaves = [];
-		var n = factory.getAndNode();
-		for (var i = 0; i &lt; this.values.length; i++)
-		{
-			var v = this.values[i];
-			var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
-			var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
-			var sub_leaves = [];
-			sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
-			leaves.push(...sub_leaves);
-			n.addChild(sub_root);
-		}
-		if (n.getChildren().length == 1)
-		{
-			root.addChild(n.getChildren()[0]);
-		}
-		else
-		{
-			root.addChild(n);
-		}
-		return leaves;
-	}
+    query(q, d, root, factory) {
+        var leaves = [];
+        var n = factory.getAndNode();
+        for (var i = 0; i &lt; this.values.length; i++) {
+            var v = this.values[i];
+            var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
+            var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
+            var sub_leaves = [];
+            sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
+            leaves.push(...sub_leaves);
+            n.addChild(sub_root);
+        }
+        if (n.getChildren().length == 1) {
+            root.addChild(n.getChildren()[0]);
+        } else {
+            root.addChild(n);
+        }
+        return leaves;
+    }
 }
 
 /**
  * The Boolean "and" function.
  * @extends BooleanConnective
  */
-class BooleanAnd extends BooleanConnective
-{
-	constructor(arity = 2)
-	{
-		super(arity);
-	}
+class BooleanAnd extends BooleanConnective {
+    constructor(arity = 2) {
+        super(arity);
+    }
 
-	/**
-	 * Gets the Boolean value.
-	 * @param false_values 
-	 * @param true_values 
-	 * @param false_positions 
-	 * @param true_positions 
-	 */
-	getBooleanValue(false_values = [], true_values = [], false_positions = [], true_positions = [])
-	{
-		if (false_values.length == 0)
-		{
-			return new NaryConjunctiveVerdict(true, true_values, true_positions);
-		}
-		return new NaryDisjunctiveVerdict(false, false_values, false_positions);
-	}
+    /**
+     * Gets the Boolean value.
+     * @param false_values 
+     * @param true_values 
+     * @param false_positions 
+     * @param true_positions 
+     */
+    getBooleanValue(false_values = [], true_values = [], false_positions = [], true_positions = []) {
+        if (false_values.length == 0) {
+            return new NaryConjunctiveVerdict(true, true_values, true_positions);
+        }
+        return new NaryDisjunctiveVerdict(false, false_values, false_positions);
+    }
 
-	toString()
-	{
-		return "And";
-	}
+    toString() {
+        return "And";
+    }
 }
 
 /**
  * The Boolean "or" function.
+ * @extends BooleanConnective
  */
-class BooleanOr extends BooleanConnective
-{
-	constructor(arity = 2)
-	{
-		super(arity);
-	}
+class BooleanOr extends BooleanConnective {
+    constructor(arity = 2) {
+        super(arity);
+    }
 
-	getBooleanValue(false_values = [], true_values = [], false_positions = [], true_positions = [])
-	{
-		if (true_values.length == 0)
-		{
-			return new NaryConjunctiveVerdict(false, false_values, false_positions);
-		}
-		return new NaryDisjunctiveVerdict(true, true_values, true_positions);
-	}
+    getBooleanValue(false_values = [], true_values = [], false_positions = [], true_positions = []) {
+        if (true_values.length == 0) {
+            return new NaryConjunctiveVerdict(false, false_values, false_positions);
+        }
+        return new NaryDisjunctiveVerdict(true, true_values, true_positions);
+    }
 
-	toString()
-	{
-		return "Or";
-	}
+    toString() {
+        return "Or";
+    }
 }
 
 /**
  * The Boolean "not" function.
+ * @extends BooleanConnective
  */
-class BooleanNot extends BooleanConnective
-{
-	constructor()
-	{
-		super(1);
-	}
+class BooleanNot extends BooleanConnective {
+    constructor() {
+        super(1);
+    }
 
-	getValue()
-	{
-		if (typeof(arguments[0]) != "boolean")
-		{
-			throw "Invalid argument type";
-		}
-		return !arguments[0];
-	}
+    getValue() {
+        if (typeof(arguments[0]) != "boolean") {
+            throw "Invalid argument type";
+        }
+        return !arguments[0];
+    }
 
-	toString()
-	{
-		return "Not";
-	}
+    toString() {
+        return "Not";
+    }
 }
 
 /**
  * Package exports
  */
-export {BooleanAnd, BooleanNot, BooleanOr, NaryConjunctiveVerdict, NaryDisjunctiveVerdict};</code></pre>
+export { BooleanAnd, BooleanNot, BooleanOr, NaryConjunctiveVerdict, NaryDisjunctiveVerdict };</code></pre>
         </article>
     </section>
 
@@ -269,13 +234,13 @@ export {BooleanAnd, BooleanNot, BooleanOr, NaryConjunctiveVerdict, NaryDisjuncti
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractFunction.html">AbstractFunction</a></li><li><a href="Addition.html">Addition</a></li><li><a href="All.html">All</a></li><li><a href="AndNode.html">AndNode</a></li><li><a href="Argument.html">Argument</a></li><li><a href="ArgumentValue.html">ArgumentValue</a></li><li><a href="AtomicFunction.html">AtomicFunction</a></li><li><a href="AtomicFunctionReturnValue.html">AtomicFunctionReturnValue</a></li><li><a href="BooleanAnd.html">BooleanAnd</a></li><li><a href="BooleanConnective.html">BooleanConnective</a></li><li><a href="BooleanNot.html">BooleanNot</a></li><li><a href="BooleanOr.html">BooleanOr</a></li><li><a href="ComposedFunction.html">ComposedFunction</a></li><li><a href="ComposedFunctionValue.html">ComposedFunctionValue</a></li><li><a href="CompoundDesignator.html">CompoundDesignator</a></li><li><a href="ConstantDesignator.html">ConstantDesignator</a></li><li><a href="ConstantFunction.html">ConstantFunction</a></li><li><a href="ConstantValue.html">ConstantValue</a></li><li><a href="DesignatedObject.html">DesignatedObject</a></li><li><a href="Designator.html">Designator</a></li><li><a href="DimensionHeight.html">DimensionHeight</a></li><li><a href="DimensionWidth.html">DimensionWidth</a></li><li><a href="ElementAttribute.html">ElementAttribute</a></li><li><a href="ElementAttributeValue.html">ElementAttributeValue</a></li><li><a href="ExistentialQuantifier.html">ExistentialQuantifier</a></li><li><a href="Explainer.html">Explainer</a></li><li><a href="FindBySelector.html">FindBySelector</a></li><li><a href="FunctionNamedArgument.html">FunctionNamedArgument</a></li><li><a href="GreaterOrEqual.html">GreaterOrEqual</a></li><li><a href="GreaterThan.html">GreaterThan</a></li><li><a href="Identity.html">Identity</a></li><li><a href="InputArgument.html">InputArgument</a></li><li><a href="IsEqualTo.html">IsEqualTo</a></li><li><a href="NamedArgument.html">NamedArgument</a></li><li><a href="NaryConjunctiveVerdict.html">NaryConjunctiveVerdict</a></li><li><a href="NaryDisjunctiveVerdict.html">NaryDisjunctiveVerdict</a></li><li><a href="NaryValue.html">NaryValue</a></li><li><a href="Nothing.html">Nothing</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="OrNode.html">OrNode</a></li><li><a href="Path.html">Path</a></li><li><a href="Quantifier.html">Quantifier</a></li><li><a href="QuantifierConjunctiveVerdict.html">QuantifierConjunctiveVerdict</a></li><li><a href="QuantifierDisjunctiveVerdict.html">QuantifierDisjunctiveVerdict</a></li><li><a href="QuantifierVerdict.html">QuantifierVerdict</a></li><li><a href="ReturnValue.html">ReturnValue</a></li><li><a href="TraceabilityNode.html">TraceabilityNode</a></li><li><a href="Tracer.html">Tracer</a></li><li><a href="UniversalQuantifier.html">UniversalQuantifier</a></li><li><a href="Unknown.html">Unknown</a></li><li><a href="UnknownNode.html">UnknownNode</a></li><li><a href="Value.html">Value</a></li><li><a href="Verdict.html">Verdict</a></li></ul><h3>Global</h3><ul><li><a href="global.html#evaluateDom">evaluateDom</a></li><li><a href="global.html#getVerdict">getVerdict</a></li><li><a href="global.html#same_object">same_object</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractFunction.html">AbstractFunction</a></li><li><a href="Addition.html">Addition</a></li><li><a href="All.html">All</a></li><li><a href="AndNode.html">AndNode</a></li><li><a href="Argument.html">Argument</a></li><li><a href="ArgumentValue.html">ArgumentValue</a></li><li><a href="AtomicFunction.html">AtomicFunction</a></li><li><a href="AtomicFunctionReturnValue.html">AtomicFunctionReturnValue</a></li><li><a href="BackgroundColor.html">BackgroundColor</a></li><li><a href="BooleanAnd.html">BooleanAnd</a></li><li><a href="BooleanConnective.html">BooleanConnective</a></li><li><a href="BooleanNot.html">BooleanNot</a></li><li><a href="BooleanOr.html">BooleanOr</a></li><li><a href="ComposedFunction.html">ComposedFunction</a></li><li><a href="ComposedFunctionValue.html">ComposedFunctionValue</a></li><li><a href="CompoundDesignator.html">CompoundDesignator</a></li><li><a href="ConstantDesignator.html">ConstantDesignator</a></li><li><a href="ConstantFunction.html">ConstantFunction</a></li><li><a href="ConstantValue.html">ConstantValue</a></li><li><a href="DesignatedObject.html">DesignatedObject</a></li><li><a href="Designator.html">Designator</a></li><li><a href="DimensionHeight.html">DimensionHeight</a></li><li><a href="DimensionWidth.html">DimensionWidth</a></li><li><a href="Division.html">Division</a></li><li><a href="ElementAttribute.html">ElementAttribute</a></li><li><a href="ElementAttributeValue.html">ElementAttributeValue</a></li><li><a href="Enumerate.html">Enumerate</a></li><li><a href="EnumeratedValue.html">EnumeratedValue</a></li><li><a href="ExistentialQuantifier.html">ExistentialQuantifier</a></li><li><a href="Explainer.html">Explainer</a></li><li><a href="FindBySelector.html">FindBySelector</a></li><li><a href="FunctionNamedArgument.html">FunctionNamedArgument</a></li><li><a href="GreaterOrEqual.html">GreaterOrEqual</a></li><li><a href="GreaterThan.html">GreaterThan</a></li><li><a href="Identity.html">Identity</a></li><li><a href="InputArgument.html">InputArgument</a></li><li><a href="IsEqualTo.html">IsEqualTo</a></li><li><a href="LesserOrEqual.html">LesserOrEqual</a></li><li><a href="LesserThan.html">LesserThan</a></li><li><a href="Multiplication.html">Multiplication</a></li><li><a href="NamedArgument.html">NamedArgument</a></li><li><a href="NamedArgumentValue.html">NamedArgumentValue</a></li><li><a href="NaryConjunctiveVerdict.html">NaryConjunctiveVerdict</a></li><li><a href="NaryDisjunctiveVerdict.html">NaryDisjunctiveVerdict</a></li><li><a href="NaryValue.html">NaryValue</a></li><li><a href="Nothing.html">Nothing</a></li><li><a href="NthItem.html">NthItem</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="OrNode.html">OrNode</a></li><li><a href="Path.html">Path</a></li><li><a href="PathValue.html">PathValue</a></li><li><a href="Quantifier.html">Quantifier</a></li><li><a href="QuantifierConjunctiveVerdict.html">QuantifierConjunctiveVerdict</a></li><li><a href="QuantifierDisjunctiveVerdict.html">QuantifierDisjunctiveVerdict</a></li><li><a href="QuantifierVerdict.html">QuantifierVerdict</a></li><li><a href="ReturnValue.html">ReturnValue</a></li><li><a href="Substraction.html">Substraction</a></li><li><a href="TraceabilityNode.html">TraceabilityNode</a></li><li><a href="Tracer.html">Tracer</a></li><li><a href="UniversalQuantifier.html">UniversalQuantifier</a></li><li><a href="Unknown.html">Unknown</a></li><li><a href="UnknownNode.html">UnknownNode</a></li><li><a href="Value.html">Value</a></li><li><a href="Verdict.html">Verdict</a></li><li><a href="WebElementFunction.html">WebElementFunction</a></li></ul><h3>Global</h3><ul><li><a href="global.html#evaluateDom">evaluateDom</a></li><li><a href="global.html#getVerdict">getVerdict</a></li><li><a href="global.html#same_object">same_object</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 25 2021 08:44:50 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Jan 28 2021 09:08:21 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

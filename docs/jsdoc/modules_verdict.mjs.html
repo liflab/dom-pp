@@ -56,13 +56,10 @@
 import { AndNode, Explainer, ObjectNode, OrNode } from "./tracer.mjs";
 import { set_contains } from "./util.mjs";
 
-class TestDriver
-{
-    constructor()
-    {
+class TestDriver {
+    constructor() {
         this.conditions = [];
-        if (arguments.length > 0)
-        {
+        if (arguments.length > 0) {
             this.conditions = arguments;
         }
         this.returnedValues = [];
@@ -71,42 +68,34 @@ class TestDriver
     /**
      * Adds a condition to evaluate
      */
-    add()
-    {
+    add() {
         this.conditions.push(...arguments);
     }
 
-    evaluateAll(o)
-    {
+    evaluateAll(o) {
         this.returnedValues = [];
-        for (var i = 0; i &lt; this.conditions.length; i++)
-        {
+        for (var i = 0; i &lt; this.conditions.length; i++) {
             var v = this.conditions[i].evaluate(o);
             this.returnedValues.push(v);
         }
     }
 
-    getResult()
-    {
+    getResult() {
         var verdicts = [];
-        for (var i = 0; i &lt; this.conditions.length; i++)
-        {
+        for (var i = 0; i &lt; this.conditions.length; i++) {
             verdicts.push(new Verdict(this.returnedValues[i], this.conditions[i]));
         }
         return new TestResult(...verdicts);
     }
 }
 
-class TestCondition
-{
-    constructor(name, f)
-    {
-        this.name =  name;
+class TestCondition {
+    constructor(name, f) {
+        this.name = name;
         this.function = f;
     }
 
-    getName()
-    {
+    getName() {
         return this.name;
     }
 
@@ -115,47 +104,39 @@ class TestCondition
      * @param e The web element on which to evaluate the test condition
      * @return {Verdict} The result of the evaluation of the condition
      */
-    evaluate(e)
-    {
+    evaluate(e) {
         return this.function.evaluate(e);
     }
 }
 
-class Verdict
-{
+class Verdict {
     /**
      * Creates a new verdict.
      * @param v {Value} The return value of the test condition
      * @param c {TestCondition} The test condition that was evaluated
      */
-    constructor(v, c)
-    {
+    constructor(v, c) {
         this.value = v;
         this.condition = c;
     }
 
-    getCondition()
-    {
+    getCondition() {
         return this.condition;
     }
 
-    getValue()
-    {
+    getValue() {
         return this.value;
     }
 
-    getResult()
-    {
+    getResult() {
         var o = this.value.getValue();
-        if (!o)
-        {
+        if (!o) {
             return false;
         }
         return true;
     }
 
-    getWitness()
-    {
+    getWitness() {
         var list = [];
         var root = Explainer.explain(this.value);
         Verdict.pick(root, list);
@@ -179,38 +160,25 @@ class Verdict
      * @param n The current node
      * @param list A list to which nodes are added
      */
-    static pick(n, list, visited = [])
-    {
-        if (set_contains(visited, n))
-        {
+    static pick(n, list, visited = []) {
+        if (set_contains(visited, n)) {
             return;
         }
         visited.push(n);
-        if (n instanceof AndNode)
-        {
-            for (var i = 0; i &lt; n.getChildren().length; i++)
-            {
+        if (n instanceof AndNode) {
+            for (var i = 0; i &lt; n.getChildren().length; i++) {
                 Verdict.pick(n.getChildren()[i], list, visited);
             }
-        }
-        else if (n instanceof OrNode)
-        {
-            for (var i = 0; i &lt; n.getChildren().length; i++)
-            {
+        } else if (n instanceof OrNode) {
+            for (var i = 0; i &lt; n.getChildren().length; i++) {
                 Verdict.pick(n.getChildren()[i], list, visited);
                 break;
             }
-        }
-        else if (n instanceof ObjectNode)
-        {
-            if (n.getChildren().length == 0)
-            {
+        } else if (n instanceof ObjectNode) {
+            if (n.getChildren().length == 0) {
                 list.push(n.getDesignatedObject());
-            }
-            else
-            {
-                for (var i = 0; i &lt; n.getChildren().length; i++)
-                {
+            } else {
+                for (var i = 0; i &lt; n.getChildren().length; i++) {
                     Verdict.pick(n.getChildren()[i], list, visited);
                 }
             }
@@ -218,24 +186,18 @@ class Verdict
     }
 }
 
-class TestResult
-{
-    constructor()
-    {
+class TestResult {
+    constructor() {
         this.verdicts = arguments;
     }
 
-    getVerdicts()
-    {
+    getVerdicts() {
         return this.verdicts;
     }
 
-    getResult()
-    {
-        for (var i = 0; i &lt; this.verdicts.length; i++)
-        {
-            if (!this.verdicts[i].getResult())
-            {
+    getResult() {
+        for (var i = 0; i &lt; this.verdicts.length; i++) {
+            if (!this.verdicts[i].getResult()) {
                 return false;
             }
         }
@@ -246,7 +208,7 @@ class TestResult
 /**
  * Package exports
  */
-export {TestCondition, TestDriver, TestResult, Verdict};
+export { TestCondition, TestDriver, TestResult, Verdict };
 
 // :wrap=soft:tabSize=2:indentWidth=2:</code></pre>
         </article>
@@ -258,13 +220,13 @@ export {TestCondition, TestDriver, TestResult, Verdict};
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractFunction.html">AbstractFunction</a></li><li><a href="Addition.html">Addition</a></li><li><a href="All.html">All</a></li><li><a href="AndNode.html">AndNode</a></li><li><a href="Argument.html">Argument</a></li><li><a href="ArgumentValue.html">ArgumentValue</a></li><li><a href="AtomicFunction.html">AtomicFunction</a></li><li><a href="AtomicFunctionReturnValue.html">AtomicFunctionReturnValue</a></li><li><a href="BooleanAnd.html">BooleanAnd</a></li><li><a href="BooleanConnective.html">BooleanConnective</a></li><li><a href="BooleanNot.html">BooleanNot</a></li><li><a href="BooleanOr.html">BooleanOr</a></li><li><a href="ComposedFunction.html">ComposedFunction</a></li><li><a href="ComposedFunctionValue.html">ComposedFunctionValue</a></li><li><a href="CompoundDesignator.html">CompoundDesignator</a></li><li><a href="ConstantDesignator.html">ConstantDesignator</a></li><li><a href="ConstantFunction.html">ConstantFunction</a></li><li><a href="ConstantValue.html">ConstantValue</a></li><li><a href="DesignatedObject.html">DesignatedObject</a></li><li><a href="Designator.html">Designator</a></li><li><a href="DimensionHeight.html">DimensionHeight</a></li><li><a href="DimensionWidth.html">DimensionWidth</a></li><li><a href="ElementAttribute.html">ElementAttribute</a></li><li><a href="ElementAttributeValue.html">ElementAttributeValue</a></li><li><a href="ExistentialQuantifier.html">ExistentialQuantifier</a></li><li><a href="Explainer.html">Explainer</a></li><li><a href="FindBySelector.html">FindBySelector</a></li><li><a href="FunctionNamedArgument.html">FunctionNamedArgument</a></li><li><a href="GreaterOrEqual.html">GreaterOrEqual</a></li><li><a href="GreaterThan.html">GreaterThan</a></li><li><a href="Identity.html">Identity</a></li><li><a href="InputArgument.html">InputArgument</a></li><li><a href="IsEqualTo.html">IsEqualTo</a></li><li><a href="NamedArgument.html">NamedArgument</a></li><li><a href="NaryConjunctiveVerdict.html">NaryConjunctiveVerdict</a></li><li><a href="NaryDisjunctiveVerdict.html">NaryDisjunctiveVerdict</a></li><li><a href="NaryValue.html">NaryValue</a></li><li><a href="Nothing.html">Nothing</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="OrNode.html">OrNode</a></li><li><a href="Path.html">Path</a></li><li><a href="Quantifier.html">Quantifier</a></li><li><a href="QuantifierConjunctiveVerdict.html">QuantifierConjunctiveVerdict</a></li><li><a href="QuantifierDisjunctiveVerdict.html">QuantifierDisjunctiveVerdict</a></li><li><a href="QuantifierVerdict.html">QuantifierVerdict</a></li><li><a href="ReturnValue.html">ReturnValue</a></li><li><a href="TraceabilityNode.html">TraceabilityNode</a></li><li><a href="Tracer.html">Tracer</a></li><li><a href="UniversalQuantifier.html">UniversalQuantifier</a></li><li><a href="Unknown.html">Unknown</a></li><li><a href="UnknownNode.html">UnknownNode</a></li><li><a href="Value.html">Value</a></li><li><a href="Verdict.html">Verdict</a></li></ul><h3>Global</h3><ul><li><a href="global.html#evaluateDom">evaluateDom</a></li><li><a href="global.html#getVerdict">getVerdict</a></li><li><a href="global.html#same_object">same_object</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractFunction.html">AbstractFunction</a></li><li><a href="Addition.html">Addition</a></li><li><a href="All.html">All</a></li><li><a href="AndNode.html">AndNode</a></li><li><a href="Argument.html">Argument</a></li><li><a href="ArgumentValue.html">ArgumentValue</a></li><li><a href="AtomicFunction.html">AtomicFunction</a></li><li><a href="AtomicFunctionReturnValue.html">AtomicFunctionReturnValue</a></li><li><a href="BackgroundColor.html">BackgroundColor</a></li><li><a href="BooleanAnd.html">BooleanAnd</a></li><li><a href="BooleanConnective.html">BooleanConnective</a></li><li><a href="BooleanNot.html">BooleanNot</a></li><li><a href="BooleanOr.html">BooleanOr</a></li><li><a href="ComposedFunction.html">ComposedFunction</a></li><li><a href="ComposedFunctionValue.html">ComposedFunctionValue</a></li><li><a href="CompoundDesignator.html">CompoundDesignator</a></li><li><a href="ConstantDesignator.html">ConstantDesignator</a></li><li><a href="ConstantFunction.html">ConstantFunction</a></li><li><a href="ConstantValue.html">ConstantValue</a></li><li><a href="DesignatedObject.html">DesignatedObject</a></li><li><a href="Designator.html">Designator</a></li><li><a href="DimensionHeight.html">DimensionHeight</a></li><li><a href="DimensionWidth.html">DimensionWidth</a></li><li><a href="Division.html">Division</a></li><li><a href="ElementAttribute.html">ElementAttribute</a></li><li><a href="ElementAttributeValue.html">ElementAttributeValue</a></li><li><a href="Enumerate.html">Enumerate</a></li><li><a href="EnumeratedValue.html">EnumeratedValue</a></li><li><a href="ExistentialQuantifier.html">ExistentialQuantifier</a></li><li><a href="Explainer.html">Explainer</a></li><li><a href="FindBySelector.html">FindBySelector</a></li><li><a href="FunctionNamedArgument.html">FunctionNamedArgument</a></li><li><a href="GreaterOrEqual.html">GreaterOrEqual</a></li><li><a href="GreaterThan.html">GreaterThan</a></li><li><a href="Identity.html">Identity</a></li><li><a href="InputArgument.html">InputArgument</a></li><li><a href="IsEqualTo.html">IsEqualTo</a></li><li><a href="LesserOrEqual.html">LesserOrEqual</a></li><li><a href="LesserThan.html">LesserThan</a></li><li><a href="Multiplication.html">Multiplication</a></li><li><a href="NamedArgument.html">NamedArgument</a></li><li><a href="NamedArgumentValue.html">NamedArgumentValue</a></li><li><a href="NaryConjunctiveVerdict.html">NaryConjunctiveVerdict</a></li><li><a href="NaryDisjunctiveVerdict.html">NaryDisjunctiveVerdict</a></li><li><a href="NaryValue.html">NaryValue</a></li><li><a href="Nothing.html">Nothing</a></li><li><a href="NthItem.html">NthItem</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="OrNode.html">OrNode</a></li><li><a href="Path.html">Path</a></li><li><a href="PathValue.html">PathValue</a></li><li><a href="Quantifier.html">Quantifier</a></li><li><a href="QuantifierConjunctiveVerdict.html">QuantifierConjunctiveVerdict</a></li><li><a href="QuantifierDisjunctiveVerdict.html">QuantifierDisjunctiveVerdict</a></li><li><a href="QuantifierVerdict.html">QuantifierVerdict</a></li><li><a href="ReturnValue.html">ReturnValue</a></li><li><a href="Substraction.html">Substraction</a></li><li><a href="TraceabilityNode.html">TraceabilityNode</a></li><li><a href="Tracer.html">Tracer</a></li><li><a href="UniversalQuantifier.html">UniversalQuantifier</a></li><li><a href="Unknown.html">Unknown</a></li><li><a href="UnknownNode.html">UnknownNode</a></li><li><a href="Value.html">Value</a></li><li><a href="Verdict.html">Verdict</a></li><li><a href="WebElementFunction.html">WebElementFunction</a></li></ul><h3>Global</h3><ul><li><a href="global.html#evaluateDom">evaluateDom</a></li><li><a href="global.html#getVerdict">getVerdict</a></li><li><a href="global.html#same_object">same_object</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 25 2021 08:44:50 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Jan 28 2021 09:08:21 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: modules/function.mjs</title>
+    <title>JSDoc: Source: modules/enumerate.mjs</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: modules/function.mjs</h1>
+    <h1 class="page-title">Source: modules/enumerate.mjs</h1>
 
     
 
@@ -52,156 +52,107 @@
   SOFTWARE.
 */
 
-// Local imports
-import { Designator } from "./designator.mjs";
+import { AtomicFunction, AtomicFunctionReturnValue } from "./atomic-function.mjs";
+import { CompoundDesignator, Designator } from "./designator.mjs";
 import { Value } from "./value.mjs";
 
 /**
- * Abstract class representing a function.
+ * 
+ * @extends AtomicFunction
  */
-class AbstractFunction {
+class Enumerate extends AtomicFunction {
     constructor() {
-        // Nothing to do
+        super(1);
     }
 
-    /**
-     * Converts an arbitrary object into a {@link Function}.
-     * @param o The object to convert. If o is a function, it is returned as is.
-     * Otherwise, o is converted into a {@link ConstantFunction} that returns
-     * the {@link Value} lifted from o.
-     * @return The converted function
-     */
-    static lift(o) {
-        if (o instanceof AbstractFunction) {
-            return o;
+    compute() {
+        var list = arguments[0].getValue();
+        if (!Array.isArray(list)) {
+            throw "Invalid argument type";
         }
-        return new ConstantFunction(Value.lift(o));
+        var val_list = [];
+        var out_list = [];
+        for (var i = 0; i &lt; list.length; i++) {
+            val_list.push(Value.lift(list[i]));
+        }
+        for (var i = 0; i &lt; list.length; i++) {
+            out_list.push(new EnumeratedValue(i, val_list));
+        }
+        return new AtomicFunctionReturnValue(this, out_list, ...arguments);
     }
 
-    /**
-     * Computes the return value of the function from its provided input
-     * arguments.
-     * @param arguments A variable number of input arguments
-     * @return The return value of the function
-     */
-    evaluate() {
-        // To be overridden by descendants
+    getValue() {
         return null;
-    }
-
-    /**
-     * Binds a variable name to a specific value.
-     * @param variable The name of the variable
-     * @param value The value to bind this variable to
-     */
-    setTo(variable, value) {
-        // To be overridden by descendants
-    }
-
-    /**
-     * Gets the arity of the function.
-     * @return The arity
-     */
-    getArity() {
-        return 0;
-    }
-
-    equals(o) {
-        if (o == null || !(o instanceof AbstractFunction)) {
-            return false;
-        }
-        return o == this;
     }
 }
 
 /**
- * Atomic designator representing the return value of a function.
- * @extends Designator
+ * 
+ * @extends Value
  */
-class ReturnValue extends Designator {
-    static instance = new ReturnValue();
-
-    constructor() {
+class EnumeratedValue extends Value {
+    constructor(index, input_list) {
         super();
+        this.index = index;
+        this.inputList = input_list;
+    }
+
+    query(q, d, root, factory) {
+        var leaves = [];
+        var new_d = CompoundDesignator.create(d.tail(), new NthItem(this.index));
+        var n_it = factory.getObjectNode(new_d, this.inputList);
+        root.addChild(n_it);
+        var v = this.inputList[this.index];
+        var sub_leaves = v.query(q, new_d, n_it, factory);
+        leaves.push(...sub_leaves);
+        return leaves;
+    }
+
+    getValue() {
+        return this.inputList[this.index].getValue();
     }
 
     toString() {
-        return "!";
+        return this.inputList[this.index].getValue().toString();
     }
 
     equals(o) {
-        if (o == null || !(o instanceof ReturnValue)) {
+        if (o == null || !(o instanceof EnumeratedValue)) {
             return false;
         }
-        return true;
+        return this.index == o.index &amp;&amp; this.inputList == o.inputList;
     }
 }
 
 /**
- * Atomic designator representing one of the input arguments of a function.
- * @param index The index of the input argument
+ * 
  * @extends Designator
  */
-class InputArgument extends Designator {
+class NthItem extends Designator {
     constructor(index) {
         super();
-
-        /**
-         * The index of the input argument
-         */
         this.index = index;
     }
 
-    /**
-     * Gets the index of this argument.
-     */
+    appliesTo(o) {
+        return Array.isArray(o);
+    }
+
     getIndex() {
         return this.index;
     }
 
     toString() {
-        return "@" + this.index;
-    }
-
-    equals(o) {
-        if (o == null || !(o instanceof InputArgument)) {
-            return false;
-        }
-        return o.getIndex() == this.index;
+        return "Element #" + (this.index + 1);
     }
 }
 
 /**
- * Function or arity 0 that always returns the same object.
- * @extends AbstractFunction
+ * Package exports
  */
-class ConstantFunction extends AbstractFunction {
-    /**
-     * Creates a new instance of constant function.
-     * @param o The object to return
-     */
-    constructor(o) {
-        super();
-        this.value = Value.lift(o);
-    }
+export { Enumerate, EnumeratedValue, NthItem };
 
-    evaluate() {
-        return this.value;
-    }
-
-    getArity() {
-        return 0;
-    }
-
-    set(variable, value) {
-        return this;
-    }
-}
-
-/**
- * Module exports
- */
-export { AbstractFunction, ConstantFunction, InputArgument, ReturnValue };</code></pre>
+// :wrap=soft:tabSize=2:indentWidth=2:</code></pre>
         </article>
     </section>
 
