@@ -25,48 +25,40 @@
 */
 
 // Local imports
-import {InputArgument, ReturnValue} from "./function.mjs";
-import {AtomicFunction} from "./atomic-function.mjs";
-import {NaryValue} from "./value.mjs";
-import {CompoundDesignator} from "./designator.mjs";
+import { InputArgument, ReturnValue } from "./function.mjs";
+import { AtomicFunction } from "./atomic-function.mjs";
+import { NaryValue } from "./value.mjs";
+import { CompoundDesignator } from "./designator.mjs";
 
 /**
  * Abstract class representing the binary Boolean connectives "and" and "or".
  * @extends AtomicFunction
  */
-class BooleanConnective extends AtomicFunction
-{
-	constructor(arity)
-	{
-		super(arity);
-	}
+class BooleanConnective extends AtomicFunction {
+    constructor(arity) {
+        super(arity);
+    }
 
-	compute()
-	{
-		var false_values = [];
-		var false_positions = [];
-		var true_values = [];
-		var true_positions = [];
-		for (var i = 0; i < arguments.length; i++)
-		{
-			var o = arguments[i].getValue();
-			if (typeof(o) != "boolean")
-			{
-				throw "Invalid argument type";
-			}
-			if (o == true)
-			{
-				true_values.push(arguments[i]);
-				true_positions.push(i);
-			}
-			else
-			{
-				false_values.push(arguments[i]);
-				false_positions.push(i);
-			}
-		}
-		return this.getBooleanValue(false_values, true_values, false_positions, true_positions);
-	}
+    compute() {
+        var false_values = [];
+        var false_positions = [];
+        var true_values = [];
+        var true_positions = [];
+        for (var i = 0; i < arguments.length; i++) {
+            var o = arguments[i].getValue();
+            if (typeof(o) != "boolean") {
+                throw "Invalid argument type";
+            }
+            if (o == true) {
+                true_values.push(arguments[i]);
+                true_positions.push(i);
+            } else {
+                false_values.push(arguments[i]);
+                false_positions.push(i);
+            }
+        }
+        return this.getBooleanValue(false_values, true_values, false_positions, true_positions);
+    }
 }
 
 /**
@@ -74,37 +66,30 @@ class BooleanConnective extends AtomicFunction
  * node.
  * @extends NaryValue
  */
-class NaryDisjunctiveVerdict extends NaryValue
-{
-	constructor(value, values, positions)
-	{
-		super(value, values, positions);
-	}
+class NaryDisjunctiveVerdict extends NaryValue {
+    constructor(value, values, positions) {
+        super(value, values, positions);
+    }
 
-	query(q, d, root, factory)
-	{
-		var leaves = [];
-		var n = factory.getOrNode();
-		for (var i = 0; i < this.values.length; i++)
-		{
-			var v = this.values[i];
-			var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
-			var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
-			var sub_leaves = [];
-			sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
-			leaves.push(...sub_leaves);
-			n.addChild(sub_root);
-		}
-		if (n.getChildren().length == 1)
-		{
-			root.addChild(n.getChildren()[0]);
-		}
-		else
-		{
-			root.addChild(n);
-		}
-		return leaves;
-	}
+    query(q, d, root, factory) {
+        var leaves = [];
+        var n = factory.getOrNode();
+        for (var i = 0; i < this.values.length; i++) {
+            var v = this.values[i];
+            var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
+            var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
+            var sub_leaves = [];
+            sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
+            leaves.push(...sub_leaves);
+            n.addChild(sub_root);
+        }
+        if (n.getChildren().length == 1) {
+            root.addChild(n.getChildren()[0]);
+        } else {
+            root.addChild(n);
+        }
+        return leaves;
+    }
 }
 
 /**
@@ -112,123 +97,103 @@ class NaryDisjunctiveVerdict extends NaryValue
  * node.
  * @extends NaryValue
  */
-class NaryConjunctiveVerdict extends NaryValue
-{
-	constructor(value, values = [], positions = [])
-	{
-		super(value, values, positions);
-	}
+class NaryConjunctiveVerdict extends NaryValue {
+    constructor(value, values = [], positions = []) {
+        super(value, values, positions);
+    }
 
-	query(q, d, root, factory)
-	{
-		var leaves = [];
-		var n = factory.getAndNode();
-		for (var i = 0; i < this.values.length; i++)
-		{
-			var v = this.values[i];
-			var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
-			var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
-			var sub_leaves = [];
-			sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
-			leaves.push(...sub_leaves);
-			n.addChild(sub_root);
-		}
-		if (n.getChildren().length == 1)
-		{
-			root.addChild(n.getChildren()[0]);
-		}
-		else
-		{
-			root.addChild(n);
-		}
-		return leaves;
-	}
+    query(q, d, root, factory) {
+        var leaves = [];
+        var n = factory.getAndNode();
+        for (var i = 0; i < this.values.length; i++) {
+            var v = this.values[i];
+            var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
+            var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
+            var sub_leaves = [];
+            sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
+            leaves.push(...sub_leaves);
+            n.addChild(sub_root);
+        }
+        if (n.getChildren().length == 1) {
+            root.addChild(n.getChildren()[0]);
+        } else {
+            root.addChild(n);
+        }
+        return leaves;
+    }
 }
 
 /**
  * The Boolean "and" function.
  * @extends BooleanConnective
  */
-class BooleanAnd extends BooleanConnective
-{
-	constructor(arity = 2)
-	{
-		super(arity);
-	}
+class BooleanAnd extends BooleanConnective {
+    constructor(arity = 2) {
+        super(arity);
+    }
 
-	/**
-	 * Gets the Boolean value.
-	 * @param false_values 
-	 * @param true_values 
-	 * @param false_positions 
-	 * @param true_positions 
-	 */
-	getBooleanValue(false_values = [], true_values = [], false_positions = [], true_positions = [])
-	{
-		if (false_values.length == 0)
-		{
-			return new NaryConjunctiveVerdict(true, true_values, true_positions);
-		}
-		return new NaryDisjunctiveVerdict(false, false_values, false_positions);
-	}
+    /**
+     * Gets the Boolean value.
+     * @param false_values 
+     * @param true_values 
+     * @param false_positions 
+     * @param true_positions 
+     */
+    getBooleanValue(false_values = [], true_values = [], false_positions = [], true_positions = []) {
+        if (false_values.length == 0) {
+            return new NaryConjunctiveVerdict(true, true_values, true_positions);
+        }
+        return new NaryDisjunctiveVerdict(false, false_values, false_positions);
+    }
 
-	toString()
-	{
-		return "And";
-	}
+    toString() {
+        return "And";
+    }
 }
 
 /**
  * The Boolean "or" function.
+ * @extends BooleanConnective
  */
-class BooleanOr extends BooleanConnective
-{
-	constructor(arity = 2)
-	{
-		super(arity);
-	}
+class BooleanOr extends BooleanConnective {
+    constructor(arity = 2) {
+        super(arity);
+    }
 
-	getBooleanValue(false_values = [], true_values = [], false_positions = [], true_positions = [])
-	{
-		if (true_values.length == 0)
-		{
-			return new NaryConjunctiveVerdict(false, false_values, false_positions);
-		}
-		return new NaryDisjunctiveVerdict(true, true_values, true_positions);
-	}
+    getBooleanValue(false_values = [], true_values = [], false_positions = [], true_positions = []) {
+        if (true_values.length == 0) {
+            return new NaryConjunctiveVerdict(false, false_values, false_positions);
+        }
+        return new NaryDisjunctiveVerdict(true, true_values, true_positions);
+    }
 
-	toString()
-	{
-		return "Or";
-	}
+    toString() {
+        return "Or";
+    }
 }
 
 /**
  * The Boolean "not" function.
+ * @extends BooleanConnective
  */
-class BooleanNot extends AtomicFunction
-{
-	constructor()
-	{
-		super(1);
-	}
+class BooleanNot extends BooleanConnective {
+    constructor() {
+        super(1);
+    }
 
-	getValue()
-	{
-		if (typeof(arguments[0]) != "boolean")
-		{
-			throw "Invalid argument type";
-		}
-		return !arguments[0];
-	}
+    getValue() {
+        if (typeof(arguments[0]) != "boolean") {
+            throw "Invalid argument type";
+        }
+        return !arguments[0];
+    }
 
-	toString()
-	{
-		return "Not";
-	}
+    toString() {
+        return "Not";
+    }
 }
 
 /**
  * Package exports
  */
-export {BooleanAnd, BooleanNot, BooleanOr, NaryConjunctiveVerdict, NaryDisjunctiveVerdict};
+export { BooleanAnd, BooleanNot, BooleanOr, NaryConjunctiveVerdict, NaryDisjunctiveVerdict };
