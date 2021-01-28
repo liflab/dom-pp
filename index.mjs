@@ -38,14 +38,27 @@ import { ConstantDesignator, ConstantValue, NaryValue, Value } from "./modules/v
 import { AtomicFunction, AtomicFunctionReturnValue, Identity } from "./modules/atomic-function.mjs";
 import { BooleanAnd, BooleanOr, BooleanNot, NaryConjunctiveVerdict, NaryDisjunctiveVerdict } from "./modules/booleans.mjs";
 import { AndNode, Explainer, DesignatedObject, ObjectNode, OrNode, Tracer, UnknownNode } from "./modules/tracer.mjs";
-import { Addition, GreaterOrEqual, GreaterThan, IsEqualTo } from "./modules/numbers.mjs";
+import { Addition, Substraction, Multiplication, Division, GreaterOrEqual, LesserOrEqual, GreaterThan, LesserThan, IsEqualTo } from "./modules/numbers.mjs";
 import { Enumerate, EnumeratedValue, NthItem } from "./modules/enumerate.mjs";
-import {Argument, ArgumentValue, ComposedFunction, ComposedFunctionValue,
-	FunctionNamedArgument, NamedArgument, NamedArgumentValue} from "./modules/composed-function.mjs";
-import {ExistentialQuantifier, Quantifier, QuantifierConjunctiveVerdict, 
-	QuantifierDisjunctiveVerdict, QuantifierVerdict, UniversalQuantifier} from "./modules/quantifier.mjs";
-import {DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, Path, PathValue, WebElementFunction} from "./modules/web-element.mjs";
-import {TestCondition, TestDriver, TestResult, Verdict} from "./modules/verdict.mjs";
+import {
+    Argument,
+    ArgumentValue,
+    ComposedFunction,
+    ComposedFunctionValue,
+    FunctionNamedArgument,
+    NamedArgument,
+    NamedArgumentValue
+} from "./modules/composed-function.mjs";
+import {
+    ExistentialQuantifier,
+    Quantifier,
+    QuantifierConjunctiveVerdict,
+    QuantifierDisjunctiveVerdict,
+    QuantifierVerdict,
+    UniversalQuantifier
+} from "./modules/quantifier.mjs";
+import { DimensionHeight, DimensionWidth, BackgroundColor, ElementAttribute, ElementAttributeValue, FindBySelector, Path, PathValue, WebElementFunction } from "./modules/web-element.mjs";
+import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 
 /**
  * Evaluates a set of conditions on a DOM tree
@@ -55,18 +68,15 @@ import {TestCondition, TestDriver, TestResult, Verdict} from "./modules/verdict.
  * @return An array of data trees corresponding to the explanation for
  * each condition that evaluates to <tt>false</tt>.
  */
-function evaluateDom(root, conditions = [])
-{
-	var verdicts = [];
-	for (var i = 0; i < conditions.length; i++)
-	{
-		var verdict = getVerdict(root, conditions[i]);
-		if (verdict != null)
-		{
-			verdicts.push(verdict);
-		}
-	}
-	return verdicts;
+function evaluateDom(root, conditions = []) {
+    var verdicts = [];
+    for (var i = 0; i < conditions.length; i++) {
+        var verdict = getVerdict(root, conditions[i]);
+        if (verdict != null) {
+            verdicts.push(verdict);
+        }
+    }
+    return verdicts;
 }
 
 /**
@@ -78,108 +88,136 @@ function evaluateDom(root, conditions = [])
  * @return A data tree explaining the violation of the condition if it
  * evaluates to <tt>false</tt>, and <tt>null</tt> if the condition is fulfilled.
  */
-function getVerdict(root, condition)
-{
-	if (root == null)
-	{
-		return null;
-	}
-	// Create a "fake" data tree
-	var tree = dataTree.create();
-	var n1 = tree.insert({
-		type: "OR"});
-	var n2 = tree.insertToNode(n1, {
-		type: "object",
-	  part: ["width"],
-	  subject: "body[1]/section[2]/div[1]"});
-	var n3 = tree.insertToNode(n1, {
-		type: "AND"});
-	var n4 = tree.insertToNode(n3, {
-		type: "object",
-	  part: ["characters 2-10", "text"],
-	  subject: "body[1]/div[2]"});
-	var n5 = tree.insertToNode(n3, "OR");
-	var n6 = tree.insertToNode(n5, {
-		type: "object",
-	  part: ["value of"],
-	  subject: "constant 100"});
-	var n7 = tree.insertToNode(n5, {
-		type: "object",
-	  part: ["width"],
-	  subject: "body[1]/section[2]/div[1]"});
-	var n8 = tree.insertToNode(n3, {
-		type: "object",
-	  part: ["width"],
-	  subject: "body[1]/section[2]/div[1]"});
-	return tree;
+function getVerdict(root, condition) {
+    if (root == null) {
+        return null;
+    }
+    // Create a "fake" data tree
+    var tree = dataTree.create();
+    var n1 = tree.insert({
+        type: "OR"
+    });
+    var n2 = tree.insertToNode(n1, {
+        type: "object",
+        part: ["width"],
+        subject: "body[1]/section[2]/div[1]"
+    });
+    var n3 = tree.insertToNode(n1, {
+        type: "AND"
+    });
+    var n4 = tree.insertToNode(n3, {
+        type: "object",
+        part: ["characters 2-10", "text"],
+        subject: "body[1]/div[2]"
+    });
+    var n5 = tree.insertToNode(n3, "OR");
+    var n6 = tree.insertToNode(n5, {
+        type: "object",
+        part: ["value of"],
+        subject: "constant 100"
+    });
+    var n7 = tree.insertToNode(n5, {
+        type: "object",
+        part: ["width"],
+        subject: "body[1]/section[2]/div[1]"
+    });
+    var n8 = tree.insertToNode(n3, {
+        type: "object",
+        part: ["width"],
+        subject: "body[1]/section[2]/div[1]"
+
+    });
+    var n9 = tree.insertToNode(n3, {
+        type: "object",
+
+        part: [Designator],
+        subject: DesignatedObject.AndNode
+
+    });
+
+    return tree;
 }
+
+function getTreeFromWitness(w) {
+    if (w == null) {
+        return null;
+    }
+    return w;
+}
+
 
 /**
  * Export public API
  */
-export
-{
-		evaluateDom,
-		AbstractFunction,
-		Addition,
-		All,
-		AndNode,
-		Argument,
-		ArgumentValue,
-		AtomicFunction,
-		AtomicFunctionReturnValue,
-		BooleanAnd,
-		BooleanNot,
-		BooleanOr,
-		ComposedFunction,
-		ComposedFunctionValue,
-		CompoundDesignator,
-		ConstantFunction,
-		ConstantDesignator,
-		ConstantValue,
-		Designator,
-		DesignatedObject,
-		DimensionHeight,
-		DimensionWidth,
-		ElementAttribute,
-		ElementAttributeValue,
-		Enumerate,
-		EnumeratedValue,
-		ExistentialQuantifier,
-		Explainer,
-		FindBySelector,
-		FunctionNamedArgument,
-		GreaterOrEqual,
-		GreaterThan,
-		Identity,
-		InputArgument,
-		IsEqualTo,
-		NamedArgument,
-		NamedArgumentValue,
-		NaryConjunctiveVerdict,
-		NaryDisjunctiveVerdict,
-		NaryValue,
-		NthItem,
-		Nothing,
-		ObjectNode,
-		OrNode,
-		Path,
-		PathValue,
-		Quantifier,
-		QuantifierConjunctiveVerdict,
-		QuantifierDisjunctiveVerdict,
-		QuantifierVerdict,
-		ReturnValue,
-		TestCondition,
-		TestDriver,
-		TestResult,
-		Tracer,
-		UniversalQuantifier,
-		Unknown,
-		UnknownNode,
-		Value,
-		Verdict,
-		WebElementFunction
+export {
+    evaluateDom,
+    getTreeFromWitness,
+    AbstractFunction,
+    Addition,
+    All,
+    AndNode,
+    Argument,
+    ArgumentValue,
+    AtomicFunction,
+    AtomicFunctionReturnValue,
+    BackgroundColor,
+    BooleanAnd,
+    BooleanNot,
+    BooleanOr,
+    ComposedFunction,
+    ComposedFunctionValue,
+    CompoundDesignator,
+    ConstantFunction,
+    ConstantDesignator,
+    ConstantValue,
+    Designator,
+    DesignatedObject,
+    DimensionHeight,
+    DimensionWidth,
+    Division,
+    ElementAttribute,
+    ElementAttributeValue,
+    Enumerate,
+    EnumeratedValue,
+    ExistentialQuantifier,
+    Explainer,
+    FindBySelector,
+    FunctionNamedArgument,
+    GreaterOrEqual,
+    GreaterThan,
+    Identity,
+    InputArgument,
+    IsEqualTo,
+    LesserThan,
+    LesserOrEqual,
+    Multiplication,
+    NamedArgument,
+    NamedArgumentValue,
+    NaryConjunctiveVerdict,
+    NaryDisjunctiveVerdict,
+    NaryValue,
+    NthItem,
+    Nothing,
+    ObjectNode,
+    OrNode,
+    Path,
+    PathValue,
+    Quantifier,
+    QuantifierConjunctiveVerdict,
+    QuantifierDisjunctiveVerdict,
+    QuantifierVerdict,
+    ReturnValue,
+    Substraction,
+    TestCondition,
+    TestDriver,
+    TestResult,
+    Tracer,
+    UniversalQuantifier,
+    Unknown,
+    UnknownNode,
+    Value,
+    Verdict,
+    WebElementFunction
 };
 
 // :wrap=soft:tabSize=2:
