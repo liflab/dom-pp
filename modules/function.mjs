@@ -25,152 +25,174 @@
 */
 
 // Local imports
-import { Designator } from "./designator.mjs";
-import { Value } from "./value.mjs";
+import {Designator} from "./designator.mjs";
+import {Value} from "./value.mjs";
 
 /**
  * Abstract class representing a function.
  */
-class AbstractFunction {
-    constructor() {
-        // Nothing to do
-    }
+class AbstractFunction
+ {
+	constructor()
+	{
+		// Nothing to do
+	}
 
-    /**
-     * Converts an arbitrary object into a {@link Function}.
-     * @param o The object to convert. If o is a function, it is returned as is.
-     * Otherwise, o is converted into a {@link ConstantFunction} that returns
-     * the {@link Value} lifted from o.
-     * @return The converted function
-     */
-    static lift(o) {
-        if (o instanceof AbstractFunction) {
-            return o;
-        }
-        return new ConstantFunction(Value.lift(o));
-    }
+	/**
+	 * Converts an arbitrary object into a {@link Function}.
+	 * @param o The object to convert. If o is a function, it is returned as is.
+	 * Otherwise, o is converted into a {@link ConstantFunction} that returns
+	 * the {@link Value} lifted from o.
+	 * @return The converted function
+	 */
+	static lift(o) 
+	{
+		if (o instanceof AbstractFunction)
+		{
+			return o;
+		}
+		return new ConstantFunction(Value.lift(o));
+	}
 
-    /**
-     * Computes the return value of the function from its provided input
-     * arguments.
-     * @param arguments A variable number of input arguments
-     * @return The return value of the function
-     */
-    evaluate() {
-        // To be overridden by descendants
-        return null;
-    }
+	/**
+	 * Computes the return value of the function from its provided input
+	 * arguments.
+	 * @param arguments A variable number of input arguments
+	 * @return The return value of the function
+	 */
+	evaluate()
+	{
+		// To be overridden by descendants
+		return null;
+	}
 
-    /**
-     * Binds a variable name to a specific value.
-     * @param variable The name of the variable
-     * @param value The value to bind this variable to
-     */
-    setTo(variable, value) {
-        // To be overridden by descendants
-    }
+	/**
+	 * Binds a variable name to a specific value.
+	 * @param variable The name of the variable
+	 * @param value The value to bind this variable to
+	 */
+	setTo(variable, value) 
+	{
+		// To be overridden by descendants
+	}
 
-    /**
-     * Gets the arity of the function.
-     * @return The arity
-     */
-    getArity() {
-        return 0;
-    }
+	/**
+	 * Gets the arity of the function.
+	 * @return The arity
+	 */
+	getArity()
+	{
+		return 0;
+	}
 
-    equals(o) {
-        if (o == null || !(o instanceof AbstractFunction)) {
-            return false;
-        }
-        return o == this;
-    }
+	equals(o)
+	{
+		if (o == null || !(o instanceof AbstractFunction))
+		{
+			return false;
+		}
+		return o == this;
+	}
 }
 
 /**
  * Atomic designator representing the return value of a function.
- * @extends Designator
  */
-class ReturnValue extends Designator {
-    static instance = new ReturnValue();
+class ReturnValue extends Designator
+ {
+	static instance = new ReturnValue();
 
-    constructor() {
-        super();
-    }
+	constructor()
+	{
+		super();
+	}
 
-    toString() {
-        return "!";
-    }
+	toString()
+	{
+		return "!";
+	}
 
-    equals(o) {
-        if (o == null || !(o instanceof ReturnValue)) {
-            return false;
-        }
-        return true;
-    }
+	equals(o)
+	{
+		if (o == null || !(o instanceof ReturnValue))
+		{
+			return false;
+		}
+		return true;
+	}
 }
 
 /**
  * Atomic designator representing one of the input arguments of a function.
  * @param index The index of the input argument
- * @extends Designator
  */
-class InputArgument extends Designator {
-    constructor(index) {
-        super();
+class InputArgument extends Designator
+{
+	constructor(index)
+	{
+		super();
 
-        /**
-         * The index of the input argument
-         */
-        this.index = index;
-    }
+		/**
+		 * The index of the input argument
+		 */
+		this.index = index;
+	}
 
-    /**
-     * Gets the index of this argument.
-     */
-    getIndex() {
-        return this.index;
-    }
+	/**
+	 * Gets the index of this argument.
+	 */
+	getIndex()
+	{
+		return this.index;
+	}
 
-    toString() {
-        return "@" + this.index;
-    }
+	toString()
+	{
+		return "@" + this.index;
+	}
 
-    equals(o) {
-        if (o == null || !(o instanceof InputArgument)) {
-            return false;
-        }
-        return o.getIndex() == this.index;
-    }
+	equals(o)
+	{
+		if (o == null || !(o instanceof InputArgument))
+		{
+			return false;
+		}
+		return o.getIndex() == this.index;
+	}
 }
 
 /**
  * Function or arity 0 that always returns the same object.
- * @extends AbstractFunction
  */
-class ConstantFunction extends AbstractFunction {
-    /**
-     * Creates a new instance of constant function.
-     * @param o The object to return
-     */
-    constructor(o) {
-        super();
-        this.value = Value.lift(o);
-    }
+class ConstantFunction extends AbstractFunction
+{
+	/**
+	 * Creates a new instance of constant function.
+	 * @param o The object to return
+	 */
+	constructor(o)
+	{
+		super();
+		this.value = Value.lift(o);
+	}
 
-    evaluate() {
-        return this.value;
-    }
+	evaluate()
+	{
+		return this.value;
+	}
 
-    getArity() {
-        return 0;
-    }
+	getArity()
+	{
+		return 0;
+	}
 
-    set(variable, value) {
-        return this;
-    }
+	set(variable, value)
+	{
+		return this;
+	}
 }
 
 /**
  * Module exports
  */
-export { AbstractFunction, ConstantFunction, InputArgument, ReturnValue };
+export {AbstractFunction, ConstantFunction, InputArgument, ReturnValue};

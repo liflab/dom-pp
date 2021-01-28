@@ -33,50 +33,52 @@ import { Value } from "./value.mjs";
 import { Enumerate, EnumeratedValue } from "./enumerate.mjs";
 import { AtomicFunctionReturnValue } from "./atomic-function.mjs";
 
-/**
- * 
- * @extends AtomicFunction
- */
-class WebElementFunction extends AtomicFunction {
-    constructor(name) {
+class WebElementFunction extends AtomicFunction
+{
+    constructor(name)
+    {
         super(1);
         this.name = name;
     }
 
-    compute() {
+    compute()
+    {
         var val = this.get(arguments[0].getValue());
         return new ElementAttributeValue(this.name, arguments[0], val);
     }
 
-    get(e) {
+    get(e)
+    {
         return null; // To be overridden by descendants
     }
 }
 
 /**
  * Designator that points to the value of an attribute for some DOM node.
- * @extends Designator
  */
-class ElementAttribute extends Designator {
+class ElementAttribute extends Designator
+{
     /**
-     * Creates a new instance of the designator.
+     * Creates a ne instance of the designator.
      * @param name {String} The name of the attribute
      */
-    constructor(name) {
+    constructor(name)
+    {
         super();
         this.name = name;
     }
 
-    toString() {
+    toString()
+    {
         return this.name;
     }
 }
 
 /**
  * The value of an attribute for some DOM node.
- * @extends Value
  */
-class ElementAttributeValue extends Value {
+class ElementAttributeValue extends Value
+{
     /**
      * Creates a new instance of the value.
      * @param name {String} The name of the attribute in the DOM node
@@ -84,22 +86,26 @@ class ElementAttributeValue extends Value {
      * DOM node
      * @param v {Object|Value} The value of the attribute in the DOM node
      */
-    constructor(name, input, v) {
+    constructor(name, input, v)
+    {
         super();
         this.name = name;
         this.input = Value.lift(input);
         this.value = Value.lift(v);
     }
 
-    getValue() {
+    getValue()
+    {
         return this.value.getValue();
     }
 
-    toString() {
+    toString()
+    {
         return this.value.getValue().toString();
     }
 
-    query(q, d, root, factory) {
+    query(q, d, root, factory)
+    {
         var leaves = [];
         var new_d = CompoundDesignator.create(new ElementAttribute(this.name), d);
         var n = factory.getObjectNode(new_d, this.input);
@@ -111,17 +117,19 @@ class ElementAttributeValue extends Value {
 
 /**
  * Function that extracts the width of a DOM node.
- * @extends WebElementFunction
  */
-class DimensionWidth extends WebElementFunction {
+class DimensionWidth extends WebElementFunction
+{
     /**
      * Creates a new instance of the function.
      */
-    constructor() {
+    constructor()
+    {
         super("width");
     }
 
-    get(e) {
+    get(e)
+    {
         var s = e.style.width;
         return parseFloat(s);
     }
@@ -129,73 +137,58 @@ class DimensionWidth extends WebElementFunction {
 
 /**
  * Function that extracts the height of a DOM node.
- * @extends WebElementFunction
  */
-class DimensionHeight extends WebElementFunction {
+class DimensionHeight extends WebElementFunction
+{
     /**
      * Creates a new instance of the function.
      */
-    constructor() {
+    constructor()
+    {
         super("height");
     }
 
-    get(e) {
+    get(e)
+    {
         var s = e.style.height;
         return parseFloat(s);
     }
 }
 
 /**
- * Function that extracts the background color of a DOM.
- * @extends Value
- */
-class BackgroundColor extends WebElementFunction {
-    /**
-     * Creates a new instance of the function.
-     */
-    constructor() {
-        super("background");
-    }
-
-    get(e) {
-        var s = e.style.backgroundColor //e.style.backgroundColor = "yellow";
-        return s;
-    }
-}
-
-/**
  * Designator that points to an element in a DOM tree based on
  * an XPath expression.
- * @extends Designator
  */
-class Path extends Designator {
+class Path extends Designator
+{
     /**
      * Creates a new instance of the designator.
      * @param path {String} A string containing an XPath expression
      */
-    constructor(path) {
+    constructor(path)
+    {
         super();
         this.path = path;
     }
 
-    toString() {
+    toString()
+    {
         return this.path;
     }
 }
 
-/**
- * The value of the path
- * @extends Value
- */
-class PathValue extends Value {
-    constructor(p, root, value) {
+class PathValue extends Value
+{
+    constructor(p, root, value)
+    {
         super();
         this.value = Value.lift(value);
         this.root = Value.lift(root);
         this.path = p;
     }
 
-    query(q, d, root, factory) {
+    query(q, d, root, factory)
+    {
         var leaves = [];
         var new_d = CompoundDesignator.create(d.tail(), this.path);
         var n = factory.getObjectNode(new_d, this.root);
@@ -204,31 +197,36 @@ class PathValue extends Value {
         return leaves;
     }
 
-    getValue() {
+    getValue()
+    {
         return this.value.getValue();
     }
 
-    toString() {
+    toString()
+    {
         return this.value.toString();
     }
 }
 
 /**
  * Function that produces a list of elements that match a given CSS selector.
- * @extends Enumerate
  */
-class FindBySelector extends Enumerate {
+class FindBySelector extends Enumerate
+{
     /**
      * Creates a new instance of the function.
      * @param selector The CSS selector used to fetch elements
      */
-    constructor(selector) {
+    constructor(selector)
+    {
         super();
         this.selector = selector;
     }
 
-    evaluate() {
-        if (arguments.length != 1) {
+    evaluate()
+    {
+        if (arguments.length != 1)
+        {
             throw "Invalid number of arguments";
         }
         var v = Value.lift(arguments[0]);
@@ -236,30 +234,33 @@ class FindBySelector extends Enumerate {
         var elm_list = root.querySelectorAll(this.selector);
         var val_list = [];
         var out_list = [];
-        for (var i = 0; i < elm_list.length; i++) {
+        for (var i = 0; i < elm_list.length; i++)
+        {
             var path = FindBySelector.getPathTo(elm_list[i]);
             var pv = new PathValue(new Path(path), root, elm_list[i]);
             val_list.push(pv);
         }
-        for (var i = 0; i < val_list.length; i++) {
+        for (var i = 0; i < val_list.length; i++)
+        {
             out_list.push(new EnumeratedValue(i, val_list));
         }
         return new AtomicFunctionReturnValue(this, out_list, v);
     }
 
-    static getPathTo(element) {
-        if (element.id !== '')
-            return 'id("' + element.id + '")';
+    static getPathTo(element)
+     {
+        if (element.id!=='')
+            return 'id("'+element.id+'")';
         if (element.tagName == "BODY")
             return element.tagName;
-
-        var ix = 0;
-        var siblings = element.parentNode.childNodes;
-        for (var i = 0; i < siblings.length; i++) {
-            var sibling = siblings[i];
-            if (sibling === element)
-                return getPathTo(element.parentNode) + '/' + element.tagName + '[' + (ix + 1) + ']';
-            if (sibling.nodeType === 1 && sibling.tagName === element.tagName)
+    
+        var ix= 0;
+        var siblings= element.parentNode.childNodes;
+        for (var i= 0; i<siblings.length; i++) {
+            var sibling= siblings[i];
+            if (sibling===element)
+                return getPathTo(element.parentNode)+'/'+element.tagName+'['+(ix+1)+']';
+            if (sibling.nodeType===1 && sibling.tagName===element.tagName)
                 ix++;
         }
     }
@@ -268,6 +269,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, Path, PathValue, WebElementFunction };
+export {DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, Path, PathValue, WebElementFunction};
 
 // :wrap=soft:tabSize=2:indentWidth=2:
