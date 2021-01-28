@@ -33,7 +33,16 @@ import pkg_chai from "chai";
 const { expect } = pkg_chai;
 
 // Local imports
-import {GreaterThan, GreaterOrEqual} from "../index.mjs";
+import {
+  Addition,
+  Division,
+  GreaterThan,
+  GreaterOrEqual,
+  LesserThan,
+  LesserOrEqual,
+  Multiplication,
+  Substraction,
+} from "../index.mjs";
 import { expect_to_throw } from "./test-util.mjs";
 
 /**
@@ -43,35 +52,56 @@ import { expect_to_throw } from "./test-util.mjs";
  * below).
  */
 describe("Arithmetic function tests", () => {
-
   describe("Greater than", () => {
+    it("First greater", () => {
+      var f = new GreaterThan();
+      var v = f.evaluate(3, 2);
+      expect(v.getValue()).to.be.true;
+    });
 
-      it("First greater", () => {
-        var f = new GreaterThan();
-        var v = f.evaluate(3, 2);
-        expect(v.getValue()).to.be.true;
-      });
+    it("Second greater", () => {
+      var f = new GreaterThan();
+      var v = f.evaluate(2, 3);
+      expect(v.getValue()).to.be.false;
+    });
 
-      it("Second greater", () => {
-        var f = new GreaterThan();
-        var v = f.evaluate(2, 3);
-        expect(v.getValue()).to.be.false;
-      });
+    it("Both equal", () => {
+      var f = new GreaterThan();
+      var v = f.evaluate(3, 3);
+      expect(v.getValue()).to.be.false;
+    });
 
-      it("Both equal", () => {
-        var f = new GreaterThan();
-        var v = f.evaluate(3, 3);
-        expect(v.getValue()).to.be.false;
-      });
+    it("Not a number", () => {
+      var f = new GreaterThan();
+      expect(expect_to_throw(f, "evaluate", 3)).to.be.true;
+    });
+  });
+  describe("Lesser than", () => {
+    it("First Lesser", () => {
+      var f = new LesserThan();
+      var v = f.evaluate(2, 3);
+      expect(v.getValue()).to.be.true;
+    });
 
-      it("Not a number", () => {
-        var f = new GreaterThan();
-        expect(expect_to_throw(f, "evaluate", 3)).to.be.true;
-      });
+    it("Second Lesser", () => {
+      var f = new LesserThan();
+      var v = f.evaluate(3, 2);
+      expect(v.getValue()).to.be.false;
+    });
+
+    it("Both equal", () => {
+      var f = new LesserThan();
+      var v = f.evaluate(3, 3);
+      expect(v.getValue()).to.be.false;
+    });
+
+    it("Not a number", () => {
+      var f = new GreaterThan();
+      expect(expect_to_throw(f, "evaluate", 3)).to.be.true;
+    });
   });
 
   describe("Greater or equal", () => {
-
     it("First greater", () => {
       var f = new GreaterOrEqual();
       var v = f.evaluate(3, 2);
@@ -85,17 +115,86 @@ describe("Arithmetic function tests", () => {
     });
 
     it("Both equal", () => {
-        var f = new GreaterOrEqual();
-        var v = f.evaluate(3, 3);
-        expect(v.getValue()).to.be.true;
-      });
+      var f = new GreaterOrEqual();
+      var v = f.evaluate(3, 3);
+      expect(v.getValue()).to.be.true;
+    });
 
     it("Not a number", () => {
       var f = new GreaterThan();
       expect(expect_to_throw(f, "evaluate", 3, "foo")).to.be.true;
     });
-});
+  });
+  describe("Lesser or equal", () => {
+    it("First Lesser", () => {
+      var f = new LesserOrEqual();
+      var v = f.evaluate(2, 3);
+      expect(v.getValue()).to.be.true;
+    });
 
+    it("Second Lesser", () => {
+      var f = new LesserOrEqual();
+      var v = f.evaluate(3, 2);
+      expect(v.getValue()).to.be.false;
+    });
+
+    it("Both equal", () => {
+      var f = new LesserOrEqual();
+      var v = f.evaluate(3, 3);
+      expect(v.getValue()).to.be.true;
+    });
+
+    it("Not a number", () => {
+      var f = new GreaterThan();
+      expect(expect_to_throw(f, "evaluate", 3, "foo")).to.be.true;
+    });
+  });
+  describe("Adding numbers", () => {
+    it("Addition", () => {
+      var f = new Addition();
+      var v = f.evaluate(3, 3);
+      expect(v.getValue()).to.be.equal(6);
+    });
+    it("Not a number", () => {
+      var f = new Addition();
+      expect(() => {
+        f.evaluate(3, "foo");
+      }).to.throw;
+    });
+  });
+  describe("Substracting numbers", () => {
+    it("Substraction", () => {
+      var f = new Substraction();
+      var v = f.evaluate(10, 6);
+      expect(v.getValue()).to.be.equal(4);
+    });
+    it("Not a number", () => {
+      var f = new GreaterThan();
+      expect(expect_to_throw(f, "evaluate", 3)).to.be.true;
+    });
+  });
+  describe("Multiplying numbers", () => {
+    it("Multiplication", () => {
+      var f = new Multiplication();
+      var v = f.evaluate(5, 5);
+      expect(v.getValue()).to.be.equal(25);
+    });
+    it("Not a number", () => {
+      var f = new GreaterThan();
+      expect(expect_to_throw(f, "evaluate", 3)).to.be.true;
+    });
+  });
+  describe("Dividing numbers", () => {
+    it("Division", () => {
+      var f = new Division();
+      var v = f.evaluate(5, 5);
+      expect(v.getValue()).to.be.equal(1);
+    });
+    it("Not a number", () => {
+      var f = new GreaterThan();
+      expect(expect_to_throw(f, "evaluate", 3)).to.be.true;
+    });
+  });
 });
 
 // :wrap=soft:tabSize=2:indentWidth=2:
