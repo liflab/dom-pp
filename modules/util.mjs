@@ -33,75 +33,59 @@
  * @param o2 The second object
  * @return true if the two objects are equal, false otherwise
  */
-function same_object(o1, o2)
-{
-	if (o1 == null && o2 == null)
-	{
-		return true;
-	}
-	if ((o1 == null && o2 != null) || (o1 != null && o2 == null))
-	{
-		return false;
-	}
-	// assert: o1 != null && o2 != null
-	if (typeof(o1).equals === "function")
-	{
-		// Two objects that implement equals
-		return o1.equals(o2);
-	}
-	return o1 == o2;
+function same_object(o1, o2) {
+    if (o1 == null && o2 == null) {
+        return true;
+    }
+    if ((o1 == null && o2 != null) || (o1 != null && o2 == null)) {
+        return false;
+    }
+    // assert: o1 != null && o2 != null
+    if (typeof(o1).equals === "function") {
+        // Two objects that implement equals
+        return o1.equals(o2);
+    }
+    return o1 == o2;
 }
 
-function map_get(m, k)
-{
-	for (const [key, value] of m)
-	{
-		if (key.equals(k))
-		{
-			return value;
-		}
-	}
-	return null;
+function map_get(m, k) {
+    for (const [key, value] of m) {
+        if (key.equals(k)) {
+            return value;
+        }
+    }
+    return null;
 }
 
-function map_contains(m, k)
-{
-	for (const [key, value] of m)
-	{
-		if (same_object(key, k))
-		{
-			return true;
-		}
-	}
-	return false;
+function map_contains(m, k) {
+    for (const [key, value] of m) {
+        if (same_object(key, k)) {
+            return true;
+        }
+    }
+    return false;
 }
 
-function map_put(m, k, v)
-{
-	for (const [key, value] of m)
-	{
-		if (same_object(key, k))
-		{
-			m.set(key, v);
-			return;
-		}
-	}
-	m.set(k, v);
+function map_put(m, k, v) {
+    for (const [key, value] of m) {
+        if (same_object(key, k)) {
+            m.set(key, v);
+            return;
+        }
+    }
+    m.set(k, v);
 }
 
-function set_contains(s, x)
-{
-	for (var i = 0; i < s.length; i++)
-	{
-		if (same_object(s[i], x))
-		{
-			return true;
-		}
-	}
-	return false;
+function set_contains(s, x) {
+    for (var i = 0; i < s.length; i++) {
+        if (same_object(s[i], x)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
  * Package exports
  */
-export {map_contains, map_get, map_put, same_object, set_contains};
+export { map_contains, map_get, map_put, same_object, set_contains };
