@@ -57,7 +57,7 @@ import {
     QuantifierVerdict,
     UniversalQuantifier
 } from "./modules/quantifier.mjs";
-import { DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, Path, PathValue, WebElementFunction } from "./modules/web-element.mjs";
+import { BackgroundColor, Color, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, MarginTop, MarginBottom, MarginLeft, MarginRight, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, WebElementFunction } from "./modules/web-element.mjs";
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 
 /**
@@ -129,11 +129,41 @@ function getVerdict(root, condition) {
     return tree;
 }
 
+function getWit(root, condition) {
+    if (root == null) {
+        return null;
+    }
+    // Create a "fake" data tree
+    var tree = dataTree.create();
+    var n1 = tree.insert({
+        type: "AND"
+    });
+    var n2 = tree.insertToNode(n1, {
+        type: "object",
+        part: [ElementAttribute],
+        subject: Path
+    });
+    return tree;
+}
+
+function getTreeFromWitness(root, w = []) {
+    var verdicts = [];
+    for (var i = 0; i < w.length; i++) {
+        var verdict = getWit(root, w[i]);
+        if (verdict != null) {
+            verdicts.push(verdict);
+        }
+    }
+    return verdicts;
+}
+
+
 /**
  * Export public API
  */
 export {
     evaluateDom,
+    getTreeFromWitness,
     AbstractFunction,
     Addition,
     All,
@@ -142,9 +172,11 @@ export {
     ArgumentValue,
     AtomicFunction,
     AtomicFunctionReturnValue,
+    BackgroundColor,
     BooleanAnd,
     BooleanNot,
     BooleanOr,
+    Color,
     ComposedFunction,
     ComposedFunctionValue,
     CompoundDesignator,
@@ -171,18 +203,26 @@ export {
     IsEqualTo,
     LesserThan,
     LesserOrEqual,
+    MarginTop,
+    MarginBottom,
+    MarginLeft,
+    MarginRight,
+    Multiplication,
     NamedArgument,
     NamedArgumentValue,
     NaryConjunctiveVerdict,
     NaryDisjunctiveVerdict,
     NaryValue,
-    Multiplication,
     NthItem,
     Nothing,
     ObjectNode,
     OrNode,
     Path,
     PathValue,
+    PaddingTop,
+    PaddingBottom,
+    PaddingRight,
+    PaddingLeft,
     Quantifier,
     QuantifierConjunctiveVerdict,
     QuantifierDisjunctiveVerdict,
