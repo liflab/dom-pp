@@ -146,6 +146,179 @@ class DimensionHeight extends WebElementFunction {
 }
 
 /**
+ * Function that extracts the background color of a DOM.
+ * @extends Value
+ */
+class BackgroundColor extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("background");
+    }
+
+    get(e) {
+        var s = e.style.backgroundColor;
+        return s;
+    }
+}
+/**
+ * Function that extracts the color of text.
+ * @extends Value
+ */
+class Color extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("color");
+    }
+
+    get(e) {
+        var s = e.style.color;
+        return s;
+    }
+}
+
+/**
+ * Function that extracts the margin-top.
+ * @extends Value
+ */
+class MarginTop extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("marginTop");
+    }
+
+    get(e) {
+        var s = e.style.marginTop;
+        return s;
+    }
+}
+
+/**
+ * Function that extracts the margin-bottom.
+ * @extends Value
+ */
+class MarginBottom extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("marginBottom");
+    }
+
+    get(e) {
+        var s = e.style.marginBottom;
+        return s;
+    }
+}
+/**
+ * Function that extracts the margin-right.
+ * @extends Value
+ */
+class MarginRight extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("marginRight");
+    }
+
+    get(e) {
+        var s = e.style.marginRight;
+        return s;
+    }
+}
+/**
+ * Function that extracts the margin-left.
+ * @extends Value
+ */
+class MarginLeft extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("marginLeft");
+    }
+
+    get(e) {
+        var s = e.style.marginLeft;
+        return s;
+    }
+}
+/**
+ * Function that extracts the padding-top.
+ * @extends Value
+ */
+class PaddingTop extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("paddingTop");
+    }
+
+    get(e) {
+        var s = e.style.paddingTop;
+        return s;
+    }
+}
+
+/**
+ * Function that extracts the padding-bottom.
+ * @extends Value
+ */
+class PaddingBottom extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("paddingBottom");
+    }
+
+    get(e) {
+        var s = e.style.paddingBottom;
+        return s;
+    }
+}
+/**
+ * Function that extracts the padding-right.
+ * @extends Value
+ */
+class PaddingRight extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("paddingRight");
+    }
+
+    get(e) {
+        var s = e.style.paddingRight;
+        return s;
+    }
+}
+/**
+ * Function that extracts the padding-left.
+ * @extends Value
+ */
+class PaddingLeft extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("paddingLeft");
+    }
+
+    get(e) {
+        var s = e.style.paddingLeft;
+        return s;
+    }
+}
+/**
  * Designator that points to an element in a DOM tree based on
  * an XPath expression.
  * @extends Designator
@@ -250,6 +423,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, Path, PathValue, WebElementFunction };
+export { BackgroundColor, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:
