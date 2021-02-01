@@ -34,34 +34,51 @@ import { InputArgument } from "../index.mjs";
 const { expect } = pkg_chai;
 
 // Local imports
-import {AndNode, ComposedFunction, CompoundDesignator, ConstantDesignator, ExistentialQuantifier, Enumerate, Identity, NthItem, ObjectNode, QuantifierConjunctiveVerdict, QuantifierDisjunctiveVerdict, UniversalQuantifier, ReturnValue, Tracer} from "../index.mjs";
+import {
+  AndNode,
+  ComposedFunction,
+  CompoundDesignator,
+  ConstantDesignator,
+  ExistentialQuantifier,
+  Enumerate,
+  Identity,
+  NthItem,
+  ObjectNode,
+  QuantifierConjunctiveVerdict,
+  QuantifierDisjunctiveVerdict,
+  UniversalQuantifier,
+  ReturnValue,
+  Tracer,
+} from "../index.mjs";
 
 describe("Quantifier tests", () => {
-
-    describe("Universal quantifier", () => {
-
-        it("True evaluation", () => {
-            var q = new UniversalQuantifier("$x", new Enumerate(), new ComposedFunction(new Identity(), "$x"));
-            var v = q.evaluate([true, true, true]);
-            expect(v).to.be.an.instanceof(QuantifierConjunctiveVerdict);
-            expect(v.getValue()).to.be.true;
-            var t = new Tracer();
-            var root = t.getUnknownNode();
-            var leaves = v.query(null, ReturnValue.instance, root, t);
-            expect(leaves.length).to.equal(3);
-            expect(leaves[0].getChildren().length).to.equal(0);
-            expect(leaves[1].getChildren().length).to.equal(0);
-            expect(leaves[2].getChildren().length).to.equal(0);
-            expect(root.getChildren().length).to.equal(1);
-            var under = root.getChildren()[0].getChildren()[0];
-            expect(under).to.be.an.instanceof(AndNode);
-            expect(under.getChildren().length).to.equal(3);
-            var leaf1 = leaves[0];
-            expect(leaf1).to.be.an.instanceof(ObjectNode);
-            var leaf1_d = leaf1.getDesignatedObject().getDesignator();
-            expect(leaf1_d).to.be.an.instanceof(CompoundDesignator);
-            expect(leaf1_d.tail()).to.be.an.instanceof(NthItem);
-            expect(leaf1_d.head()).to.be.an.instanceof(ConstantDesignator);
-        });
+  describe("Universal quantifier", () => {
+    it("True evaluation", () => {
+      var q = new UniversalQuantifier(
+        "$x",
+        new Enumerate(),
+        new ComposedFunction(new Identity(), "$x")
+      );
+      var v = q.evaluate([true, true, true]);
+      expect(v).to.be.an.instanceof(QuantifierConjunctiveVerdict);
+      expect(v.getValue()).to.be.true;
+      var t = new Tracer();
+      var root = t.getUnknownNode();
+      var leaves = v.query(null, ReturnValue.instance, root, t);
+      expect(leaves.length).to.equal(3);
+      expect(leaves[0].getChildren().length).to.equal(0);
+      expect(leaves[1].getChildren().length).to.equal(0);
+      expect(leaves[2].getChildren().length).to.equal(0);
+      expect(root.getChildren().length).to.equal(1);
+      var under = root.getChildren()[0].getChildren()[0];
+      expect(under).to.be.an.instanceof(AndNode);
+      expect(under.getChildren().length).to.equal(3);
+      var leaf1 = leaves[0];
+      expect(leaf1).to.be.an.instanceof(ObjectNode);
+      var leaf1_d = leaf1.getDesignatedObject().getDesignator();
+      expect(leaf1_d).to.be.an.instanceof(CompoundDesignator);
+      expect(leaf1_d.tail()).to.be.an.instanceof(NthItem);
+      expect(leaf1_d.head()).to.be.an.instanceof(ConstantDesignator);
     });
+  });
 });

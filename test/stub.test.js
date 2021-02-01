@@ -41,7 +41,7 @@ import pkg_datatree from "data-tree";
 const { dataTree } = pkg_datatree;
 
 // Local imports
-import {evaluateDom} from "../index.mjs";
+import { evaluateDom } from "../index.mjs";
 
 describe("Stub tests", () => {
   beforeEach((done) => {
@@ -52,30 +52,31 @@ describe("Stub tests", () => {
       .then(done, done);
   });
 
-	it("Calling the plugin with a null page should return no tree", () => {
-		var conditions = ["foo"]; // Dummy condition
-		const trees = evaluateDom(null, conditions);
-		// The tree is not empty, and its root is an "OR" node
-		expect(trees).to.have.length(0);
-	});
-	
-	it("Calling the plugin with a page should return a tree", () => {
-		var conditions = ["foo"]; // Dummy condition
-		const trees = evaluateDom(document, conditions);
-		// The tree is not empty, and its root is an "OR" node
-		expect(trees).to.have.length(1);
-		const tree = trees[0];
-		const root = tree.rootNode();
-		expect(root).not.to.be.null;
-		expect(root.data().type).to.equal("OR");
-	});
-	
-	it("Calling the plugin with two conditions produces two trees", () => {
-		var conditions = ["foo", "bar"]; // Dummy condition
-		const trees = evaluateDom(document, conditions);
-		// The tree is not empty, and its root is an "OR" node
-		expect(trees).to.have.length(2);
-	});
+  it("Calling the plugin with a null page should return no tree", () => {
+    var conditions = ["foo"]; // Dummy condition
+    const trees = evaluateDom(null, conditions);
+    // The tree is not empty, and its root is an "OR" node
+    expect(trees).to.have.length(0);
+  });
+
+  it("Calling the plugin with a page should return a tree", () => {
+    var conditions = ["foo"]; // Dummy condition
+    const trees = evaluateDom(document, conditions);
+    // The tree is not empty, and its root is an "OR" node
+    expect(trees).to.have.length(1);
+    const tree = trees[0];
+    // console.log(tree);
+    const root = tree.rootNode();
+    expect(root).not.to.be.null;
+    expect(root.data().type).to.equal("OR");
+  });
+
+  it("Calling the plugin with two conditions produces two trees", () => {
+    var conditions = ["foo", "bar"]; // Dummy condition
+    const trees = evaluateDom(document, conditions);
+    // The tree is not empty, and its root is an "OR" node
+    expect(trees).to.have.length(2);
+  });
 });
 
 //////////////////////////////////////////////////////////////// Find XPath //////////////////////////////////

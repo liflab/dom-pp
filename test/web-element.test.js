@@ -33,29 +33,50 @@ import pkg_chai from "chai";
 const { expect } = pkg_chai;
 
 // Utilities
-import {load_dom} from "./test-util.mjs";
+import { load_dom } from "./test-util.mjs";
 
 // Local imports
-import {CompoundDesignator, ConstantDesignator, DimensionHeight, DimensionWidth, ElementAttributeValue, EnumeratedValue, FindBySelector, ObjectNode, Path, PathValue, ReturnValue, Tracer} from "../index.mjs";
+import {
+  BackgroundColor,
+  CompoundDesignator,
+  ConstantDesignator,
+  DimensionHeight,
+  DimensionWidth,
+  ElementAttributeValue,
+  EnumeratedValue,
+  FindBySelector,
+  MarginTop,
+  MarginBottom,
+  MarginRight,
+  MarginLeft,
+  ObjectNode,
+  Path,
+  PathValue,
+  PaddingTop,
+  PaddingBottom,
+  PaddingRight,
+  PaddingLeft,
+  ReturnValue,
+  Tracer,
+  Color,
+} from "../index.mjs";
 
 describe("Web element tests", () => {
-
   describe("FindBySelector", () => {
-
-  /**
-   * Tests lineage for the FindBySelector function, giving the ID of an
-   * element as the CSS selector. The lineage for this function
-   * should produce a tree of the following form:
-   * <pre>
-   * ReturnValue
-   *  |
-   *  +-- EnumeratedValue
-   *       |
-   *       +-- First element
-   *            |
-   *            +-- id("h2") of Constant
-   * </pre>
-   */
+    /**
+     * Tests lineage for the FindBySelector function, giving the ID of an
+     * element as the CSS selector. The lineage for this function
+     * should produce a tree of the following form:
+     * <pre>
+     * ReturnValue
+     *  |
+     *  +-- EnumeratedValue
+     *       |
+     *       +-- First element
+     *            |
+     *            +-- id("h2") of Constant
+     * </pre>
+     */
     it("With ID", async () => {
       var dom = await load_dom("./test/pages/stub-1.html");
       var body = dom.window.document.body;
@@ -78,13 +99,12 @@ describe("Web element tests", () => {
       expect(d).to.be.an.instanceof(CompoundDesignator);
       var tail = d.tail();
       expect(tail).to.be.an.instanceof(Path);
-      expect(tail.toString()).to.equal("id(\"h2\")");
+      expect(tail.toString()).to.equal('id("h2")');
       expect(d.head()).to.be.an.instanceof(ConstantDesignator);
     });
   });
 
   describe("DimensionHeight", () => {
-
     it("Value", async () => {
       var dom = await load_dom("./test/pages/stub-1.html");
       var body = dom.window.document.body;
@@ -98,7 +118,6 @@ describe("Web element tests", () => {
   });
 
   describe("DimensionWidth", () => {
-
     it("Value", async () => {
       var dom = await load_dom("./test/pages/stub-1.html");
       var body = dom.window.document.body;
@@ -108,6 +127,126 @@ describe("Web element tests", () => {
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
       expect(h).to.equal(200);
+    });
+  });
+  describe("BackgroundColor", () => {
+    it("Value", async () => {
+      var dom = await load_dom("./test/pages/stub-1.html");
+      var body = dom.window.document.body;
+      var backgrColor = dom.window.document.querySelector("body");
+      var f = new BackgroundColor();
+      var v = f.evaluate(backgrColor);
+      expect(v).to.be.an.instanceof(ElementAttributeValue);
+      var h = v.getValue();
+      expect(h).to.equal("yellow");
+    });
+  });
+  describe("Color", () => {
+    it("Value", async () => {
+      var dom = await load_dom("./test/pages/stub-1.html");
+      var body = dom.window.document.body;
+      var color = dom.window.document.querySelector("#p1");
+      var f = new Color();
+      var v = f.evaluate(color);
+      expect(v).to.be.an.instanceof(ElementAttributeValue);
+      var h = v.getValue();
+      expect(h).to.equal("green");
+    });
+  });
+  describe("Margin-top", () => {
+    it("Value", async () => {
+      var dom = await load_dom("./test/pages/stub-1.html");
+      var body = dom.window.document.body;
+      var marginTop = dom.window.document.querySelector("#h2");
+      var f = new MarginTop();
+      var v = f.evaluate(marginTop);
+      expect(v).to.be.an.instanceof(ElementAttributeValue);
+      var h = v.getValue();
+      expect(h).to.equal("20px");
+    });
+  });
+  describe("Margin-bottom", () => {
+    it("Value", async () => {
+      var dom = await load_dom("./test/pages/stub-1.html");
+      var body = dom.window.document.body;
+      var marginBottom = dom.window.document.querySelector("#div1");
+      var f = new MarginBottom();
+      var v = f.evaluate(marginBottom);
+      expect(v).to.be.an.instanceof(ElementAttributeValue);
+      var h = v.getValue();
+      expect(h).to.equal("50px");
+    });
+  });
+  describe("Margin-right", () => {
+    it("Value", async () => {
+      var dom = await load_dom("./test/pages/stub-1.html");
+      var body = dom.window.document.body;
+      var marginRight = dom.window.document.querySelector("#div1");
+      var f = new MarginRight();
+      var v = f.evaluate(marginRight);
+      expect(v).to.be.an.instanceof(ElementAttributeValue);
+      var h = v.getValue();
+      expect(h).to.equal("20px");
+    });
+  });
+  describe("Margin-left", () => {
+    it("Value", async () => {
+      var dom = await load_dom("./test/pages/stub-1.html");
+      var body = dom.window.document.body;
+      var marginLeft = dom.window.document.querySelector("#div1");
+      var f = new MarginLeft();
+      var v = f.evaluate(marginLeft);
+      expect(v).to.be.an.instanceof(ElementAttributeValue);
+      var h = v.getValue();
+      expect(h).to.equal("20px");
+    });
+  });
+  describe("Padding-top", () => {
+    it("Value", async () => {
+      var dom = await load_dom("./test/pages/stub-1.html");
+      var body = dom.window.document.body;
+      var paddingTop = dom.window.document.querySelector("#p1");
+      var f = new PaddingTop();
+      var v = f.evaluate(paddingTop);
+      expect(v).to.be.an.instanceof(ElementAttributeValue);
+      var h = v.getValue();
+      expect(h).to.equal("20px");
+    });
+  });
+  describe("Padding-bottom", () => {
+    it("Value", async () => {
+      var dom = await load_dom("./test/pages/stub-1.html");
+      var body = dom.window.document.body;
+      var paddingBottom = dom.window.document.querySelector("#p1");
+      var f = new PaddingBottom();
+      var v = f.evaluate(paddingBottom);
+      expect(v).to.be.an.instanceof(ElementAttributeValue);
+      var h = v.getValue();
+      expect(h).to.equal("20px");
+    });
+  });
+  describe("Padding-right", () => {
+    it("Value", async () => {
+      var dom = await load_dom("./test/pages/stub-1.html");
+      var body = dom.window.document.body;
+      var paddingRight = dom.window.document.querySelector("#p1");
+      var f = new PaddingRight();
+      var v = f.evaluate(paddingRight);
+      expect(v).to.be.an.instanceof(ElementAttributeValue);
+      var h = v.getValue();
+      expect(h).to.equal("20px");
+    });
+  });
+  describe("Padding-left", () => {
+    it("Value", async () => {
+      var dom = await load_dom("./test/pages/stub-1.html");
+      var body = dom.window.document.body;
+      var paddingLeft = dom.window.document.querySelector("#p1");
+      var f = new PaddingLeft();
+      var v = f.evaluate(paddingLeft);
+      expect(v).to.be.an.instanceof(ElementAttributeValue);
+      var h = v.getValue();
+      expect(h).to.equal("20px");
     });
   });
 });
