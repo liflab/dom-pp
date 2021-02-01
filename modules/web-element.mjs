@@ -194,7 +194,7 @@ class MarginTop extends WebElementFunction {
 
     get(e) {
         var s = e.style.marginTop;
-        return s;
+        return parseFloat(s);
     }
 }
 
@@ -212,7 +212,7 @@ class MarginBottom extends WebElementFunction {
 
     get(e) {
         var s = e.style.marginBottom;
-        return s;
+        return parseFloat(s);
     }
 }
 /**
@@ -229,7 +229,7 @@ class MarginRight extends WebElementFunction {
 
     get(e) {
         var s = e.style.marginRight;
-        return s;
+        return parseFloat(s);
     }
 }
 /**
@@ -246,7 +246,7 @@ class MarginLeft extends WebElementFunction {
 
     get(e) {
         var s = e.style.marginLeft;
-        return s;
+        return parseFloat(s);
     }
 }
 /**
@@ -263,7 +263,7 @@ class PaddingTop extends WebElementFunction {
 
     get(e) {
         var s = e.style.paddingTop;
-        return s;
+        return parseFloat(s);
     }
 }
 
@@ -281,7 +281,7 @@ class PaddingBottom extends WebElementFunction {
 
     get(e) {
         var s = e.style.paddingBottom;
-        return s;
+        return parseFloat(s);
     }
 }
 /**
@@ -298,7 +298,7 @@ class PaddingRight extends WebElementFunction {
 
     get(e) {
         var s = e.style.paddingRight;
-        return s;
+        return parseFloat(s);
     }
 }
 /**
@@ -315,7 +315,7 @@ class PaddingLeft extends WebElementFunction {
 
     get(e) {
         var s = e.style.paddingLeft;
-        return s;
+        return parseFloat(s);
     }
 }
 /**
