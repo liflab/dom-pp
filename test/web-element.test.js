@@ -162,7 +162,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(marginTop);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal("20px");
+      expect(h).to.equal(20);
     });
   });
   describe("Margin-bottom", () => {
@@ -174,7 +174,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(marginBottom);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal("50px");
+      expect(h).to.equal(50);
     });
   });
   describe("Margin-right", () => {
@@ -186,7 +186,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(marginRight);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal("20px");
+      expect(h).to.equal(20);
     });
   });
   describe("Margin-left", () => {
@@ -198,7 +198,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(marginLeft);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal("20px");
+      expect(h).to.equal(20);
     });
   });
   describe("Padding-top", () => {
@@ -210,7 +210,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(paddingTop);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal("20px");
+      expect(h).to.equal(20);
     });
   });
   describe("Padding-bottom", () => {
@@ -222,7 +222,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(paddingBottom);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal("20px");
+      expect(h).to.equal(20);
     });
   });
   describe("Padding-right", () => {
@@ -234,7 +234,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(paddingRight);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal("20px");
+      expect(h).to.equal(20);
     });
   });
   describe("Padding-left", () => {
@@ -246,7 +246,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(paddingLeft);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal("20px");
+      expect(h).to.equal(20);
     });
   });
 });
