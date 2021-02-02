@@ -45,6 +45,7 @@ import {
   ElementAttributeValue,
   EnumeratedValue,
   FindBySelector,
+  FontSize,
   MarginTop,
   MarginBottom,
   MarginRight,
@@ -247,6 +248,17 @@ describe("Web element tests", () => {
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
       expect(h).to.equal(20);
+    });
+  });
+  describe("Font-Size", ()=>{
+    it("Value", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var fontSize = dom.window.document.querySelector("#title")
+      var f = new FontSize()
+      var v = f.evaluate(fontSize)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal(30)
     });
   });
 });

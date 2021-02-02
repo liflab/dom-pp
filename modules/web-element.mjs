@@ -319,6 +319,19 @@ class PaddingLeft extends WebElementFunction {
     }
 }
 /**
+ * Function that extracts the font size.
+ * @extends Value
+ */
+class FontSize extends WebElementFunction{
+    constructor(){
+        super("fontSize")
+    }
+    get(e){
+        var s = e.style.fontSize
+        return parseFloat(s)
+    }
+}
+/**
  * Designator that points to an element in a DOM tree based on
  * an XPath expression.
  * @extends Designator
@@ -423,6 +436,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
+export { BackgroundColor, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:
