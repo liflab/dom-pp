@@ -331,6 +331,15 @@ class FontSize extends WebElementFunction{
         return parseFloat(s)
     }
 }
+class FontFamily extends WebElementFunction{
+    constructor(){
+        super("fontFamily")
+    }
+    get(e){
+        var s = e.style.fontFamily
+        return s
+    }
+}
 /**
  * Designator that points to an element in a DOM tree based on
  * an XPath expression.
@@ -436,6 +445,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
+export { BackgroundColor, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:
