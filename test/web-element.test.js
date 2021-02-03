@@ -45,6 +45,7 @@ import {
   ElementAttributeValue,
   EnumeratedValue,
   FindBySelector,
+  FontFamily,
   FontSize,
   MarginTop,
   MarginBottom,
@@ -259,6 +260,17 @@ describe("Web element tests", () => {
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
       expect(h).to.equal(30)
+    });
+  });
+  describe("Font-Family", ()=>{
+    it("Value", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var fontFamily = dom.window.document.querySelector("#title")
+      var f  = new FontFamily()
+      var v = f.evaluate(fontFamily)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("cursive")
     });
   });
 });
