@@ -44,6 +44,10 @@ import {
   CheckMarginLeft,
   CheckMarginRight,
   CheckMarginTop,
+  CheckPaddingBottom,
+  CheckPaddingRight,
+  CheckPaddingLeft,
+  CheckPaddingTop,
   CompoundDesignator,
   ConstantDesignator,
   DimensionHeight,
@@ -276,7 +280,6 @@ describe("Web element tests", () => {
       var v = f.evaluate(fontFamily)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
-      console.log(h);
       expect(h).to.equal("cursive")
     });
   });
@@ -343,7 +346,48 @@ describe("Web element tests", () => {
       var h = v.getValue()
       expect(h).to.equal("40px")
     });
+  });
 
+  describe("check padding-xx for DOM element", ()=>{
+    it("check padding-top", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var paddingTop = dom.window.document.querySelector(".testElem")
+      var f = new CheckPaddingTop()
+      var v = f.evaluate(paddingTop)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("30px")
+    });
+
+    it("check padding-bottom", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var paddingBottom = dom.window.document.querySelector(".testElem")
+      var f = new CheckPaddingBottom()
+      var v = f.evaluate(paddingBottom)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("30px")
+    });
+
+    it("check padding-left", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var paddingLeft = dom.window.document.querySelector(".testElem")
+      var f = new CheckPaddingLeft()
+      var v = f.evaluate(paddingLeft)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("50px")
+    });
+
+    it("check padding-right", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var paddingRight = dom.window.document.querySelector(".testElem")
+      var f = new CheckPaddingRight()
+      var v = f.evaluate(paddingRight)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("50px")
+    });
   });
 
 });

@@ -343,7 +343,6 @@ class FontFamily extends WebElementFunction{
 /**
  * this is a simple exple to test h1's color is
  */
-
 class CheckColorGreen extends WebElementFunction{   
     constructor(){
         super("color")
@@ -377,7 +376,9 @@ class CheckBackgroundColor extends WebElementFunction {
         return cssProp;
     }
 }
-
+/**
+ * Function that extract margin-top of a DOM
+ */
 class CheckMarginTop extends WebElementFunction{
     constructor(){
         super("margin-top")
@@ -390,6 +391,9 @@ class CheckMarginTop extends WebElementFunction{
         return cssProp
     }
 }
+/**
+ * Function that extract margin-bottom of a DOM
+ */
 class CheckMarginBottom extends WebElementFunction{
     constructor(){
         super("margin-bottom")
@@ -402,6 +406,9 @@ class CheckMarginBottom extends WebElementFunction{
         return cssProp
     }
 }
+/**
+ * Function that extract margin-left of a DOM
+ */
 class CheckMarginLeft extends WebElementFunction{
     constructor(){
         super("margin-left")
@@ -414,6 +421,9 @@ class CheckMarginLeft extends WebElementFunction{
         return cssProp
     }
 }
+/**
+ * Function that extract margin-right of a DOM
+ */
 class CheckMarginRight extends WebElementFunction{
     constructor(){
         super("margin-right")
@@ -423,6 +433,66 @@ class CheckMarginRight extends WebElementFunction{
         var win = doc.defaultView || doc.parentWindow
         var elem = doc.querySelector('.testElem')
         var cssProp = win.getComputedStyle(elem).getPropertyValue('margin-right')
+        return cssProp
+    }
+}
+/**
+ * Function that extract paddig-top of a DOM
+ */
+class CheckPaddingTop extends WebElementFunction{
+    constructor(){
+        super("padding-top")
+    }
+    get(element){
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow;
+        var elem = doc.querySelector('.testElem')
+        var cssProp = win.getComputedStyle(elem).getPropertyValue('padding-top')
+        return cssProp
+    }
+}
+/**
+ * Function that extract paddig-bottom of a DOM
+ */
+class CheckPaddingBottom extends WebElementFunction{
+    constructor(){
+        super("padding-bottom")
+    }
+    get(element){
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow;
+        var elem = doc.querySelector('.testElem')
+        var cssProp = win.getComputedStyle(elem).getPropertyValue('padding-bottom')
+        return cssProp
+    }
+}
+/**
+ * Function that extract paddig-left of a DOM
+ */
+class CheckPaddingLeft extends WebElementFunction{
+    constructor(){
+        super("padding-left")
+    }
+    get(element){
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow;
+        var elem = doc.querySelector('.testElem')
+        var cssProp = win.getComputedStyle(elem).getPropertyValue('padding-left')
+        return cssProp
+    }
+}
+/**
+ * Function that extract paddig-right of a DOM
+ */
+class CheckPaddingRight extends WebElementFunction{
+    constructor(){
+        super("padding-right")
+    }
+    get(element){
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow;
+        var elem = doc.querySelector('.testElem')
+        var cssProp = win.getComputedStyle(elem).getPropertyValue('padding-right')
         return cssProp
     }
 }
@@ -532,6 +602,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, CheckBackgroundColor, CheckColorGreen, CheckMarginBottom, CheckMarginLeft, CheckMarginRight, CheckMarginTop, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
+export { BackgroundColor, CheckBackgroundColor, CheckColorGreen, CheckMarginBottom, CheckMarginLeft, CheckMarginRight, CheckMarginTop, CheckPaddingBottom, CheckPaddingLeft, CheckPaddingRight, CheckPaddingTop, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:
