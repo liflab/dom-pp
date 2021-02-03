@@ -40,6 +40,7 @@ import {
   BackgroundColor,
   checkBackgroundColor,
   checkColorGreen,
+  checkMarginTop,
   CompoundDesignator,
   ConstantDesignator,
   DimensionHeight,
@@ -298,6 +299,19 @@ describe("Web element tests", () => {
       expect(h).to.equal("blue")
     });
   });
+
+  describe("Check margin-top for DOM element", ()=>{
+    it("value", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var mgTop = dom.window.document.querySelector(".testElem")
+      var f = new checkMarginTop()
+      var v = f.evaluate(mgTop)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("20px")
+    });
+  });
+
 });
 
 // :wrap=soft:tabSize=2:indentWidth=2:

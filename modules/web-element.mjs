@@ -364,14 +364,27 @@ class checkBackgroundColor extends WebElementFunction {
      * Creates a new instance of the function.
      */
     constructor() {
-        super("backgroundColor");
+        super("background-color");
     }
     get(element) {
         var doc = element.ownerDocument;
         var win = doc.defaultView ||doc.parentWindow;
         var elem = doc.querySelector('.testElem')
-        var cssProp = win.getComputedStyle(elem).getPropertyValue("background-color")
+        var cssProp = win.getComputedStyle(elem).getPropertyValue('background-color')
         return cssProp;
+    }
+}
+
+class checkMarginTop extends WebElementFunction{
+    constructor(){
+        super("margin-top")
+    }
+    get(element){
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow
+        var elem = doc.querySelector('.testElem')
+        var cssProp = win.getComputedStyle(elem).getPropertyValue('margin-top')
+        return cssProp
     }
 }
 
@@ -480,6 +493,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, checkBackgroundColor, checkColorGreen, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
+export { BackgroundColor, checkBackgroundColor, checkColorGreen, checkMarginTop, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:

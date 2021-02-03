@@ -1,6 +1,12 @@
-#title{
-    /*font-size: 30px;
+/*#title{
+    font-size: 30px;
     font-family: cursive;
 }
 h1 { color: red; }
-.heading { color: green; }*/
+.heading { color: green; }
+.testElem{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+}*/

@@ -57,7 +57,7 @@ import {
     QuantifierVerdict,
     UniversalQuantifier
 } from "./modules/quantifier.mjs";
-import { BackgroundColor, Color, checkBackgroundColor, checkColorGreen, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily,FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, WebElementFunction } from "./modules/web-element.mjs";
+import { BackgroundColor, Color, checkBackgroundColor, checkColorGreen, checkMarginTop, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily,FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, WebElementFunction } from "./modules/web-element.mjs";
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 
 /**
@@ -178,6 +178,7 @@ export {
     BooleanOr,
     checkBackgroundColor,
     checkColorGreen,
+    checkMarginTop,
     Color,
     ComposedFunction,
     ComposedFunctionValue,
