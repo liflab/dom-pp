@@ -38,6 +38,7 @@ import { load_dom } from "./test-util.mjs";
 // Local imports
 import {
   BackgroundColor,
+  checkBackgroundColor,
   checkColorGreen,
   CompoundDesignator,
   ConstantDesignator,
@@ -284,6 +285,17 @@ describe("Web element tests", () => {
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
       expect(h).to.equal("green")
+    });
+  });
+  describe("Check the background-color for DOM element", ()=>{
+    it("value", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var bgColor = dom.window.document.querySelector(".testElem")
+      var f = new checkBackgroundColor()
+      var v = f.evaluate(bgColor)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("blue")
     });
   });
 });

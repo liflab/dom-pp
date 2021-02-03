@@ -341,7 +341,7 @@ class FontFamily extends WebElementFunction{
     }
 }
 class checkColorGreen extends WebElementFunction{
-    //this is a simple exple to test h1's color is Green
+    //this is a simple exple to test h1's color is
     constructor(){
         super("color")
     }
@@ -354,6 +354,27 @@ class checkColorGreen extends WebElementFunction{
         return cssPropVal;
     }
 }
+
+
+/**
+ * Function that extracts the background-color of a DOM.
+ */
+class checkBackgroundColor extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("backgroundColor");
+    }
+    get(element) {
+        var doc = element.ownerDocument;
+        var win = doc.defaultView ||doc.parentWindow;
+        var elem = doc.querySelector('.testElem')
+        var cssProp = win.getComputedStyle(elem).getPropertyValue("background-color")
+        return cssProp;
+    }
+}
+
 /**
  * Designator that points to an element in a DOM tree based on
  * an XPath expression.
@@ -459,6 +480,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, checkColorGreen, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
+export { BackgroundColor, checkBackgroundColor, checkColorGreen, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:
