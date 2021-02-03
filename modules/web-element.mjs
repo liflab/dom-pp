@@ -340,6 +340,20 @@ class FontFamily extends WebElementFunction{
         return s
     }
 }
+class checkColorGreen extends WebElementFunction{
+    //this is a simple exple to test h1's color is Green
+    constructor(){
+        super("color")
+    }
+    get(element){
+        //var element = document.querySelector('.heading')
+        var doc = element.ownerDocument; //Dom rérence
+        var win = doc.defaultView || doc.parentWindow; //window reference
+        var elem = doc.querySelector('.heading')
+        var cssPropVal = win.getComputedStyle(elem).getPropertyValue('color')
+        return cssPropVal;
+    }
+}
 /**
  * Designator that points to an element in a DOM tree based on
  * an XPath expression.
@@ -445,6 +459,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
+export { BackgroundColor, checkColorGreen, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:

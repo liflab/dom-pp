@@ -38,6 +38,7 @@ import { load_dom } from "./test-util.mjs";
 // Local imports
 import {
   BackgroundColor,
+  checkColorGreen,
   CompoundDesignator,
   ConstantDesignator,
   DimensionHeight,
@@ -270,7 +271,19 @@ describe("Web element tests", () => {
       var v = f.evaluate(fontFamily)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
+      console.log(h);
       expect(h).to.equal("cursive")
+    });
+  });
+  describe("Check color for h1 heading", ()=>{
+    it("value", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var h1col = dom.window.document.querySelector(".heading")
+      var f = new checkColorGreen()
+      var v = f.evaluate(h1col)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("green")
     });
   });
 });
