@@ -40,6 +40,9 @@ import {
   BackgroundColor,
   checkBackgroundColor,
   checkColorGreen,
+  checkMarginBottom,
+  checkMarginLeft,
+  checkMarginRight,
   checkMarginTop,
   CompoundDesignator,
   ConstantDesignator,
@@ -300,8 +303,8 @@ describe("Web element tests", () => {
     });
   });
 
-  describe("Check margin-top for DOM element", ()=>{
-    it("value", async()=>{
+  describe("Check margin-xx for DOM element", ()=>{
+    it("check margin-top", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var mgTop = dom.window.document.querySelector(".testElem")
       var f = new checkMarginTop()
@@ -310,6 +313,37 @@ describe("Web element tests", () => {
       var h = v.getValue()
       expect(h).to.equal("20px")
     });
+
+    it("check margin-bottom", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var marginBottom = dom.window.document.querySelector(".testElem")
+      var f = new checkMarginBottom()
+      var v = f.evaluate(marginBottom)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("20px")
+    });
+
+    it("check margin-left", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var marginLeft = dom.window.document.querySelector(".testElem")
+      var f = new checkMarginLeft()
+      var v = f.evaluate(marginLeft)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("40px")
+    });
+
+    it("check margin-right", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var marginRight = dom.window.document.querySelector(".testElem")
+      var f = new checkMarginRight()
+      var v = f.evaluate(marginRight)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("40px")
+    });
+
   });
 
 });

@@ -387,6 +387,42 @@ class checkMarginTop extends WebElementFunction{
         return cssProp
     }
 }
+class checkMarginBottom extends WebElementFunction{
+    constructor(){
+        super("margin-bottom")
+    }
+    get(element){
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow
+        var elem = doc.querySelector('.testElem')
+        var cssProp = win.getComputedStyle(elem).getPropertyValue('margin-bottom')
+        return cssProp
+    }
+}
+class checkMarginLeft extends WebElementFunction{
+    constructor(){
+        super("margin-left")
+    }
+    get(element){
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow
+        var elem = doc.querySelector('.testElem')
+        var cssProp = win.getComputedStyle(elem).getPropertyValue('margin-left')
+        return cssProp
+    }
+}
+class checkMarginRight extends WebElementFunction{
+    constructor(){
+        super("margin-right")
+    }
+    get(element){
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow
+        var elem = doc.querySelector('.testElem')
+        var cssProp = win.getComputedStyle(elem).getPropertyValue('margin-right')
+        return cssProp
+    }
+}
 
 /**
  * Designator that points to an element in a DOM tree based on
@@ -493,6 +529,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, checkBackgroundColor, checkColorGreen, checkMarginTop, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
+export { BackgroundColor, checkBackgroundColor, checkColorGreen, checkMarginBottom, checkMarginLeft, checkMarginRight, checkMarginTop, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:
