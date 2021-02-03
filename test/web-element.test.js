@@ -38,12 +38,12 @@ import { load_dom } from "./test-util.mjs";
 // Local imports
 import {
   BackgroundColor,
-  checkBackgroundColor,
-  checkColorGreen,
-  checkMarginBottom,
-  checkMarginLeft,
-  checkMarginRight,
-  checkMarginTop,
+  CheckBackgroundColor,
+  CheckColorGreen,
+  CheckMarginBottom,
+  CheckMarginLeft,
+  CheckMarginRight,
+  CheckMarginTop,
   CompoundDesignator,
   ConstantDesignator,
   DimensionHeight,
@@ -284,7 +284,7 @@ describe("Web element tests", () => {
     it("value", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var h1col = dom.window.document.querySelector(".heading")
-      var f = new checkColorGreen()
+      var f = new CheckColorGreen()
       var v = f.evaluate(h1col)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
@@ -295,7 +295,7 @@ describe("Web element tests", () => {
     it("value", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var bgColor = dom.window.document.querySelector(".testElem")
-      var f = new checkBackgroundColor()
+      var f = new CheckBackgroundColor()
       var v = f.evaluate(bgColor)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
@@ -307,7 +307,7 @@ describe("Web element tests", () => {
     it("check margin-top", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var mgTop = dom.window.document.querySelector(".testElem")
-      var f = new checkMarginTop()
+      var f = new CheckMarginTop()
       var v = f.evaluate(mgTop)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
@@ -317,7 +317,7 @@ describe("Web element tests", () => {
     it("check margin-bottom", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var marginBottom = dom.window.document.querySelector(".testElem")
-      var f = new checkMarginBottom()
+      var f = new CheckMarginBottom()
       var v = f.evaluate(marginBottom)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
@@ -327,7 +327,7 @@ describe("Web element tests", () => {
     it("check margin-left", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var marginLeft = dom.window.document.querySelector(".testElem")
-      var f = new checkMarginLeft()
+      var f = new CheckMarginLeft()
       var v = f.evaluate(marginLeft)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
@@ -337,7 +337,7 @@ describe("Web element tests", () => {
     it("check margin-right", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var marginRight = dom.window.document.querySelector(".testElem")
-      var f = new checkMarginRight()
+      var f = new CheckMarginRight()
       var v = f.evaluate(marginRight)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()

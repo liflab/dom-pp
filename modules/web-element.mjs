@@ -340,8 +340,11 @@ class FontFamily extends WebElementFunction{
         return s
     }
 }
-class checkColorGreen extends WebElementFunction{
-    //this is a simple exple to test h1's color is
+/**
+ * this is a simple exple to test h1's color is
+ */
+
+class CheckColorGreen extends WebElementFunction{   
     constructor(){
         super("color")
     }
@@ -359,7 +362,7 @@ class checkColorGreen extends WebElementFunction{
 /**
  * Function that extracts the background-color of a DOM.
  */
-class checkBackgroundColor extends WebElementFunction {
+class CheckBackgroundColor extends WebElementFunction {
     /**
      * Creates a new instance of the function.
      */
@@ -375,7 +378,7 @@ class checkBackgroundColor extends WebElementFunction {
     }
 }
 
-class checkMarginTop extends WebElementFunction{
+class CheckMarginTop extends WebElementFunction{
     constructor(){
         super("margin-top")
     }
@@ -387,7 +390,7 @@ class checkMarginTop extends WebElementFunction{
         return cssProp
     }
 }
-class checkMarginBottom extends WebElementFunction{
+class CheckMarginBottom extends WebElementFunction{
     constructor(){
         super("margin-bottom")
     }
@@ -399,7 +402,7 @@ class checkMarginBottom extends WebElementFunction{
         return cssProp
     }
 }
-class checkMarginLeft extends WebElementFunction{
+class CheckMarginLeft extends WebElementFunction{
     constructor(){
         super("margin-left")
     }
@@ -411,7 +414,7 @@ class checkMarginLeft extends WebElementFunction{
         return cssProp
     }
 }
-class checkMarginRight extends WebElementFunction{
+class CheckMarginRight extends WebElementFunction{
     constructor(){
         super("margin-right")
     }
@@ -529,6 +532,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, checkBackgroundColor, checkColorGreen, checkMarginBottom, checkMarginLeft, checkMarginRight, checkMarginTop, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
+export { BackgroundColor, CheckBackgroundColor, CheckColorGreen, CheckMarginBottom, CheckMarginLeft, CheckMarginRight, CheckMarginTop, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:
