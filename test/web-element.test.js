@@ -269,7 +269,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(fontSize)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
-      expect(h).to.equal(30)
+      expect(h).to.equal("30px")
     });
   });
   describe("Font-Family", ()=>{

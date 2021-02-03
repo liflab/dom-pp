@@ -324,20 +324,29 @@ class PaddingLeft extends WebElementFunction {
  */
 class FontSize extends WebElementFunction{
     constructor(){
-        super("fontSize")
+        super("font-size")
     }
-    get(e){
-        var s = e.style.fontSize
-        return parseFloat(s)
+    get(element){
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow;
+        var elem = doc.querySelector('#title')
+        var cssProp = win.getComputedStyle(elem).getPropertyValue('font-size')
+        return cssProp
     }
 }
+/**
+ * Function that extracts the font family
+ */
 class FontFamily extends WebElementFunction{
     constructor(){
-        super("fontFamily")
+        super("font-family")
     }
-    get(e){
-        var s = e.style.fontFamily
-        return s
+    get(element){
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow;
+        var elem = doc.querySelector('#title')
+        var cssProp = win.getComputedStyle(elem).getPropertyValue('font-family')
+        return cssProp
     }
 }
 /**
