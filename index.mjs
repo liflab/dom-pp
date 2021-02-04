@@ -57,7 +57,7 @@ import {
     QuantifierVerdict,
     UniversalQuantifier
 } from "./modules/quantifier.mjs";
-import { BackgroundColor, Color, CheckBackgroundColor, CheckColorGreen, CheckMarginBottom, CheckMarginLeft, CheckMarginRight, CheckMarginTop, CheckPaddingBottom, CheckPaddingLeft, CheckPaddingRight, CheckPaddingTop, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily,FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, WebElementFunction } from "./modules/web-element.mjs";
+import { BackgroundColor, Color, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily,FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, WebElementFunction } from "./modules/web-element.mjs";
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 
 /**
@@ -176,16 +176,6 @@ export {
     BooleanAnd,
     BooleanNot,
     BooleanOr,
-    CheckBackgroundColor,
-    CheckColorGreen,
-    CheckMarginBottom,
-    CheckMarginLeft,
-    CheckMarginRight,
-    CheckMarginTop,
-    CheckPaddingBottom,
-    CheckPaddingLeft,
-    CheckPaddingRight,
-    CheckPaddingTop,
     Color,
     ComposedFunction,
     ComposedFunctionValue,

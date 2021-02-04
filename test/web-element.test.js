@@ -38,16 +38,7 @@ import { load_dom } from "./test-util.mjs";
 // Local imports
 import {
   BackgroundColor,
-  CheckBackgroundColor,
-  CheckColorGreen,
-  CheckMarginBottom,
-  CheckMarginLeft,
-  CheckMarginRight,
-  CheckMarginTop,
-  CheckPaddingBottom,
-  CheckPaddingRight,
-  CheckPaddingLeft,
-  CheckPaddingTop,
+  Color,
   CompoundDesignator,
   ConstantDesignator,
   DimensionHeight,
@@ -69,8 +60,7 @@ import {
   PaddingRight,
   PaddingLeft,
   ReturnValue,
-  Tracer,
-  Color,
+  Tracer
 } from "../index.mjs";
 
 describe("Web element tests", () => {
@@ -141,126 +131,6 @@ describe("Web element tests", () => {
       expect(h).to.equal(200);
     });
   });
-  describe("BackgroundColor", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var backgrColor = dom.window.document.querySelector("body");
-      var f = new BackgroundColor();
-      var v = f.evaluate(backgrColor);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
-      expect(h).to.equal("yellow");
-    });
-  });
-  describe("Color", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var color = dom.window.document.querySelector("#p1");
-      var f = new Color();
-      var v = f.evaluate(color);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
-      expect(h).to.equal("green");
-    });
-  });
-  describe("Margin-top", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var marginTop = dom.window.document.querySelector("#h2");
-      var f = new MarginTop();
-      var v = f.evaluate(marginTop);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
-      expect(h).to.equal(20);
-    });
-  });
-  describe("Margin-bottom", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var marginBottom = dom.window.document.querySelector("#div1");
-      var f = new MarginBottom();
-      var v = f.evaluate(marginBottom);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
-      expect(h).to.equal(50);
-    });
-  });
-  describe("Margin-right", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var marginRight = dom.window.document.querySelector("#div1");
-      var f = new MarginRight();
-      var v = f.evaluate(marginRight);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
-      expect(h).to.equal(20);
-    });
-  });
-  describe("Margin-left", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var marginLeft = dom.window.document.querySelector("#div1");
-      var f = new MarginLeft();
-      var v = f.evaluate(marginLeft);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
-      expect(h).to.equal(20);
-    });
-  });
-  describe("Padding-top", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var paddingTop = dom.window.document.querySelector("#p1");
-      var f = new PaddingTop();
-      var v = f.evaluate(paddingTop);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
-      expect(h).to.equal(20);
-    });
-  });
-  describe("Padding-bottom", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var paddingBottom = dom.window.document.querySelector("#p1");
-      var f = new PaddingBottom();
-      var v = f.evaluate(paddingBottom);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
-      expect(h).to.equal(20);
-    });
-  });
-  describe("Padding-right", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var paddingRight = dom.window.document.querySelector("#p1");
-      var f = new PaddingRight();
-      var v = f.evaluate(paddingRight);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
-      expect(h).to.equal(20);
-    });
-  });
-  describe("Padding-left", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var paddingLeft = dom.window.document.querySelector("#p1");
-      var f = new PaddingLeft();
-      var v = f.evaluate(paddingLeft);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
-      expect(h).to.equal(20);
-    });
-  });
   describe("Font-Size", ()=>{
     it("Value", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
@@ -283,11 +153,11 @@ describe("Web element tests", () => {
       expect(h).to.equal("cursive")
     });
   });
-  describe("Check color for h1 heading", ()=>{
+  describe("Check color for DOM element", ()=>{
     it("value", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var h1col = dom.window.document.querySelector(".heading")
-      var f = new CheckColorGreen()
+      var f = new Color()
       var v = f.evaluate(h1col)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
@@ -298,7 +168,7 @@ describe("Web element tests", () => {
     it("value", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var bgColor = dom.window.document.querySelector(".testElem")
-      var f = new CheckBackgroundColor()
+      var f = new BackgroundColor()
       var v = f.evaluate(bgColor)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
@@ -307,40 +177,40 @@ describe("Web element tests", () => {
   });
 
   describe("Check margin-xx for DOM element", ()=>{
-    it("check margin-top", async()=>{
+    it("Check margin-top", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var mgTop = dom.window.document.querySelector(".testElem")
-      var f = new CheckMarginTop()
+      var f = new MarginTop()
       var v = f.evaluate(mgTop)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
       expect(h).to.equal("20px")
     });
 
-    it("check margin-bottom", async()=>{
+    it("Check margin-bottom", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var marginBottom = dom.window.document.querySelector(".testElem")
-      var f = new CheckMarginBottom()
+      var f = new MarginBottom()
       var v = f.evaluate(marginBottom)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
       expect(h).to.equal("20px")
     });
 
-    it("check margin-left", async()=>{
+    it("Check margin-left", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var marginLeft = dom.window.document.querySelector(".testElem")
-      var f = new CheckMarginLeft()
+      var f = new MarginLeft()
       var v = f.evaluate(marginLeft)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
       expect(h).to.equal("40px")
     });
 
-    it("check margin-right", async()=>{
+    it("Check margin-right", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var marginRight = dom.window.document.querySelector(".testElem")
-      var f = new CheckMarginRight()
+      var f = new MarginRight()
       var v = f.evaluate(marginRight)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
@@ -348,41 +218,41 @@ describe("Web element tests", () => {
     });
   });
 
-  describe("check padding-xx for DOM element", ()=>{
+  describe("Check padding-xx for DOM element", ()=>{
     it("check padding-top", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var paddingTop = dom.window.document.querySelector(".testElem")
-      var f = new CheckPaddingTop()
+      var f = new PaddingTop()
       var v = f.evaluate(paddingTop)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
       expect(h).to.equal("30px")
     });
 
-    it("check padding-bottom", async()=>{
+    it("Check padding-bottom", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var paddingBottom = dom.window.document.querySelector(".testElem")
-      var f = new CheckPaddingBottom()
+      var f = new PaddingBottom()
       var v = f.evaluate(paddingBottom)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
       expect(h).to.equal("30px")
     });
 
-    it("check padding-left", async()=>{
+    it("Check padding-left", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var paddingLeft = dom.window.document.querySelector(".testElem")
-      var f = new CheckPaddingLeft()
+      var f = new PaddingLeft()
       var v = f.evaluate(paddingLeft)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
       expect(h).to.equal("50px")
     });
 
-    it("check padding-right", async()=>{
+    it("Check padding-right", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var paddingRight = dom.window.document.querySelector(".testElem")
-      var f = new CheckPaddingRight()
+      var f = new PaddingRight()
       var v = f.evaluate(paddingRight)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
