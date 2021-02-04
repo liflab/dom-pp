@@ -51,6 +51,7 @@ class WebElementFunction extends AtomicFunction {
     get(e) {
         return null; // To be overridden by descendants
     }
+    //this method help to get window object
     GetOwnerWindow(e) {
         return e.ownerDocument.defaultView || e.ownerDocument.parentWindow;
     }
@@ -171,8 +172,7 @@ class FontFamily extends WebElementFunction{
         super("font-family")
     }
     get(element){
-        var doc = element.ownerDocument;
-        var win = doc.defaultView || doc.parentWindow;
+        var win = this.GetOwnerWindow(element)
         return win.getComputedStyle(element).getPropertyValue('font-family')
     }
 }
@@ -184,9 +184,7 @@ class Color extends WebElementFunction{
         super("color")
     }
     get(element){
-        //var element = document.querySelector('.heading')
-        var doc = element.ownerDocument; //Dom rérence
-        var win = doc.defaultView || doc.parentWindow; //window reference
+        var win = this.GetOwnerWindow(element)
         return win.getComputedStyle(element).getPropertyValue('color')
     }
 }
@@ -203,8 +201,7 @@ class BackgroundColor extends WebElementFunction {
         super("background-color");
     }
     get(element) {
-        var doc = element.ownerDocument;
-        var win = doc.defaultView ||doc.parentWindow;
+        var win = this.GetOwnerWindow(element)
         return win.getComputedStyle(element).getPropertyValue('background-color')
        
     }
@@ -217,8 +214,7 @@ class MarginTop extends WebElementFunction{
         super("margin-top")
     }
     get(element){
-        var doc = element.ownerDocument;
-        var win = doc.defaultView || doc.parentWindow
+        var win = this.GetOwnerWindow(element)
         return win.getComputedStyle(element).getPropertyValue('margin-top')
       
     }
@@ -231,8 +227,7 @@ class MarginBottom extends WebElementFunction{
         super("margin-bottom")
     }
     get(element){
-        var doc = element.ownerDocument;
-        var win = doc.defaultView || doc.parentWindow
+        var win = this.GetOwnerWindow(element)
         return win.getComputedStyle(element).getPropertyValue('margin-bottom')
        
     }
@@ -245,8 +240,7 @@ class MarginLeft extends WebElementFunction{
         super("margin-left")
     }
     get(element){
-        var doc = element.ownerDocument;
-        var win = doc.defaultView || doc.parentWindow
+        var win = this.GetOwnerWindow(element)
         return win.getComputedStyle(element).getPropertyValue('margin-left')
         
     }
@@ -259,9 +253,8 @@ class MarginRight extends WebElementFunction{
         super("margin-right")
     }
     get(element){
-        var doc = element.ownerDocument;
-        var win = doc.defaultView || doc.parentWindow
-       return win.getComputedStyle(element).getPropertyValue('margin-right')
+        var win = this.GetOwnerWindow(element)
+        return win.getComputedStyle(element).getPropertyValue('margin-right')
     }
 }
 /**
@@ -272,9 +265,8 @@ class PaddingTop extends WebElementFunction{
         super("padding-top")
     }
     get(element){
-        var doc = element.ownerDocument;
-        var win = doc.defaultView || doc.parentWindow;
-       return win.getComputedStyle(element).getPropertyValue('padding-top')
+        var win = this.GetOwnerWindow(element)
+        return win.getComputedStyle(element).getPropertyValue('padding-top')
     }
 }
 /**
@@ -285,8 +277,7 @@ class PaddingBottom extends WebElementFunction{
         super("padding-bottom")
     }
     get(element){
-        var doc = element.ownerDocument;
-        var win = doc.defaultView || doc.parentWindow;
+        var win = this.GetOwnerWindow(element)
         return win.getComputedStyle(element).getPropertyValue('padding-bottom')
     }
 }
@@ -298,8 +289,7 @@ class PaddingLeft extends WebElementFunction{
         super("padding-left")
     }
     get(element){
-        var doc = element.ownerDocument;
-        var win = doc.defaultView || doc.parentWindow;
+        var win = this.GetOwnerWindow(element)
         return win.getComputedStyle(element).getPropertyValue('padding-left')
     }
 }
@@ -311,8 +301,7 @@ class PaddingRight extends WebElementFunction{
         super("padding-right")
     }
     get(element){
-        var doc = element.ownerDocument;
-        var win = doc.defaultView || doc.parentWindow;
+        var win = this.GetOwnerWindow(element)
         return win.getComputedStyle(element).getPropertyValue('padding-right')
     }
 }
