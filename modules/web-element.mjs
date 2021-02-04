@@ -51,6 +51,9 @@ class WebElementFunction extends AtomicFunction {
     get(e) {
         return null; // To be overridden by descendants
     }
+    GetOwnerWindow(e) {
+        return e.ownerDocument.defaultView || e.ownerDocument.parentWindow;
+    }
 }
 
 /**
@@ -122,8 +125,9 @@ class DimensionWidth extends WebElementFunction {
     }
 
     get(element) {
-        var doc = element.ownerDocument;
-        var win = doc.defaultView || doc.parentWindow;
+        //var doc = element.ownerDocument;
+        //var win = doc.defaultView || doc.parentWindow;
+        var win = this.GetOwnerWindow(element)
         return parseFloat(win.getComputedStyle(element).getPropertyValue('width'))
     }
 }
@@ -312,7 +316,56 @@ class PaddingRight extends WebElementFunction{
         return win.getComputedStyle(element).getPropertyValue('padding-right')
     }
 }
+/**
+ * Function that extract border-width
+ */
+class BorderWidth extends WebElementFunction{
+    constructor(){
+        super("border-width")
+    }
+    get(element){
+        var win = this.GetOwnerWindow(element)
+        return win.getComputedStyle(element).getPropertyValue("border-width")
+    }
+}
+/**
+ * Function extract border-style for DOM element
+ */
+class BorderStyle extends WebElementFunction{
+    constructor(){
+        super("border-style")
+    }
+    get(element){
+        var win = this.GetOwnerWindow(element)
+        return win.getComputedStyle(element).getPropertyValue("border-style")
+    }
+}
+/**
+ * Function extrach border-color for DOM element
+ */
+class BorderColor extends WebElementFunction{
+    constructor(){
+        super("border-color")
+    }
+    get(element){
+        var win = this.GetOwnerWindow(element)
+        return win.getComputedStyle(element).getPropertyValue("border-color")
+    }
+}
+/**
+ * Function that extract bordr-radius
+ */
+class BorderRadius extends WebElementFunction{
+    constructor(){
+        super("border-radius")
+    }
+    get(element){
+         var win = this.GetOwnerWindow(element)
+         return win.getComputedStyle(element).getPropertyValue("border-radius")
+    }
+   
 
+}
 /**
  * Designator that points to an element in a DOM tree based on
  * an XPath expression.
@@ -418,6 +471,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, Color, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, WebElementFunction };
+export { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, Color, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:

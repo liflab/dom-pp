@@ -38,6 +38,10 @@ import { load_dom } from "./test-util.mjs";
 // Local imports
 import {
   BackgroundColor,
+  BorderColor,
+  BorderRadius,
+  BorderStyle,
+  BorderWidth,
   Color,
   CompoundDesignator,
   ConstantDesignator,
@@ -259,6 +263,44 @@ describe("Web element tests", () => {
       expect(h).to.equal("50px")
     });
   });
+  describe("Check border for DOM element", ()=>{
+    it("Check border-width", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var borderWidth = dom.window.document.querySelector(".testElem")
+      var f = new BorderWidth()
+      var v = f.evaluate(borderWidth)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("10px")
+    })
+    it("Check border-style", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var borderStyle = dom.window.document.querySelector(".testElem")
+      var f = new BorderStyle()
+      var v = f.evaluate(borderStyle)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("solid")
+    })
+    it("Check border-color", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var borderColor = dom.window.document.querySelector(".testElem")
+      var f = new BorderColor()
+      var v = f.evaluate(borderColor)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("red")
+    })
+    it("Check bordr-radius", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var borderRadius = dom.window.document.querySelector(".testElem")
+      var f = new BorderRadius()
+      var v = f.evaluate(borderRadius)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("10px")
+    });
+  })
 
 });
 
