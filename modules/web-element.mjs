@@ -318,7 +318,7 @@ class BorderWidth extends WebElementFunction{
     }
 }
 /**
- * Function extract border-style for DOM element
+ * Function extract border-style of DOM element
  */
 class BorderStyle extends WebElementFunction{
     constructor(){
@@ -342,7 +342,7 @@ class BorderColor extends WebElementFunction{
     }
 }
 /**
- * Function that extract bordr-radius
+ * Function that extract border-radius
  */
 class BorderRadius extends WebElementFunction{
     constructor(){
@@ -352,8 +352,54 @@ class BorderRadius extends WebElementFunction{
          var win = this.GetOwnerWindow(element)
          return win.getComputedStyle(element).getPropertyValue("border-radius")
     }
-   
-
+}
+/**
+ * Function that extract display property of DOM element
+ */
+class Display extends WebElementFunction{
+    constructor(){
+        super("display")
+    }
+    get(element){
+        var win = this.GetOwnerWindow(element)
+        return win.getComputedStyle(element).getPropertyValue("display")
+    }
+}
+/**
+ * Function that extract visibility of DOM element
+ */
+class Visibility extends WebElementFunction{
+    constructor(){
+        super("visibility")
+    }
+    get(element){
+        var win = this.GetOwnerWindow(element)
+        return win.getComputedStyle(element).getPropertyValue("visibility")
+    }
+}
+/**
+ * Function that extract position of DOM element
+ */
+class Position extends WebElementFunction{
+    constructor(){
+        super("position")
+    }
+    get(element){
+        var win = this.GetOwnerWindow(element)
+        return win.getComputedStyle(element).getPropertyValue("position")
+    }
+}
+/**
+ * Function that extract flottant elemnt of DOM
+ */
+class Float extends WebElementFunction{
+    constructor(){
+        super("float")
+    }
+    get(element){
+        var win = this.GetOwnerWindow(element)
+        return win.getComputedStyle(element).getPropertyValue("float")
+    }
 }
 /**
  * Designator that points to an element in a DOM tree based on
@@ -460,6 +506,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, Color, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, WebElementFunction };
+export { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:

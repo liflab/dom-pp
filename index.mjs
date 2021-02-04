@@ -57,7 +57,7 @@ import {
     QuantifierVerdict,
     UniversalQuantifier
 } from "./modules/quantifier.mjs";
-import { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, Color, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily,FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, WebElementFunction } from "./modules/web-element.mjs";
+import { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily,FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, Position, Visibility, WebElementFunction } from "./modules/web-element.mjs";
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 
 /**
@@ -191,6 +191,7 @@ export {
     DesignatedObject,
     DimensionHeight,
     DimensionWidth,
+    Display,
     Division,
     ElementAttribute,
     ElementAttributeValue,
@@ -199,6 +200,7 @@ export {
     ExistentialQuantifier,
     Explainer,
     FindBySelector,
+    Float,
     FontFamily,
     FontSize,
     FunctionNamedArgument,
@@ -229,6 +231,7 @@ export {
     PaddingBottom,
     PaddingRight,
     PaddingLeft,
+    Position,
     Quantifier,
     QuantifierConjunctiveVerdict,
     QuantifierDisjunctiveVerdict,
@@ -244,6 +247,7 @@ export {
     UnknownNode,
     Value,
     Verdict,
+    Visibility,
     WebElementFunction
 };
 

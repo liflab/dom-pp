@@ -46,10 +46,12 @@ import {
   CompoundDesignator,
   ConstantDesignator,
   DimensionHeight,
+  Display,
   DimensionWidth,
   ElementAttributeValue,
   EnumeratedValue,
   FindBySelector,
+  Float,
   FontFamily,
   FontSize,
   MarginTop,
@@ -63,8 +65,10 @@ import {
   PaddingBottom,
   PaddingRight,
   PaddingLeft,
+  Position,
   ReturnValue,
-  Tracer
+  Tracer,
+  Visibility
 } from "../index.mjs";
 
 describe("Web element tests", () => {
@@ -135,8 +139,8 @@ describe("Web element tests", () => {
       expect(h).to.equal(200);
     });
   });
-  describe("Font-Size", ()=>{
-    it("Value", async()=>{
+  describe("Check formatting properties", ()=>{
+    it("Check font-size", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var fontSize = dom.window.document.querySelector("#title")
       var f = new FontSize()
@@ -145,9 +149,7 @@ describe("Web element tests", () => {
       var h = v.getValue()
       expect(h).to.equal("30px")
     });
-  });
-  describe("Font-Family", ()=>{
-    it("Value", async()=>{
+    it("Check font-family", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var fontFamily = dom.window.document.querySelector("#title")
       var f  = new FontFamily()
@@ -157,8 +159,9 @@ describe("Web element tests", () => {
       expect(h).to.equal("cursive")
     });
   });
-  describe("Check color for DOM element", ()=>{
-    it("value", async()=>{
+
+  describe("Check color and background properties", ()=>{
+    it("Check color", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var h1col = dom.window.document.querySelector(".heading")
       var f = new Color()
@@ -167,9 +170,7 @@ describe("Web element tests", () => {
       var h = v.getValue()
       expect(h).to.equal("green")
     });
-  });
-  describe("Check the background-color for DOM element", ()=>{
-    it("value", async()=>{
+    it("Check background-color", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
       var bgColor = dom.window.document.querySelector(".testElem")
       var f = new BackgroundColor()
@@ -301,6 +302,45 @@ describe("Web element tests", () => {
       expect(h).to.equal("10px")
     });
   })
+  describe("Check position and display of DOM elements", ()=>{
+    it("Check display", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var display = dom.window.document.querySelector(".displayElem")
+      var f = new Display()
+      var v = f.evaluate(display)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("inline-block")
+    })
+    it("Check visibility", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var visibility = dom.window.document.querySelector("#dispVisiblity")
+      var f = new Visibility()
+      var v = f.evaluate(visibility)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("hidden")
+    })
+    it("Check position", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var position = dom.window.document.querySelector("#titlePositionDisp")
+      var f = new Position()
+      var v = f.evaluate(position)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("relative")
+    })
+    it("Check float", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var float = dom.window.document.querySelector("#rightContent")
+      var f = new Float()
+      var v = f.evaluate(float)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("right")
+    })
+  })
+
 
 });
 
