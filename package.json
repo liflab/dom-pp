@@ -7,7 +7,8 @@
     "scripts": {
         "test": "mocha",
         "coverage": "NODE_ENV=test c8 mocha test/*.test.js",
-        "doc": "jsdoc -c jsdoc.conf.json"
+        "doc": "jsdoc -c jsdoc.conf.json",
+	"lint": "eslint index.mjs modules/*.mjs"
     },
     "repository": {
         "type": "git",
@@ -21,6 +22,11 @@
     "homepage": "https://github.com/liflab/dom-pp",
     "devDependencies": {
         "c8": "^7.4.0",
+        "eslint": "^7.19.0",
+        "eslint-config-standard": "^16.0.2",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^4.2.1",
         "fs": "0.0.1-security",
         "global-jsdom": "7.0.0",
         "jsdoc": "^3.6.6",
