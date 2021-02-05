@@ -57,7 +57,7 @@ import {
     QuantifierVerdict,
     UniversalQuantifier
 } from "./modules/quantifier.mjs";
-import { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily,FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, Position, Visibility, WebElementFunction } from "./modules/web-element.mjs";
+import { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily,FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, Position, Visibility, WebElementFunction } from "./modules/web-element.mjs";
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 
 /**
@@ -180,6 +180,7 @@ export {
     BorderRadius,
     BorderStyle,
     BorderWidth,
+    CssPropertyFunction,
     Color,
     ComposedFunction,
     ComposedFunctionValue,

@@ -42,6 +42,7 @@ import {
   BorderRadius,
   BorderStyle,
   BorderWidth,
+  CssPropertyFunction,
   Color,
   CompoundDesignator,
   ConstantDesignator,
@@ -123,7 +124,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(h2);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal(100);
+      expect(h).to.equal("100px");
     });
   });
 
@@ -136,7 +137,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(h2);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal(200);
+      expect(h).to.equal("200px");
     });
   });
   describe("Check formatting properties", ()=>{
