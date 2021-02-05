@@ -14,7 +14,7 @@
         "type": "git",
         "url": "git+https://github.com/liflab/dom-pp.git"
     },
-    "author": "Sylvain Hallé, Amadou Ba",
+    "author": "Sylvain Hallé, Amadou Ba, Papa Alioune Fall, Émile Perron",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/liflab/dom-pp/issues"
