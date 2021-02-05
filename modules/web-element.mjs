@@ -133,12 +133,17 @@ class CssPropertyFunction extends  WebElementFunction
  * Function that extracts the width of a DOM node.
  * @extends CssPropertyFunction
  */
-class DimensionWidth extends CssPropertyFunction {
+class DimensionWidth extends WebElementFunction {
     /**
      * Creates a new instance of the function.
      */
     constructor() {
         super("width");
+    }
+
+    get(element) {
+        var win = this.getOwnerWindow(element)
+        return parseFloat(win.getComputedStyle(element).getPropertyValue('width'))
     }
 }
 
@@ -146,12 +151,17 @@ class DimensionWidth extends CssPropertyFunction {
  * Function that extracts the height of a DOM node.
  * @extends WebElementFunction
  */
-class DimensionHeight extends CssPropertyFunction {
+class DimensionHeight extends WebElementFunction {
     /**
      * Creates a new instance of the function.
      */
     constructor() {
         super("height");
+    }
+    get(element) {
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow;
+        return parseFloat(win.getComputedStyle(element).getPropertyValue('height'))
     }
 }
 /**
@@ -172,11 +182,19 @@ class FontFamily extends CssPropertyFunction{
     }
 }
 /**
- * this is a simple exple to test h1's color is
+ * Function that extract the color of DOM element
  */
 class Color extends CssPropertyFunction{   
     constructor(){
         super("color")
+    }
+}
+/**
+ * Function that extract the opacity
+ */
+class Opacity extends CssPropertyFunction{
+    constructor(){
+        super("opacity")
     }
 }
 /**
@@ -423,6 +441,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction };
+export { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:

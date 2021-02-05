@@ -71,6 +71,7 @@ import {
   Tracer,
   Visibility
 } from "../index.mjs";
+import { Opacity } from "../modules/web-element.mjs";
 
 describe("Web element tests", () => {
   describe("FindBySelector", () => {
@@ -124,7 +125,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(h2);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal("100px");
+      expect(h).to.equal(100);
     });
   });
 
@@ -137,7 +138,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(h2);
       expect(v).to.be.an.instanceof(ElementAttributeValue);
       var h = v.getValue();
-      expect(h).to.equal("200px");
+      expect(h).to.equal(200);
     });
   });
   describe("Check formatting properties", ()=>{
@@ -170,6 +171,7 @@ describe("Web element tests", () => {
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
       expect(h).to.equal("green")
+      //expect(h).to.equal('rgb(' + 0 + ',' + 128 + ',' + 0 + ')')
     });
     it("Check background-color", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
@@ -180,6 +182,15 @@ describe("Web element tests", () => {
       var h = v.getValue()
       expect(h).to.equal("blue")
     });
+    it("Check opacity", async()=>{
+      var dom = await load_dom("./test/pages/stub-2.html")
+      var opacityElem = dom.window.document.querySelector("#titlePositionDisp")
+      var f = new Opacity()
+      var v = f.evaluate(opacityElem)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("1")
+    })
   });
 
   describe("Check margin-xx for DOM element", ()=>{
