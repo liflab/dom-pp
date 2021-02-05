@@ -55,7 +55,66 @@ import {
 } from "../index.mjs";
 
 describe("Witness tests", () => {
-  it("Test", async () => {});
+  it("Simple condition true", async () => {
+    var f = new ComposedFunction(new GreaterThan(), "@0", 50);
+    var cond = new TestCondition("A condition", f);
+    var driver = new TestDriver(cond);
+    driver.evaluateAll(100);
+    var result = driver.getResult();
+    expect(result).to.be.an.instanceof(TestResult);
+    expect(result.getResult()).to.be.true;
+    var verdicts = result.getVerdicts();
+    expect(verdicts.length).to.equal(1);
+    var verdict = verdicts[0];
+    var witness = verdict.getWitness();
+    expect(Array.isArray(witness)).to.be.true;
+    expect(witness.length).to.equal(2);
+    const trees = getTreeFromWitness(witness);
+  });
+  it("Simple condition false", async () => {
+    var f = new ComposedFunction(new GreaterThan(), "@0", 50);
+    var cond = new TestCondition("A condition", f);
+    var driver = new TestDriver(cond);
+    driver.evaluateAll(0);
+    var result = driver.getResult();
+    expect(result).to.be.an.instanceof(TestResult);
+    expect(result.getResult()).to.be.false;
+    var verdicts = result.getVerdicts();
+    expect(verdicts.length).to.equal(1);
+    var verdict = verdicts[0];
+    var witness = verdict.getWitness();
+    expect(Array.isArray(witness)).to.be.true;
+    expect(witness.length).to.equal(2);
+    const trees = getTreeFromWitness(witness);
+  });
+  it("Test", async () => {
+    var dom = await load_dom("./test/pages/stub-1.html");
+    var body = dom.window.document.body;
+    var f = new UniversalQuantifier(
+      "$x",
+      new FindBySelector("#h2"),
+      new ComposedFunction(
+        new GreaterThan(),
+        new ComposedFunction(new DimensionWidth(), "$x"),
+        350
+      )
+    );
+
+    var cond = new TestCondition("h2's width > 350", f);
+    var driver = new TestDriver(cond);
+    driver.evaluateAll(body);
+    var result = driver.getResult();
+    expect(result).to.be.an.instanceof(TestResult);
+    expect(result.getResult()).to.be.false;
+    var verdicts = result.getVerdicts();
+    expect(verdicts.length).to.equal(1);
+    var verdict = verdicts[0];
+    var witness = verdict.getWitness();
+    expect(Array.isArray(witness)).to.be.true;
+    expect(witness.length).to.equal(2);
+    const trees = getTreeFromWitness(witness);
+    console.log(trees);
+  });
 });
 //////////////////////////////////////////////////////////////////////////////////
 
