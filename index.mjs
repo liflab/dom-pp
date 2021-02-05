@@ -129,32 +129,40 @@ function getVerdict(root, condition) {
     return tree;
 }
 
-function getWit(root, condition) {
-    if (root == null) {
-        return null;
-    }
-    // Create a "fake" data tree
-    var tree = dataTree.create();
-    var n1 = tree.insert({
-        type: "AND"
-    });
-    var n2 = tree.insertToNode(n1, {
-        type: "object",
-        part: [ElementAttribute],
-        subject: Path
-    });
-    return tree;
-}
-
-function getTreeFromWitness(root, w = []) {
-    var verdicts = [];
-    for (var i = 0; i < w.length; i++) {
-        var verdict = getWit(root, w[i]);
-        if (verdict != null) {
-            verdicts.push(verdict);
+function getTreeFromWitness(witnesses = []) {
+    const tree = dataTree.create()
+    for (const designatedObject of witnesses) {
+        let part = [];
+        let subject = null;
+        let elementAttribute = null;
+        let lastPartType;
+        // First form
+        if (designatedObject.getObject().constructor.name == "HTMLBodyElement") {
+            const elements = designatedObject.getDesignator().elements;
+            subject = elements[elements.length - 2].toString() || null;
+            elementAttribute = elements[elements.length - 3].toString() || null;
+            lastPartType = "Path";
         }
+        // Second form
+        else {
+            subject = designatedObject.getObject();
+            lastPartType = "ConstantDesignator";
+        }
+        // Build the leaf's "part"
+        for (const element of designatedObject.getDesignator().elements) {
+            if (element.constructor.name == lastPartType) {
+                break;
+            }
+            part.push(element.toString());
+        }
+        tree.insert({
+            elementAttribute,
+            part,
+            subject,
+        });
     }
-    return verdicts;
+
+    return tree;
 }
 
 
