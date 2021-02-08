@@ -142,10 +142,17 @@ class Verdict {
         Verdict.pick(n.getChildren()[i], list, visited);
       }
     } else if (n instanceof OrNode) {
+      var test = true;
+      while (test) {
+        Verdict.pick(n.getChildren()[i], list, visited);
+        test = false;
+      }
+      /*
       for (let i = 0; i < n.getChildren().length; i++) {
         Verdict.pick(n.getChildren()[i], list, visited);
         break;
       }
+      */
     } else if (n instanceof ObjectNode) {
       if (n.getChildren().length === 0) {
         list.push(n.getDesignatedObject());

@@ -29,8 +29,7 @@
  */
 
 // DataTree for tree management
-import "data-tree";
-
+import dataTree from "data-tree";
 // Local imports
 import { All, CompoundDesignator, Designator, Nothing, Unknown } from "./modules/designator.mjs";
 import { AbstractFunction, ConstantFunction, InputArgument, ReturnValue } from "./modules/function.mjs";

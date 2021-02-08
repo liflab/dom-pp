@@ -433,7 +433,7 @@ class FindBySelector extends Enumerate {
     var siblings = element.parentNode.childNodes;
     for (let i = 0; i < siblings.length; i++) {
       var sibling = siblings[i];
-      if (sibling === element) { return getPathTo(element.parentNode) + "/" + element.tagName + "[" + (ix + 1) + "]"; }
+      if (sibling === element) { return this.getPathTo(element.parentNode) + "/" + element.tagName + "[" + (ix + 1) + "]"; }
       if (sibling.nodeType === 1 && sibling.tagName === element.tagName) { ix++; }
     }
   }
