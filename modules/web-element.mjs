@@ -37,19 +37,27 @@ import { Enumerate, EnumeratedValue } from "./enumerate.mjs";
  * @extends AtomicFunction
  */
 class WebElementFunction extends AtomicFunction {
-  constructor(name) {
-    super(1);
-    this.name = name;
-  }
+    constructor(name) {
+        super(1);
+        this.name = name;
+    }
 
-  compute() {
-    var val = this.get(arguments[0].getValue());
-    return new ElementAttributeValue(this.name, arguments[0], val);
-  }
+    compute() {
+        var val = this.get(arguments[0].getValue());
+        return new ElementAttributeValue(this.name, arguments[0], val);
+    }
 
-  get(e) {
-    return null; // To be overridden by descendants
-  }
+    get(e) {
+        return null; // To be overridden by descendants
+    }
+    //this method help to get window object
+    getOwnerWindow(element) {
+        return element.ownerDocument.defaultView || element.ownerDocument.parentWindow;
+    }
+    getElementComputedStyle(element) {
+        const window = this.getOwnerWindow(element);
+        return window.getComputedStyle(element);
+    }
 }
 
 /**
@@ -107,23 +115,35 @@ class ElementAttributeValue extends Value {
     return leaves;
   }
 }
+/**
+ * value of css attribute
+ */
+class CssPropertyFunction extends  WebElementFunction
+{
+     get(element)
+     {
+        const style = this.getElementComputedStyle(element);
+        return style.getPropertyValue(this.name);
+     }
+}
+
 
 /**
  * Function that extracts the width of a DOM node.
- * @extends WebElementFunction
+ * @extends CssPropertyFunction
  */
 class DimensionWidth extends WebElementFunction {
   /**
      * Creates a new instance of the function.
      */
-  constructor() {
-    super("width");
-  }
+    constructor() {
+        super("width");
+    }
 
-  get(e) {
-    var s = e.style.width;
-    return parseFloat(s);
-  }
+    get(element) {
+        var win = this.getOwnerWindow(element)
+        return parseFloat(win.getComputedStyle(element).getPropertyValue('width'))
+    }
 }
 
 /**
@@ -134,212 +154,186 @@ class DimensionHeight extends WebElementFunction {
   /**
      * Creates a new instance of the function.
      */
-  constructor() {
-    super("height");
-  }
-
-  get(e) {
-    var s = e.style.height;
-    return parseFloat(s);
-  }
-}
-
-/**
- * Function that extracts the background color of a DOM.
- * @extends Value
- */
-class BackgroundColor extends WebElementFunction {
-  /**
-     * Creates a new instance of the function.
-     */
-  constructor() {
-    super("background");
-  }
-
-  get(e) {
-    var s = e.style.backgroundColor;
-    return s;
-  }
-}
-/**
- * Function that extracts the color of text.
- * @extends Value
- */
-class Color extends WebElementFunction {
-  /**
-     * Creates a new instance of the function.
-     */
-  constructor() {
-    super("color");
-  }
-
-  get(e) {
-    var s = e.style.color;
-    return s;
-  }
-}
-
-/**
- * Function that extracts the margin-top.
- * @extends Value
- */
-class MarginTop extends WebElementFunction {
-  /**
-     * Creates a new instance of the function.
-     */
-  constructor() {
-    super("marginTop");
-  }
-
-  get(e) {
-    var s = e.style.marginTop;
-    return parseFloat(s);
-  }
-}
-
-/**
- * Function that extracts the margin-bottom.
- * @extends Value
- */
-class MarginBottom extends WebElementFunction {
-  /**
-     * Creates a new instance of the function.
-     */
-  constructor() {
-    super("marginBottom");
-  }
-
-  get(e) {
-    var s = e.style.marginBottom;
-    return parseFloat(s);
-  }
-}
-/**
- * Function that extracts the margin-right.
- * @extends Value
- */
-class MarginRight extends WebElementFunction {
-  /**
-     * Creates a new instance of the function.
-     */
-  constructor() {
-    super("marginRight");
-  }
-
-  get(e) {
-    var s = e.style.marginRight;
-    return parseFloat(s);
-  }
-}
-/**
- * Function that extracts the margin-left.
- * @extends Value
- */
-class MarginLeft extends WebElementFunction {
-  /**
-     * Creates a new instance of the function.
-     */
-  constructor() {
-    super("marginLeft");
-  }
-
-  get(e) {
-    var s = e.style.marginLeft;
-    return parseFloat(s);
-  }
-}
-/**
- * Function that extracts the padding-top.
- * @extends Value
- */
-class PaddingTop extends WebElementFunction {
-  /**
-     * Creates a new instance of the function.
-     */
-  constructor() {
-    super("paddingTop");
-  }
-
-  get(e) {
-    var s = e.style.paddingTop;
-    return parseFloat(s);
-  }
-}
-
-/**
- * Function that extracts the padding-bottom.
- * @extends Value
- */
-class PaddingBottom extends WebElementFunction {
-  /**
-     * Creates a new instance of the function.
-     */
-  constructor() {
-    super("paddingBottom");
-  }
-
-  get(e) {
-    var s = e.style.paddingBottom;
-    return parseFloat(s);
-  }
-}
-/**
- * Function that extracts the padding-right.
- * @extends Value
- */
-class PaddingRight extends WebElementFunction {
-  /**
-     * Creates a new instance of the function.
-     */
-  constructor() {
-    super("paddingRight");
-  }
-
-  get(e) {
-    var s = e.style.paddingRight;
-    return parseFloat(s);
-  }
-}
-/**
- * Function that extracts the padding-left.
- * @extends Value
- */
-class PaddingLeft extends WebElementFunction {
-  /**
-     * Creates a new instance of the function.
-     */
-  constructor() {
-    super("paddingLeft");
-  }
-
-  get(e) {
-    var s = e.style.paddingLeft;
-    return parseFloat(s);
-  }
+    constructor() {
+        super("height");
+    }
+    get(element) {
+        var doc = element.ownerDocument;
+        var win = doc.defaultView || doc.parentWindow;
+        return parseFloat(win.getComputedStyle(element).getPropertyValue('height'))
+    }
 }
 /**
  * Function that extracts the font size.
  * @extends Value
  */
-class FontSize extends WebElementFunction {
-  constructor() {
-    super("fontSize");
-  }
-
-  get(e) {
-    var s = e.style.fontSize;
-    return parseFloat(s);
-  }
+class FontSize extends CssPropertyFunction{
+    constructor(){
+        super("font-size")
+    }
 }
-class FontFamily extends WebElementFunction {
-  constructor() {
-    super("fontFamily");
-  }
-
-  get(e) {
-    var s = e.style.fontFamily;
-    return s;
-  }
+/**
+ * Function that extracts the font family
+ */
+class FontFamily extends CssPropertyFunction{
+    constructor(){
+        super("font-family")
+    }
+}
+/**
+ * Function that extract the color of DOM element
+ */
+class Color extends CssPropertyFunction{   
+    constructor(){
+        super("color")
+    }
+}
+/**
+ * Function that extract the opacity
+ */
+class Opacity extends CssPropertyFunction{
+    constructor(){
+        super("opacity")
+    }
+}
+/**
+ * Function that extracts the background-color of a DOM.
+ */
+class BackgroundColor extends CssPropertyFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("background-color");
+    }
+}
+/**
+ * Function that extract margin-top of a DOM
+ */
+class MarginTop extends CssPropertyFunction{
+    constructor(){
+        super("margin-top")
+    }
+}
+/**
+ * Function that extract margin-bottom of a DOM
+ */
+class MarginBottom extends CssPropertyFunction{
+    constructor(){
+        super("margin-bottom")
+    }
+}
+/**
+ * Function that extract margin-left of a DOM
+ */
+class MarginLeft extends CssPropertyFunction{
+    constructor(){
+        super("margin-left")
+    }
+}
+/**
+ * Function that extract margin-right of a DOM
+ */
+class MarginRight extends CssPropertyFunction{
+    constructor(){
+        super("margin-right")
+    }
+}
+/**
+ * Function that extract paddig-top of a DOM
+ */
+class PaddingTop extends CssPropertyFunction{
+    constructor(){
+        super("padding-top")
+    }
+}
+/**
+ * Function that extract paddig-bottom of a DOM
+ */
+class PaddingBottom extends CssPropertyFunction{
+    constructor(){
+        super("padding-bottom")
+    }
+}
+/**
+ * Function that extract paddig-left of a DOM
+ */
+class PaddingLeft extends CssPropertyFunction{
+    constructor(){
+        super("padding-left")
+    }
+}
+/**
+ * Function that extract paddig-right of a DOM
+ */
+class PaddingRight extends CssPropertyFunction{
+    constructor(){
+        super("padding-right")
+    }
+}
+/**
+ * Function that extract border-width
+ */
+class BorderWidth extends CssPropertyFunction{
+    constructor(){
+        super("border-width")
+    }
+}
+/**
+ * Function extract border-style of DOM element
+ */
+class BorderStyle extends CssPropertyFunction{
+    constructor(){
+        super("border-style")
+    }
+}
+/**
+ * Function extrach border-color for DOM element
+ */
+class BorderColor extends CssPropertyFunction{
+    constructor(){
+        super("border-color")
+    }
+}
+/**
+ * Function that extract border-radius
+ */
+class BorderRadius extends CssPropertyFunction{
+    constructor(){
+        super("border-radius")
+    }
+}
+/**
+ * Function that extract display property of DOM element
+ */
+class Display extends CssPropertyFunction{
+    constructor(){
+        super("display")
+    }
+}
+/**
+ * Function that extract visibility of DOM element
+ */
+class Visibility extends CssPropertyFunction{
+    constructor(){
+        super("visibility")
+    }
+}
+/**
+ * Function that extract position of DOM element
+ */
+class Position extends CssPropertyFunction{
+    constructor(){
+        super("position")
+    }
+}
+/**
+ * Function that extract flottant elemnt of DOM
+ */
+class Float extends CssPropertyFunction{
+    constructor(){
+        super("float")
+    }
 }
 /**
  * Designator that points to an element in a DOM tree based on
@@ -442,6 +436,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Color, WebElementFunction };
+export { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction };
 
 // :wrap=soft:tabSize=2:indentWidth=2:
