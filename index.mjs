@@ -89,7 +89,7 @@ function evaluateDom(root, conditions = []) {
  * evaluates to <tt>false</tt>, and <tt>null</tt> if the condition is fulfilled.
  */
 function getVerdict(root, condition) {
-  if (root == null) {
+  if (root === null) {
     return null;
   }
   // Create a "fake" data tree
@@ -97,7 +97,7 @@ function getVerdict(root, condition) {
   var n1 = tree.insert({
     type: "OR"
   });
-  var n2 = tree.insertToNode(n1, {
+  tree.insertToNode(n1, {
     type: "object",
     part: ["width"],
     subject: "body[1]/section[2]/div[1]"
@@ -105,23 +105,23 @@ function getVerdict(root, condition) {
   var n3 = tree.insertToNode(n1, {
     type: "AND"
   });
-  var n4 = tree.insertToNode(n3, {
+  tree.insertToNode(n3, {
     type: "object",
     part: ["characters 2-10", "text"],
     subject: "body[1]/div[2]"
   });
   var n5 = tree.insertToNode(n3, "OR");
-  var n6 = tree.insertToNode(n5, {
+  tree.insertToNode(n5, {
     type: "object",
     part: ["value of"],
     subject: "constant 100"
   });
-  var n7 = tree.insertToNode(n5, {
+  tree.insertToNode(n5, {
     type: "object",
     part: ["width"],
     subject: "body[1]/section[2]/div[1]"
   });
-  var n8 = tree.insertToNode(n3, {
+  tree.insertToNode(n3, {
     type: "object",
     part: ["width"],
     subject: "body[1]/section[2]/div[1]"
@@ -137,20 +137,18 @@ function getTreeFromWitness(witnesses = []) {
     let elementAttribute = null;
     let lastPartType;
     // First form
-    if (designatedObject.getObject().constructor.name == "HTMLBodyElement") {
+    if (designatedObject.getObject().constructor.name === "HTMLBodyElement") {
       const elements = designatedObject.getDesignator().elements;
       subject = elements[elements.length - 2].toString() || null;
       elementAttribute = elements[elements.length - 3].toString() || null;
       lastPartType = "Path";
-    }
-    // Second form
-    else {
+    } else { // Second form
       subject = designatedObject.getObject();
       lastPartType = "ConstantDesignator";
     }
     // Build the leaf's "part"
     for (const element of designatedObject.getDesignator().elements) {
-      if (element.constructor.name == lastPartType) {
+      if (element.constructor.name === lastPartType) {
         break;
       }
       part.push(element.toString());

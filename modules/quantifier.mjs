@@ -58,7 +58,7 @@ class Quantifier extends AbstractFunction {
   }
 
   evaluate() {
-    if (arguments.length != 1) {
+    if (arguments.length !== 1) {
       throw "Invalid number of arguments";
     }
     var true_verdicts = [];
@@ -122,10 +122,6 @@ class QuantifierVerdict extends Value {
  * @extends QuantifierVerdict
  */
 class QuantifierDisjunctiveVerdict extends QuantifierVerdict {
-  constructor(f, value, verdicts) {
-    super(f, value, verdicts);
-  }
-
   query(q, d, root, factory) {
     var leaves = [];
     var n = factory.getOrNode();
@@ -137,7 +133,7 @@ class QuantifierDisjunctiveVerdict extends QuantifierVerdict {
       leaves.push(...sub_leaves);
     }
     var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
-    if (this.verdicts.length == 1) {
+    if (this.verdicts.length === 1) {
       tn.addChild(n.getChildren()[0]);
     } else {
       tn.addChild(n);
@@ -154,10 +150,6 @@ class QuantifierDisjunctiveVerdict extends QuantifierVerdict {
  * @extends QuantifierVerdict
  */
 class QuantifierConjunctiveVerdict extends QuantifierVerdict {
-  constructor(f, value, verdicts) {
-    super(f, value, verdicts);
-  }
-
   query(q, d, root, factory) {
     var leaves = [];
     var n = factory.getAndNode();
@@ -169,7 +161,7 @@ class QuantifierConjunctiveVerdict extends QuantifierVerdict {
       leaves.push(...sub_leaves);
     }
     var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
-    if (this.verdicts.length == 1) {
+    if (this.verdicts.length === 1) {
       tn.addChild(n.getChildren()[0]);
     } else {
       tn.addChild(n);
@@ -184,12 +176,8 @@ class QuantifierConjunctiveVerdict extends QuantifierVerdict {
  * @extends Quantifier
  */
 class UniversalQuantifier extends Quantifier {
-  constructor(index, domain, phi) {
-    super(index, domain, phi);
-  }
-
   getQuantifierValue(false_verdicts = [], true_verdicts = []) {
-    if (false_verdicts.length == 0) {
+    if (false_verdicts.length === 0) {
       return new QuantifierConjunctiveVerdict(this, true, true_verdicts);
     }
     return new QuantifierDisjunctiveVerdict(this, false, false_verdicts);
@@ -209,10 +197,6 @@ class UniversalQuantifier extends Quantifier {
  * @extends Quantifier
  */
 class ExistentialQuantifier extends Quantifier {
-  constructor(index, domain, phi) {
-    super(index, domain, phi);
-  }
-
   getQuantifierValue(false_verdicts = [], true_verdicts = []) {
     if (true_verdicts.length > 0) {
       return new QuantifierDisjunctiveVerdict(this, true, true_verdicts);

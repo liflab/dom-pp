@@ -45,7 +45,7 @@ function same_object(o1, o2) {
     // Two objects that implement equals
     return o1.equals(o2);
   }
-  return o1 == o2;
+  return o1 === o2;
 }
 
 function map_get(m, k) {
@@ -58,7 +58,7 @@ function map_get(m, k) {
 }
 
 function map_contains(m, k) {
-  for (const [key, value] of m) {
+  for (const [key] of m) {
     if (same_object(key, k)) {
       return true;
     }
@@ -67,7 +67,7 @@ function map_contains(m, k) {
 }
 
 function map_put(m, k, v) {
-  for (const [key, value] of m) {
+  for (const [key] of m) {
     if (same_object(key, k)) {
       m.set(key, v);
       return;

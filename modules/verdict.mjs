@@ -142,15 +142,15 @@ class Verdict {
         Verdict.pick(n.getChildren()[i], list, visited);
       }
     } else if (n instanceof OrNode) {
-      for (var i = 0; i < n.getChildren().length; i++) {
+      for (let i = 0; i < n.getChildren().length; i++) {
         Verdict.pick(n.getChildren()[i], list, visited);
         break;
       }
     } else if (n instanceof ObjectNode) {
-      if (n.getChildren().length == 0) {
+      if (n.getChildren().length === 0) {
         list.push(n.getDesignatedObject());
       } else {
-        for (var i = 0; i < n.getChildren().length; i++) {
+        for (let i = 0; i < n.getChildren().length; i++) {
           Verdict.pick(n.getChildren()[i], list, visited);
         }
       }

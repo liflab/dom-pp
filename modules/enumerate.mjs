@@ -47,7 +47,7 @@ class Enumerate extends AtomicFunction {
     for (var i = 0; i < list.length; i++) {
       val_list.push(Value.lift(list[i]));
     }
-    for (var i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
       out_list.push(new EnumeratedValue(i, val_list));
     }
     return new AtomicFunctionReturnValue(this, out_list, ...arguments);
@@ -91,7 +91,7 @@ class EnumeratedValue extends Value {
     if (o == null || !(o instanceof EnumeratedValue)) {
       return false;
     }
-    return this.index == o.index && this.inputList == o.inputList;
+    return this.index === o.index && this.inputList === o.inputList;
   }
 }
 

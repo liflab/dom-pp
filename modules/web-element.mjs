@@ -406,7 +406,7 @@ class FindBySelector extends Enumerate {
   }
 
   evaluate() {
-    if (arguments.length != 1) {
+    if (arguments.length !== 1) {
       throw "Invalid number of arguments";
     }
     var v = Value.lift(arguments[0]);
@@ -414,12 +414,12 @@ class FindBySelector extends Enumerate {
     var elm_list = root.querySelectorAll(this.selector);
     var val_list = [];
     var out_list = [];
-    for (var i = 0; i < elm_list.length; i++) {
+    for (let i = 0; i < elm_list.length; i++) {
       var path = FindBySelector.getPathTo(elm_list[i]);
       var pv = new PathValue(new Path(path), root, elm_list[i]);
       val_list.push(pv);
     }
-    for (var i = 0; i < val_list.length; i++) {
+    for (let i = 0; i < val_list.length; i++) {
       out_list.push(new EnumeratedValue(i, val_list));
     }
     return new AtomicFunctionReturnValue(this, out_list, v);
@@ -427,11 +427,11 @@ class FindBySelector extends Enumerate {
 
   static getPathTo(element) {
     if (element.id !== "") { return "id(\"" + element.id + "\")"; }
-    if (element.tagName == "BODY") { return element.tagName; }
+    if (element.tagName === "BODY") { return element.tagName; }
 
     var ix = 0;
     var siblings = element.parentNode.childNodes;
-    for (var i = 0; i < siblings.length; i++) {
+    for (let i = 0; i < siblings.length; i++) {
       var sibling = siblings[i];
       if (sibling === element) { return getPathTo(element.parentNode) + "/" + element.tagName + "[" + (ix + 1) + "]"; }
       if (sibling.nodeType === 1 && sibling.tagName === element.tagName) { ix++; }

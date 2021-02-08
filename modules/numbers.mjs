@@ -55,10 +55,10 @@ class IsEqualTo extends AtomicFunction {
       return false;
     }
     if (typeof (o1) === "number" && typeof (o2) === "number") {
-      return o1 == o2;
+      return o1 === o2;
     }
     if (typeof (o1) === "string" && typeof (o2) === "string") {
-      return o1 == o2;
+      return o1 === o2;
     }
     return false;
   }

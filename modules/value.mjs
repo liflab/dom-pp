@@ -32,9 +32,11 @@ import { CompoundDesignator, Designator } from "./designator.mjs";
  * can be computed.
  */
 class Value {
+  /*
   constructor() {
     // Nothing to do
   }
+  */
 
   /**
      * Gets the concrete value carried by this Value object.
@@ -135,7 +137,7 @@ class ConstantValue extends Value {
     if (o == null || !(o instanceof Value)) {
       return false;
     }
-    return o.getValue() == this.value;
+    return o.getValue() === this.value;
   }
 }
 /**
@@ -143,9 +145,11 @@ class ConstantValue extends Value {
  * @extends Designator
  */
 class ConstantDesignator extends Designator {
+  /*
   constructor() {
     super();
   }
+  */
 
   toString() {
     return "Value";

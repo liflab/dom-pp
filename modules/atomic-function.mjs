@@ -61,7 +61,7 @@ class AtomicFunction extends AbstractFunction {
      * @return The resulting {@link Value}
      */
   compute() {
-    if (arguments.length != this.arity) {
+    if (arguments.length !== this.arity) {
       throw "Invalid number of arguments";
     }
     var args = [];
@@ -129,7 +129,7 @@ class AtomicFunctionReturnValue extends Value {
     var leaves = [];
     var n = factory.getAndNode();
     for (var i = 0; i < this.inputValues.length; i++) {
-      if (this.inputValues[i] == null) {
+      if (this.inputValues[i] === null) {
         continue;
       }
       var new_d = CompoundDesignator.create(d.tail(), new InputArgument(i));
@@ -140,7 +140,7 @@ class AtomicFunctionReturnValue extends Value {
       n.addChild(sub_root);
     }
     var f_root = factory.getObjectNode(d, this.referenceFunction);
-    if (n.getChildren().length == 1) {
+    if (n.getChildren().length === 1) {
       f_root.addChild(n.getChildren()[0]);
     } else {
       f_root.addChild(n);

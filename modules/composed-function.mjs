@@ -182,7 +182,7 @@ class NamedArgument extends AbstractFunction {
 
   /* @Override */
   set(name, value) {
-    if (this.name == name || ("$" + this.name) == name) {
+    if (this.name === name || ("$" + this.name) === name) {
       this.value = Value.lift(value);
     }
     this.isSet = true;
@@ -195,7 +195,7 @@ class NamedArgument extends AbstractFunction {
     }
     for (var i = 0; i < this.referenceFunction.operands.length; i++) {
       if (this.referenceFunction.operands[i] instanceof NamedArgument) {
-        if (this.name == this.referenceFunction.operands[i].getName()) {
+        if (this.name === this.referenceFunction.operands[i].getName()) {
           return new NamedArgumentValue(this.name, Value.lift(arguments[i]));
         }
       }
