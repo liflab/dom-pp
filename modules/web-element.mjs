@@ -117,6 +117,7 @@ class ElementAttributeValue extends Value {
 }
 /**
  * value of css attribute
+ * @extends WebElementFunction
  */
 class CssPropertyFunction extends  WebElementFunction
 {
@@ -130,7 +131,7 @@ class CssPropertyFunction extends  WebElementFunction
 
 /**
  * Function that extracts the width of a DOM node.
- * @extends CssPropertyFunction
+ * @extends WebElementFunction
  */
 class DimensionWidth extends WebElementFunction {
   /**
@@ -143,6 +144,7 @@ class DimensionWidth extends WebElementFunction {
     get(element) {
         var win = this.getOwnerWindow(element)
         return parseFloat(win.getComputedStyle(element).getPropertyValue('width'))
+        //return element.offsetWidth;
     }
 }
 
@@ -165,7 +167,7 @@ class DimensionHeight extends WebElementFunction {
 }
 /**
  * Function that extracts the font size.
- * @extends Value
+ * @extends CssPropertyFunction
  */
 class FontSize extends CssPropertyFunction{
     constructor(){
@@ -174,6 +176,7 @@ class FontSize extends CssPropertyFunction{
 }
 /**
  * Function that extracts the font family
+ * @extends CssPropertyFunction
  */
 class FontFamily extends CssPropertyFunction{
     constructor(){
@@ -182,6 +185,7 @@ class FontFamily extends CssPropertyFunction{
 }
 /**
  * Function that extract the color of DOM element
+ * @extends CssPropertyFunction
  */
 class Color extends CssPropertyFunction{   
     constructor(){
