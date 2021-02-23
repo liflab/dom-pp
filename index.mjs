@@ -1,20 +1,20 @@
 /*
   A lineage library for DOM nodes
   MIT License
-  
+
   Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
   Eckinox Média and Université du Québec à Chicoutimi
-  
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
   copies of the Software, and to permit persons to whom the Software is
   furnished to do so, subject to the following conditions:
-  
+
   The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
-  
+
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,8 +29,7 @@
  */
 
 // DataTree for tree management
-import "data-tree";
-
+import dataTree from "data-tree";
 // Local imports
 import { All, CompoundDesignator, Designator, Nothing, Unknown } from "./modules/designator.mjs";
 import { AbstractFunction, ConstantFunction, InputArgument, ReturnValue } from "./modules/function.mjs";
@@ -41,23 +40,23 @@ import { AndNode, Explainer, DesignatedObject, ObjectNode, OrNode, Tracer, Unkno
 import { Addition, Substraction, Multiplication, Division, GreaterOrEqual, LesserOrEqual, GreaterThan, LesserThan, IsEqualTo } from "./modules/numbers.mjs";
 import { Enumerate, EnumeratedValue, NthItem } from "./modules/enumerate.mjs";
 import {
-    Argument,
-    ArgumentValue,
-    ComposedFunction,
-    ComposedFunctionValue,
-    FunctionNamedArgument,
-    NamedArgument,
-    NamedArgumentValue
+  Argument,
+  ArgumentValue,
+  ComposedFunction,
+  ComposedFunctionValue,
+  FunctionNamedArgument,
+  NamedArgument,
+  NamedArgumentValue
 } from "./modules/composed-function.mjs";
 import {
-    ExistentialQuantifier,
-    Quantifier,
-    QuantifierConjunctiveVerdict,
-    QuantifierDisjunctiveVerdict,
-    QuantifierVerdict,
-    UniversalQuantifier
+  ExistentialQuantifier,
+  Quantifier,
+  QuantifierConjunctiveVerdict,
+  QuantifierDisjunctiveVerdict,
+  QuantifierVerdict,
+  UniversalQuantifier
 } from "./modules/quantifier.mjs";
-import { BackgroundColor, Color, DimensionHeight, DimensionWidth, ElementAttribute, ElementAttributeValue, FindBySelector, FontFamily, FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, WebElementFunction } from "./modules/web-element.mjs";
+import { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily,FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, Position, Visibility, WebElementFunction } from "./modules/web-element.mjs";
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 
 /**
@@ -69,14 +68,14 @@ import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdic
  * each condition that evaluates to <tt>false</tt>.
  */
 function evaluateDom(root, conditions = []) {
-    var verdicts = [];
-    for (var i = 0; i < conditions.length; i++) {
-        var verdict = getVerdict(root, conditions[i]);
-        if (verdict != null) {
-            verdicts.push(verdict);
-        }
+  var verdicts = [];
+  for (var i = 0; i < conditions.length; i++) {
+    var verdict = getVerdict(root, conditions[i]);
+    if (verdict != null) {
+      verdicts.push(verdict);
     }
-    return verdicts;
+  }
+  return verdicts;
 }
 
 /**
@@ -89,82 +88,79 @@ function evaluateDom(root, conditions = []) {
  * evaluates to <tt>false</tt>, and <tt>null</tt> if the condition is fulfilled.
  */
 function getVerdict(root, condition) {
-    if (root == null) {
-        return null;
-    }
-    // Create a "fake" data tree
-    var tree = dataTree.create();
-    var n1 = tree.insert({
-        type: "OR"
-    });
-    var n2 = tree.insertToNode(n1, {
-        type: "object",
-        part: ["width"],
-        subject: "body[1]/section[2]/div[1]"
-    });
-    var n3 = tree.insertToNode(n1, {
-        type: "AND"
-    });
-    var n4 = tree.insertToNode(n3, {
-        type: "object",
-        part: ["characters 2-10", "text"],
-        subject: "body[1]/div[2]"
-    });
-    var n5 = tree.insertToNode(n3, "OR");
-    var n6 = tree.insertToNode(n5, {
-        type: "object",
-        part: ["value of"],
-        subject: "constant 100"
-    });
-    var n7 = tree.insertToNode(n5, {
-        type: "object",
-        part: ["width"],
-        subject: "body[1]/section[2]/div[1]"
-    });
-    var n8 = tree.insertToNode(n3, {
-        type: "object",
-        part: ["width"],
-        subject: "body[1]/section[2]/div[1]"
-    });
-    return tree;
+  if (root === null) {
+    return null;
+  }
+  // Create a "fake" data tree
+  var tree = dataTree.create();
+  var n1 = tree.insert({
+    type: "OR"
+  });
+  tree.insertToNode(n1, {
+    type: "object",
+    part: ["width"],
+    subject: "body[1]/section[2]/div[1]"
+  });
+  var n3 = tree.insertToNode(n1, {
+    type: "AND"
+  });
+  tree.insertToNode(n3, {
+    type: "object",
+    part: ["characters 2-10", "text"],
+    subject: "body[1]/div[2]"
+  });
+  var n5 = tree.insertToNode(n3, "OR");
+  tree.insertToNode(n5, {
+    type: "object",
+    part: ["value of"],
+    subject: "constant 100"
+  });
+  tree.insertToNode(n5, {
+    type: "object",
+    part: ["width"],
+    subject: "body[1]/section[2]/div[1]"
+  });
+  tree.insertToNode(n3, {
+    type: "object",
+    part: ["width"],
+    subject: "body[1]/section[2]/div[1]"
+  });
+  return tree;
 }
 
 function getTreeFromWitness(witnesses = []) {
-    const tree = dataTree.create()
-    for (const designatedObject of witnesses) {
-        let part = [];
-        let subject = null;
-        let elementAttribute = null;
-        let lastPartType;
-        // First form
-        if (designatedObject.getObject().constructor.name == "HTMLBodyElement") {
-            const elements = designatedObject.getDesignator().elements;
-            subject = elements[elements.length - 2].toString() || null;
-            elementAttribute = elements[elements.length - 3].toString() || null;
-            lastPartType = "Path";
-        }
-        // Second form
-        else {
-            subject = designatedObject.getObject();
-            lastPartType = "ConstantDesignator";
-        }
-        // Build the leaf's "part"
-        for (const element of designatedObject.getDesignator().elements) {
-            if (element.constructor.name == lastPartType) {
-                break;
-            }
-            part.push(element.toString());
-        }
-        tree.insert({
-            elementAttribute,
-            part,
-            subject,
-        });
+  const tree = dataTree.create();
+  for (const designatedObject of witnesses) {
+    const part = [];
+    let subject = null;
+    let elementAttribute = null;
+    let lastPartType;
+    // First form
+    if (designatedObject.getObject().constructor.name === "HTMLBodyElement") {
+      const elements = designatedObject.getDesignator().elements;
+      subject = elements[elements.length - 2].toString() || null;
+      elementAttribute = elements[elements.length - 3].toString() || null;
+      lastPartType = "Path";
+    } else { // Second form
+      subject = designatedObject.getObject();
+      lastPartType = "ConstantDesignator";
     }
+    // Build the leaf's "part"
+    for (const element of designatedObject.getDesignator().elements) {
+      if (element.constructor.name === lastPartType) {
+        break;
+      }
+      part.push(element.toString());
+    }
+    tree.insert({
+      elementAttribute,
+      part,
+      subject
+    });
+  }
 
-    return tree;
+  return tree;
 }
-
 
 /**
  * Export public API
@@ -184,6 +180,11 @@ export {
     BooleanAnd,
     BooleanNot,
     BooleanOr,
+    BorderColor,
+    BorderRadius,
+    BorderStyle,
+    BorderWidth,
+    CssPropertyFunction,
     Color,
     ComposedFunction,
     ComposedFunctionValue,
@@ -195,6 +196,7 @@ export {
     DesignatedObject,
     DimensionHeight,
     DimensionWidth,
+    Display,
     Division,
     ElementAttribute,
     ElementAttributeValue,
@@ -203,6 +205,7 @@ export {
     ExistentialQuantifier,
     Explainer,
     FindBySelector,
+    Float,
     FontFamily,
     FontSize,
     FunctionNamedArgument,
@@ -226,6 +229,7 @@ export {
     NthItem,
     Nothing,
     ObjectNode,
+    Opacity,
     OrNode,
     Path,
     PathValue,
@@ -233,6 +237,7 @@ export {
     PaddingBottom,
     PaddingRight,
     PaddingLeft,
+    Position,
     Quantifier,
     QuantifierConjunctiveVerdict,
     QuantifierDisjunctiveVerdict,
@@ -248,6 +253,7 @@ export {
     UnknownNode,
     Value,
     Verdict,
+    Visibility,
     WebElementFunction
 };
 

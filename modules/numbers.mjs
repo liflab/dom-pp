@@ -1,20 +1,20 @@
 /*
   A lineage library for DOM nodes
   MIT License
-  
+
   Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
   Eckinox Média and Université du Québec à Chicoutimi
-  
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
   copies of the Software, and to permit persons to whom the Software is
   furnished to do so, subject to the following conditions:
-  
+
   The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
-  
+
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -41,27 +41,27 @@ import { AtomicFunction } from "./atomic-function.mjs";
  * @extends AtomicFunction
  */
 class IsEqualTo extends AtomicFunction {
-    constructor() {
-        super(2);
-    }
+  constructor() {
+    super(2);
+  }
 
-    getValue() {
-        var o1 = arguments[0];
-        var o2 = arguments[1];
-        if (o1 == null && o2 == null) {
-            return true;
-        }
-        if ((o1 == null && o2 != null) || (o1 != null && o2 == null)) {
-            return false;
-        }
-        if (typeof(o1) == "number" && typeof(o2) == "number") {
-            return o1 == o2;
-        }
-        if (typeof(o1) == "string" && typeof(o2) == "string") {
-            return o1 == o2;
-        }
-        return false;
+  getValue() {
+    var o1 = arguments[0];
+    var o2 = arguments[1];
+    if (o1 == null && o2 == null) {
+      return true;
     }
+    if ((o1 == null && o2 != null) || (o1 != null && o2 == null)) {
+      return false;
+    }
+    if (typeof (o1) === "number" && typeof (o2) === "number") {
+      return o1 === o2;
+    }
+    if (typeof (o1) === "string" && typeof (o2) === "string") {
+      return o1 === o2;
+    }
+    return false;
+  }
 }
 
 /**
@@ -69,88 +69,91 @@ class IsEqualTo extends AtomicFunction {
  * @extends AtomicFunction
  */
 class Addition extends AtomicFunction {
-    constructor(arity = 2) {
-        super(arity);
-    }
+  constructor(arity = 2) {
+    super(arity);
+  }
 
-    getValue() {
-        var sum = 0;
-        for (var i = 0; i < this.arity; i++) {
-            var o = arguments[i];
-            if (typeof(o) != "number") {
-                throw "Invalid argument type";
-            }
-            sum += o;
-        }
-        return sum;
+  getValue() {
+    var sum = 0;
+    for (var i = 0; i < this.arity; i++) {
+      var o = arguments[i];
+      if (typeof (o) !== "number") {
+        throw "Invalid argument type";
+      }
+      sum += o;
     }
+    return sum;
+  }
 
-    toString() {
-        return "Addition";
-    }
+  toString() {
+    return "Addition";
+  }
 }
 /**
  * Function that substracts numbers.
  * @extends AtomicFunction
  */
 class Substraction extends AtomicFunction {
-    constructor(arity = 2) {
-        super(arity);
-    }
-    getValue() {
-        var o1 = arguments[0];
-        var o2 = arguments[1];
-        if (typeof(o1) != "number" || typeof(o2) != "number") {
-            throw "Invalid argument type";
-        }
-        return o1 - o2;
-    }
+  constructor(arity = 2) {
+    super(arity);
+  }
 
-    toString() {
-        return "Substraction";
+  getValue() {
+    var o1 = arguments[0];
+    var o2 = arguments[1];
+    if (typeof (o1) !== "number" || typeof (o2) !== "number") {
+      throw "Invalid argument type";
     }
+    return o1 - o2;
+  }
+
+  toString() {
+    return "Substraction";
+  }
 }
 /**
  * Function that multiplies numbers.
  * @extends AtomicFunction
  */
 class Multiplication extends AtomicFunction {
-    constructor(arity = 2) {
-        super(arity);
-    }
-    getValue() {
-        var o1 = arguments[0];
-        var o2 = arguments[1];
-        if (typeof(o1) != "number" || typeof(o2) != "number") {
-            throw "Invalid argument type";
-        }
-        return o1 * o2;
-    }
+  constructor(arity = 2) {
+    super(arity);
+  }
 
-    toString() {
-        return "Multiplication";
+  getValue() {
+    var o1 = arguments[0];
+    var o2 = arguments[1];
+    if (typeof (o1) !== "number" || typeof (o2) !== "number") {
+      throw "Invalid argument type";
     }
+    return o1 * o2;
+  }
+
+  toString() {
+    return "Multiplication";
+  }
 }
 /**
  * Function that divides numbers.
  * @extends AtomicFunction
  */
 class Division extends AtomicFunction {
-    constructor(arity = 2) {
-        super(arity);
-    }
-    getValue() {
-        var o1 = arguments[0];
-        var o2 = arguments[1];
-        if (typeof(o1) != "number" || typeof(o2) != "number") {
-            throw "Invalid argument type";
-        }
-        return o1 / o2;
-    }
+  constructor(arity = 2) {
+    super(arity);
+  }
 
-    toString() {
-        return "Division";
+  getValue() {
+    var o1 = arguments[0];
+    var o2 = arguments[1];
+    if (typeof (o1) !== "number" || typeof (o2) !== "number") {
+      throw "Invalid argument type";
     }
+    return o1 / o2;
+  }
+
+  toString() {
+    return "Division";
+  }
 }
 
 /**
@@ -159,25 +162,25 @@ class Division extends AtomicFunction {
  * @extends AtomicFunction
  */
 class GreaterThan extends AtomicFunction {
-    /**
+  /**
      * Creates a new instance of the function.
      */
-    constructor() {
-        super(2);
-    }
+  constructor() {
+    super(2);
+  }
 
-    getValue() {
-        var o1 = arguments[0];
-        var o2 = arguments[1];
-        if (typeof(o1) != "number" || typeof(o2) != "number") {
-            throw "Invalid argument type";
-        }
-        return o1 > o2;
+  getValue() {
+    var o1 = arguments[0];
+    var o2 = arguments[1];
+    if (typeof (o1) !== "number" || typeof (o2) !== "number") {
+      throw "Invalid argument type";
     }
+    return o1 > o2;
+  }
 
-    toString() {
-        return "&gt;";
-    }
+  toString() {
+    return "&gt;";
+  }
 }
 /**
  * Function that compares two numbers and returns true if the first
@@ -185,25 +188,25 @@ class GreaterThan extends AtomicFunction {
  * @extends AtomicFunction
  */
 class LesserThan extends AtomicFunction {
-    /**
+  /**
      * Creates a new instance of the function.
      */
-    constructor() {
-        super(2);
-    }
+  constructor() {
+    super(2);
+  }
 
-    getValue() {
-        var o1 = arguments[0];
-        var o2 = arguments[1];
-        if (typeof(o1) != "number" || typeof(o2) != "number") {
-            throw "Invalid argument type";
-        }
-        return o1 < o2;
+  getValue() {
+    var o1 = arguments[0];
+    var o2 = arguments[1];
+    if (typeof (o1) !== "number" || typeof (o2) !== "number") {
+      throw "Invalid argument type";
     }
+    return o1 < o2;
+  }
 
-    toString() {
-        return "&lt;";
-    }
+  toString() {
+    return "&lt;";
+  }
 }
 
 /**
@@ -212,25 +215,25 @@ class LesserThan extends AtomicFunction {
  * @extends AtomicFunction
  */
 class GreaterOrEqual extends AtomicFunction {
-    /**
+  /**
      * Creates a new instance of the function.
      */
-    constructor() {
-        super(2);
-    }
+  constructor() {
+    super(2);
+  }
 
-    getValue() {
-        var o1 = arguments[0];
-        var o2 = arguments[1];
-        if (typeof(o1) != "number" || typeof(o2) != "number") {
-            throw "Invalid argument type";
-        }
-        return o1 >= o2;
+  getValue() {
+    var o1 = arguments[0];
+    var o2 = arguments[1];
+    if (typeof (o1) !== "number" || typeof (o2) !== "number") {
+      throw "Invalid argument type";
     }
+    return o1 >= o2;
+  }
 
-    toString() {
-        return "&ge;";
-    }
+  toString() {
+    return "&ge;";
+  }
 }
 /**
  * Function that compares two numbers and returns true if the first
@@ -238,25 +241,25 @@ class GreaterOrEqual extends AtomicFunction {
  * @extends AtomicFunction
  */
 class LesserOrEqual extends AtomicFunction {
-    /**
+  /**
      * Creates a new instance of the function.
      */
-    constructor() {
-        super(2);
-    }
+  constructor() {
+    super(2);
+  }
 
-    getValue() {
-        var o1 = arguments[0];
-        var o2 = arguments[1];
-        if (typeof(o1) != "number" || typeof(o2) != "number") {
-            throw "Invalid argument type";
-        }
-        return o1 <= o2;
+  getValue() {
+    var o1 = arguments[0];
+    var o2 = arguments[1];
+    if (typeof (o1) !== "number" || typeof (o2) !== "number") {
+      throw "Invalid argument type";
     }
+    return o1 <= o2;
+  }
 
-    toString() {
-        return "&le;";
-    }
+  toString() {
+    return "&le;";
+  }
 }
 
 /**
