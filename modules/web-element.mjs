@@ -117,6 +117,7 @@ class ElementAttributeValue extends Value {
 }
 /**
  * value of css attribute
+ * @extends WebElementFunction
  */
 class CssPropertyFunction extends WebElementFunction {
     get(element) {
