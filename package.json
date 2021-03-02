@@ -2,7 +2,7 @@
     "name": "koalati-dompp",
     "version": "0.0.1",
     "description": "A traceability library for DOM trees",
-    "main": "index.js",
+    "main": "index.mjs",
     "type": "module",
     "scripts": {
         "test": "mocha",
