@@ -119,14 +119,24 @@ class Multiplication extends AtomicFunction {
     constructor(arity = 2) {
         super(arity);
     }
-
     getValue() {
+        var zero_values = [];
         var o1 = arguments[0];
         var o2 = arguments[1];
         if (typeof(o1) !== "number" || typeof(o2) !== "number") {
             throw "Invalid argument type";
         }
-        return o1 * o2;
+        if (o1 === 0) {
+            zero_values.push(o1)
+                //console.log('First arg 0')
+            return parseFloat(zero_values.toString());
+        } else if (o2 === 0) {
+            zero_values.push(o2)
+                //console.log('Second arg 0')
+            return parseFloat(zero_values.toString());
+        } else {
+            return o1 * o2;
+        }
     }
 
     toString() {
