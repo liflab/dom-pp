@@ -1,5 +1,5 @@
 /*
-   A lineage library for DOM nodes
+  A lineage library for DOM nodes
   MIT License
 
   Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé

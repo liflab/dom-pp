@@ -40,21 +40,21 @@ import { AndNode, Explainer, DesignatedObject, ObjectNode, OrNode, Tracer, Unkno
 import { Addition, Substraction, Multiplication, Division, GreaterOrEqual, LesserOrEqual, GreaterThan, LesserThan, IsEqualTo } from "./modules/numbers.mjs";
 import { Enumerate, EnumeratedValue, NthItem } from "./modules/enumerate.mjs";
 import {
-    Argument,
-    ArgumentValue,
-    ComposedFunction,
-    ComposedFunctionValue,
-    FunctionNamedArgument,
-    NamedArgument,
-    NamedArgumentValue
+  Argument,
+  ArgumentValue,
+  ComposedFunction,
+  ComposedFunctionValue,
+  FunctionNamedArgument,
+  NamedArgument,
+  NamedArgumentValue
 } from "./modules/composed-function.mjs";
 import {
-    ExistentialQuantifier,
-    Quantifier,
-    QuantifierConjunctiveVerdict,
-    QuantifierDisjunctiveVerdict,
-    QuantifierVerdict,
-    UniversalQuantifier
+  ExistentialQuantifier,
+  Quantifier,
+  QuantifierConjunctiveVerdict,
+  QuantifierDisjunctiveVerdict,
+  QuantifierVerdict,
+  UniversalQuantifier
 } from "./modules/quantifier.mjs";
 import { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, Position, Visibility, WebElementFunction } from "./modules/web-element.mjs";
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
@@ -68,14 +68,14 @@ import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdic
  * each condition that evaluates to <tt>false</tt>.
  */
 function evaluateDom(root, conditions = []) {
-    var verdicts = [];
-    for (var i = 0; i < conditions.length; i++) {
-        var verdict = getVerdict(root, conditions[i]);
-        if (verdict != null) {
-            verdicts.push(verdict);
-        }
+  var verdicts = [];
+  for (var i = 0; i < conditions.length; i++) {
+    var verdict = getVerdict(root, conditions[i]);
+    if (verdict != null) {
+      verdicts.push(verdict);
     }
-    return verdicts;
+  }
+  return verdicts;
 }
 
 /**
@@ -88,147 +88,146 @@ function evaluateDom(root, conditions = []) {
  * evaluates to <tt>false</tt>, and <tt>null</tt> if the condition is fulfilled.
  */
 function getVerdict(root, condition = []) {
-    if (root === null) {
-        return null;
-    }
-    const returnValue = condition.evaluate(root);
+  if (root === null) {
+    return null;
+  }
+  const returnValue = condition.evaluate(root);
 
-    if (returnValue.value === true) {
-        return null;
-    }
-    const verdict = new Verdict(returnValue, condition)
-    const witness = verdict.getWitness();
-    const trees = getTreeFromWitness(witness)
-    console.log(trees)
+  if (returnValue.value === true) {
+    return null;
+  }
+  const verdict = new Verdict(returnValue, condition);
+  const witness = verdict.getWitness();
+  const trees = getTreeFromWitness(witness);
+  console.log(trees);
 }
 
 function getTreeFromWitness(witnesses = []) {
-    const tree = dataTree.create();
-    for (const designatedObject of witnesses) {
-        const part = [];
-        let subject = null;
-        let elementAttribute = null;
-        let lastPartType;
-        // First form
-        if (designatedObject.getObject().constructor.name === "HTMLBodyElement") {
-            const elements = designatedObject.getDesignator().elements;
-            subject = elements[elements.length - 2].toString() || null;
-            elementAttribute = elements[elements.length - 3].toString() || null;
-            lastPartType = "Path";
-        } else { // Second form
-            subject = designatedObject.getObject();
-            lastPartType = "ConstantDesignator";
-        }
-        // Build the leaf's "part"
-        for (const element of designatedObject.getDesignator().elements) {
-            if (element.constructor.name === lastPartType) {
-                break;
-            }
-            part.push(element.toString());
-        }
-        tree.insert({
-            elementAttribute,
-            part,
-            subject
-        });
+  const tree = dataTree.create();
+  for (const designatedObject of witnesses) {
+    const part = [];
+    let subject = null;
+    let elementAttribute = null;
+    let lastPartType;
+    // First form
+    if (designatedObject.getObject().constructor.name === "HTMLBodyElement") {
+      const elements = designatedObject.getDesignator().elements;
+      subject = elements[elements.length - 2].toString() || null;
+      elementAttribute = elements[elements.length - 3].toString() || null;
+      lastPartType = "Path";
+    } else { // Second form
+      subject = designatedObject.getObject();
+      lastPartType = "ConstantDesignator";
     }
-    return tree;
+    // Build the leaf's "part"
+    for (const element of designatedObject.getDesignator().elements) {
+      if (element.constructor.name === lastPartType) {
+        break;
+      }
+      part.push(element.toString());
+    }
+    tree.insert({
+      elementAttribute,
+      part,
+      subject
+    });
+  }
+  return tree;
 }
 
 /**
  * Export public API
  */
 export {
-    evaluateDom,
-    getTreeFromWitness,
-    AbstractFunction,
-    Addition,
-    All,
-    AndNode,
-    Argument,
-    ArgumentValue,
-    AtomicFunction,
-    AtomicFunctionReturnValue,
-    BackgroundColor,
-    BooleanAnd,
-    BooleanNot,
-    BooleanOr,
-    BorderColor,
-    BorderRadius,
-    BorderStyle,
-    BorderWidth,
-    CssPropertyFunction,
-    Color,
-    ComposedFunction,
-    ComposedFunctionValue,
-    CompoundDesignator,
-    ConstantFunction,
-    ConstantDesignator,
-    ConstantValue,
-    Designator,
-    DesignatedObject,
-    DimensionHeight,
-    DimensionWidth,
-    Display,
-    Division,
-    ElementAttribute,
-    ElementAttributeValue,
-    Enumerate,
-    EnumeratedValue,
-    ExistentialQuantifier,
-    Explainer,
-    FindBySelector,
-    Float,
-    FontFamily,
-    FontSize,
-    FunctionNamedArgument,
-    GreaterOrEqual,
-    GreaterThan,
-    Identity,
-    InputArgument,
-    IsEqualTo,
-    LesserThan,
-    LesserOrEqual,
-    MarginTop,
-    MarginBottom,
-    MarginLeft,
-    MarginRight,
-    Multiplication,
-    NamedArgument,
-    NamedArgumentValue,
-    NaryConjunctiveVerdict,
-    NaryDisjunctiveVerdict,
-    NaryValue,
-    NthItem,
-    Nothing,
-    ObjectNode,
-    Opacity,
-    OrNode,
-    Path,
-    PathValue,
-    PaddingTop,
-    PaddingBottom,
-    PaddingRight,
-    PaddingLeft,
-    Position,
-    Quantifier,
-    QuantifierConjunctiveVerdict,
-    QuantifierDisjunctiveVerdict,
-    QuantifierVerdict,
-    ReturnValue,
-    Substraction,
-    TestCondition,
-    TestDriver,
-    TestResult,
-    Tracer,
-    UniversalQuantifier,
-    Unknown,
-    UnknownNode,
-    Value,
-    Verdict,
-    Visibility,
-    WebElementFunction
+  evaluateDom,
+  getTreeFromWitness,
+  AbstractFunction,
+  Addition,
+  All,
+  AndNode,
+  Argument,
+  ArgumentValue,
+  AtomicFunction,
+  AtomicFunctionReturnValue,
+  BackgroundColor,
+  BooleanAnd,
+  BooleanNot,
+  BooleanOr,
+  BorderColor,
+  BorderRadius,
+  BorderStyle,
+  BorderWidth,
+  CssPropertyFunction,
+  Color,
+  ComposedFunction,
+  ComposedFunctionValue,
+  CompoundDesignator,
+  ConstantFunction,
+  ConstantDesignator,
+  ConstantValue,
+  Designator,
+  DesignatedObject,
+  DimensionHeight,
+  DimensionWidth,
+  Display,
+  Division,
+  ElementAttribute,
+  ElementAttributeValue,
+  Enumerate,
+  EnumeratedValue,
+  ExistentialQuantifier,
+  Explainer,
+  FindBySelector,
+  Float,
+  FontFamily,
+  FontSize,
+  FunctionNamedArgument,
+  GreaterOrEqual,
+  GreaterThan,
+  Identity,
+  InputArgument,
+  IsEqualTo,
+  LesserThan,
+  LesserOrEqual,
+  MarginTop,
+  MarginBottom,
+  MarginLeft,
+  MarginRight,
+  Multiplication,
+  NamedArgument,
+  NamedArgumentValue,
+  NaryConjunctiveVerdict,
+  NaryDisjunctiveVerdict,
+  NaryValue,
+  NthItem,
+  Nothing,
+  ObjectNode,
+  Opacity,
+  OrNode,
+  Path,
+  PathValue,
+  PaddingTop,
+  PaddingBottom,
+  PaddingRight,
+  PaddingLeft,
+  Position,
+  Quantifier,
+  QuantifierConjunctiveVerdict,
+  QuantifierDisjunctiveVerdict,
+  QuantifierVerdict,
+  ReturnValue,
+  Substraction,
+  TestCondition,
+  TestDriver,
+  TestResult,
+  Tracer,
+  UniversalQuantifier,
+  Unknown,
+  UnknownNode,
+  Value,
+  Verdict,
+  Visibility,
+  WebElementFunction
 };
-
 
 // :wrap=soft:tabSize=2:
