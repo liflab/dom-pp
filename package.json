@@ -1,5 +1,5 @@
 {
-    "name": "koalati-dompp",
+    "name": "dom-pp",
     "version": "0.0.1",
     "description": "A traceability library for DOM trees",
     "main": "index.mjs",

@@ -1,3 +1,6 @@
+## ------------
+## All of gitignore
+
 *~
 *.tmp
 *.bak
@@ -20,3 +23,17 @@ eslint.html
 
 # Sylvain's script to count lines
 lines.sh
+## ------------
+
+# Auto-generated doc
+docs/*
+
+# Tests
+test/*
+
+# Dev files
+.jshintrc
+.travis.yml
+jsdoc.conf.json
+.eslintrc.json
+.nycrc.json
