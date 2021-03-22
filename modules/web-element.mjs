@@ -140,8 +140,7 @@ class DimensionWidth extends WebElementFunction {
     }
 
     get(element) {
-        var win = this.getOwnerWindow(element)
-        return parseFloat(win.getComputedStyle(element).getPropertyValue('width'))
+        return element.offsetWidth;
     }
 }
 
@@ -156,10 +155,9 @@ class DimensionHeight extends WebElementFunction {
     constructor() {
         super("height");
     }
+
     get(element) {
-        var doc = element.ownerDocument;
-        var win = doc.defaultView || doc.parentWindow;
-        return parseFloat(win.getComputedStyle(element).getPropertyValue('height'))
+        return element.offsetHeight;
     }
 }
 /**
