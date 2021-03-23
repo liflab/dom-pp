@@ -7,13 +7,15 @@ A flexible assertion framework for web pages
 DOM-PP is a library for writing assertions about elements in a web page.
 It complements classical unit libraries such as
 [Mocha](https://mochajs.org/) and [JSDOM](https://github.com/jsdom/jsdom)
-in two ways:
+in three ways:
 
 1. Conditions can be written at a higher level of abstraction, using a
    range of predefined functions including quantifiers and path selectors
 2. When a condition fails, DOM-PP returns a result that provides a
    detailed explanation of *what* elements of the page cause the error, and
    *why*.
+3. Conditions are *objects* instead of code, which means they can manipulated
+   and passed as arguments.
 
 An example
 ----------
@@ -21,7 +23,7 @@ An example
 To illustrate the use of DOM-PP, suppose you want to check this simple
 condition through a unit test:
 
-    "All items of list `#mylist` must have a width of at least 100 pixels"
+> "All items of list `#mylist` must have a width of at least 100 pixels"
 
 Doing so with DOM-PP, in conjunction with Mocha and JSDOM, goes as follows:
 
@@ -84,7 +86,7 @@ for (let i = 0; i < elements.length; i++) {
 for (let i = 0; i < errors.length; i++) {
   console.log(errors[i]);
 }
-assert(errors.length).to.equal(0);
+expect(errors.length).to.equal(0);
 ```
 
 Things are getting slightly more involved --and note that this code snippet does
@@ -96,7 +98,7 @@ supplied by the user.
 
 Let's take this one level further, and consider this other simple condition:
 
-    "All items of list `#mylist` must be left-aligned."
+> "All items of list `#mylist` must be left-aligned."
 
 With DOM-PP:
 
@@ -136,7 +138,7 @@ for (let i = 0; i < elements.length; i++) {
 for (let i = 0; i < errors.length; i++) {
   console.log("Left of " + errors[i][0] + ", Left of " + errors[i][1]);
 }
-assert(errors.length).to.equal(0);
+expect(errors.length).to.equal(0);
 ```
 
 This is why we say that DOM-PP allows the user to write *simpler* conditions,
