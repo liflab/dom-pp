@@ -221,7 +221,7 @@ describe("Web element tests", () => {
       var v = f.evaluate(opacityElem)
       expect(v).to.be.an.instanceOf(ElementAttributeValue)
       var h = v.getValue()
-      expect(h).to.equal("1")
+      expect(h).to.equal(1)
     })
   });
 
