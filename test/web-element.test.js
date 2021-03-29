@@ -33,7 +33,7 @@ import pkg_chai from "chai";
 const { expect } = pkg_chai;
 
 // Utilities
-import { load_dom } from "./test-util.mjs";
+import { load_dom, load_file_in_puppeteer, terminate_puppeteer_browser } from "./test-util.mjs";
 
 // Local imports
 import {
@@ -72,8 +72,15 @@ import {
   Visibility
 } from "../index.mjs";
 import { Opacity } from "../modules/web-element.mjs";
+import { getVerdict } from "../index.mjs";
+let stub1Page, stub2Page;
 
 describe("Web element tests", () => {
+  before(async function() {
+    stub1Page = await load_file_in_puppeteer("./test/pages/stub-1.html");
+    stub2Page = await load_file_in_puppeteer("./test/pages/stub-2.html");
+  }); 
+
   describe("FindBySelector", () => {
     /**
      * Tests lineage for the FindBySelector function, giving the ID of an
@@ -117,30 +124,55 @@ describe("Web element tests", () => {
   });
 
   describe("DimensionHeight", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var h2 = dom.window.document.querySelector("#h2");
-      var f = new DimensionHeight();
-      var v = f.evaluate(h2);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
+    it("Element with width defined in inlined-style", async () => {
+      const h = await stub1Page.evaluate(function() {
+        var h2 = document.querySelector("#h2");
+        var f = new dompp.DimensionHeight();
+        var v =  f.evaluate(h2);
+        var h = v.getValue();
+        return h;
+      });
       expect(h).to.equal(100);
+    });
+
+    it("Element with percentage-based width", async () => {
+      // This is based on a 1920px wide resolution
+      const h = await stub2Page.evaluate(function() {
+        var nav = document.querySelector("nav");
+        var f = new dompp.DimensionHeight();
+        var v =  f.evaluate(nav);
+        var h = v.getValue();
+        return h;
+      });
+      expect(h).to.equal(52);
     });
   });
 
   describe("DimensionWidth", () => {
-    it("Value", async () => {
-      var dom = await load_dom("./test/pages/stub-1.html");
-      var body = dom.window.document.body;
-      var h2 = dom.window.document.querySelector("#h2");
-      var f = new DimensionWidth();
-      var v = f.evaluate(h2);
-      expect(v).to.be.an.instanceof(ElementAttributeValue);
-      var h = v.getValue();
+    it("Element with width defined in inlined-style", async () => {
+      const h = await stub1Page.evaluate(function() {
+        var h2 = document.querySelector("#h2");
+        var f = new dompp.DimensionWidth();
+        var v =  f.evaluate(h2);
+        var h = v.getValue();
+        return h;
+      });
       expect(h).to.equal(200);
     });
+
+    it("Element with percentage-based width", async () => {
+      // This is based on a 1920px wide resolution
+      const h = await stub2Page.evaluate(function() {
+        var rightColumn = document.querySelector("#rightContent");
+        var f = new dompp.DimensionWidth();
+        var v =  f.evaluate(rightColumn);
+        var h = v.getValue();
+        return h;
+      });
+      expect(h).to.equal(342);
+    });
   });
+
   describe("Check formatting properties", ()=>{
     it("Check font-size", async()=>{
       var dom = await load_dom("./test/pages/stub-2.html")
@@ -353,7 +385,9 @@ describe("Web element tests", () => {
     })
   })
 
-
+  after(async function(){
+    await terminate_puppeteer_browser();
+  })  
 });
 
 // :wrap=soft:tabSize=2:indentWidth=2:
