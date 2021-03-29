@@ -196,7 +196,34 @@ it into a folder called `doc/jsdoc`.
 npm run doc
 ```
 
-About the author                                                   {#about}
+## Compiling UMD builds for release
+
+To generatte a browser friendly release build of the package, you can use the 
+following commands:
+
+**Development build:**
+```js
+npm run build:umd
+```
+
+**Production build (minified):**
+```js
+npm run build:umd.min
+```
+
+These will generate releaseable scripts in the `dist/` directory.  
+It is important to note that the `dist/index.umd.js` is required to run the 
+Puppeteer based tests. If the file does not exist when you attempt to run 
+these tests, a verbose error message should be displayed, along with 
+explanations on how to fix the issue.
+
+Both of these commands should be ran before a new release of the package is
+published, to ensure that the UMD builds correspond to the same version as
+the ESM version of the package.
+
+
+
+About the author
 ----------------
 
 This library was written by [Sylvain Hallé](http://leduotang.ca/sylvain),
