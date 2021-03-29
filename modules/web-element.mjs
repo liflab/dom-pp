@@ -120,9 +120,31 @@ class ElementAttributeValue extends Value {
  * @extends WebElementFunction
  */
 class CssPropertyFunction extends WebElementFunction {
+    constructor(name, returnType = null) {
+        if (["float", "int", "string", null].indexOf(returnType) == -1) {
+            throw new Error(`CssPropertyFunction returnType expects one of the following values: "float", "int", "string", null. Received ${returnType} instead.`);
+        }
+
+        super(name);
+        this.returnType = returnType;
+    }
+
     get(element) {
         const style = this.getElementComputedStyle(element);
-        return style.getPropertyValue(this.name);
+        const value = style.getPropertyValue(this.name);
+        
+        switch (this.returnType) {
+            case "float":
+                return parseFloat(value);
+            
+            case "int":
+                return parseInt(value);
+
+            case "string":
+                return typeof value == "string" ? value : value.toString();
+        }
+
+        return value;
     }
 }
 
@@ -193,7 +215,7 @@ class Color extends CssPropertyFunction {
  */
 class Opacity extends CssPropertyFunction {
     constructor() {
-        super("opacity")
+        super("opacity", "float");
     }
 }
 /**
