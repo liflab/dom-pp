@@ -2,6 +2,7 @@
 *.tmp
 *.bak
 \#*
+.DS_Store
 
 # NodeJS specific #
 .nyc_output/
