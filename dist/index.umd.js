@@ -1812,7 +1812,7 @@ class GreaterThan extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.Atom
     var o2 = arguments[1];
 
     if (typeof o1 !== "number" || typeof o2 !== "number") {
-      throw "Invalid argument type";
+      throw new Error(`Invalid argument type. GreaterThan expects both arguments to be numbers, but the following were received instead: ${typeof o1} (${JSON.stringify(o1)}) and ${typeof o2} (${JSON.stringify(o2)}).`);
     }
 
     return o1 > o2;
@@ -1843,7 +1843,7 @@ class LesserThan extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.Atomi
     var o2 = arguments[1];
 
     if (typeof o1 !== "number" || typeof o2 !== "number") {
-      throw "Invalid argument type";
+      throw new Error(`Invalid argument type. LesserThan expects both arguments to be numbers, but the following were received instead: ${typeof o1} (${JSON.stringify(o1)}) and ${typeof o2} (${JSON.stringify(o2)}).`);
     }
 
     return o1 < o2;
@@ -1874,7 +1874,7 @@ class GreaterOrEqual extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.A
     var o2 = arguments[1];
 
     if (typeof o1 !== "number" || typeof o2 !== "number") {
-      throw "Invalid argument type";
+      throw new Error(`Invalid argument type. GreaterOrEqual expects both arguments to be numbers, but the following were received instead: ${typeof o1} (${JSON.stringify(o1)}) and ${typeof o2} (${JSON.stringify(o2)}).`);
     }
 
     return o1 >= o2;
@@ -1905,7 +1905,7 @@ class LesserOrEqual extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.At
     var o2 = arguments[1];
 
     if (typeof o1 !== "number" || typeof o2 !== "number") {
-      throw "Invalid argument type";
+      throw new Error(`Invalid argument type. LesserOrEqual expects both arguments to be numbers, but the following were received instead: ${typeof o1} (${JSON.stringify(o1)}) and ${typeof o2} (${JSON.stringify(o2)}).`);
     }
 
     return o1 <= o2;
@@ -3440,9 +3440,31 @@ class ElementAttributeValue extends _value_mjs__WEBPACK_IMPORTED_MODULE_2__.Valu
 
 
 class CssPropertyFunction extends WebElementFunction {
+  constructor(name, returnType = null) {
+    if (["float", "int", "string", null].indexOf(returnType) == -1) {
+      throw new Error(`CssPropertyFunction returnType expects one of the following values: "float", "int", "string", null. Received ${returnType} instead.`);
+    }
+
+    super(name);
+    this.returnType = returnType;
+  }
+
   get(element) {
     const style = this.getElementComputedStyle(element);
-    return style.getPropertyValue(this.name);
+    const value = style.getPropertyValue(this.name);
+
+    switch (this.returnType) {
+      case "float":
+        return parseFloat(value);
+
+      case "int":
+        return parseInt(value);
+
+      case "string":
+        return typeof value == "string" ? value : value.toString();
+    }
+
+    return value;
   }
 
 }
@@ -3528,7 +3550,7 @@ class Color extends CssPropertyFunction {
 
 class Opacity extends CssPropertyFunction {
   constructor() {
-    super("opacity");
+    super("opacity", "float");
   }
 
 }
