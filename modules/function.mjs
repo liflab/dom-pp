@@ -1,34 +1,33 @@
 /*
-  A lineage library for DOM nodes
-  MIT License
+	A lineage library for DOM nodes
+	MIT License
 
-  Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
-  Eckinox Média and Université du Québec à Chicoutimi
+	Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
+	Eckinox Média and Université du Québec à Chicoutimi
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 */
 
 // Local imports
 import { Designator } from "./designator.mjs";
 import { Value } from "./value.mjs";
-import { Deserializer } from './deserializer.mjs'
-
+//import { extractJSON } from "./extractJson.mjs";
 /**
  * Abstract class representing a function.
  */
@@ -36,7 +35,6 @@ class AbstractFunction {
     constructor() {
         // Nothing to do
     }
-    //descendants = [];
 
     /**
      * Converts an arbitrary object into a {@link Function}.
@@ -51,57 +49,6 @@ class AbstractFunction {
         }
         return new ConstantFunction(Value.lift(o));
     }
-
-    // d is a deserializer and j is a JSON structure
-    static deserialize(d, j) {
-        var instance = new this();
-        var descendant = []
-        var getDescendants = instance.extractJSON(j, descendant)
-        for (const descendant in getDescendants) {
-            //we can obtain j' with descendants[d] 
-            d.deserialize(getDescendants[descendant]);
-        }
-        return instance
-    }
-    //this method will return all descendant of json structure
-    extractJSON(obj, descendant = []) {
-        for (const i in obj) {
-            if (Array.isArray(obj[i]) || typeof obj[i] === 'object') {
-                // eliminate empty objects
-                if (obj[i].name !== undefined) {
-                    descendant.push(obj[i])
-                }
-                //this.extractJSON(obj[i], descendant);
-            }
-        }
-        return descendant;
-    }
-
-    // extractJSON(obj) {
-    //     for (const i in obj) {
-    //         if (Array.isArray(obj[i]) || typeof obj[i] === 'object') {
-    //             if (obj[i].name != undefined) {
-    //                 descendants.push(obj[i])
-    //             }
-    //             extractJSON(obj[i]);
-    //         }
-    //     }
-    //     return descendants;
-    // }
-
-    // extractJSON(obj) {
-    //     for (const i in obj) {
-    //       if (Array.isArray(obj[i]) || typeof obj[i] === 'object') {
-    //         if(obj[i].name != undefined){
-    //             return obj[i].name;
-    //           }
-    //           extractJSON(obj[i]);
-    //           //console.log("true")
-    //       }
-    //     }
-    // }
-
-    //extractJSON(json, '');
 
     /**
      * Computes the return value of the function from its provided input
@@ -136,6 +83,21 @@ class AbstractFunction {
             return false;
         }
         return o == this;
+    }
+
+    // d is a deserializer and j is a JSON structure
+    static deserialize(d, j) {
+        const params = [];
+
+        for (const serializedParam of j.contents) {
+            if (typeof serializedParam == "object" && Object.keys(serializedParam).length == 2 && typeof serializedParam.name != "undefined" && typeof serializedParam.contents != "undefined") {
+                params.push(d.deserialize(serializedParam));
+            } else {
+                params.push(serializedParam);
+            }
+        }
+
+        return new this(...params);
     }
 }
 

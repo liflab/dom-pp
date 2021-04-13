@@ -132,11 +132,11 @@ class CssPropertyFunction extends WebElementFunction {
     get(element) {
         const style = this.getElementComputedStyle(element);
         const value = style.getPropertyValue(this.name);
-        
+
         switch (this.returnType) {
             case "float":
                 return parseFloat(value);
-            
+
             case "int":
                 return parseInt(value);
 
@@ -192,6 +192,15 @@ class FontSize extends CssPropertyFunction {
     }
 }
 /**
+ * Function that extracts the font size.
+ * @extends CssPropertyFunction
+ */
+class FontWeight extends CssPropertyFunction {
+    constructor() {
+        super("font-weight")
+    }
+}
+/**
  * Function that extracts the font family
  * @extends CssPropertyFunction
  */
@@ -227,7 +236,7 @@ class BackgroundColor extends CssPropertyFunction {
      * Creates a new instance of the function.
      */
     constructor() {
-        super("background-color").toString();
+        super("background-color");
     }
 }
 /**
@@ -236,7 +245,7 @@ class BackgroundColor extends CssPropertyFunction {
  */
 class MarginTop extends CssPropertyFunction {
     constructor() {
-        super("margin-top")
+        super("margin-top", "float")
     }
 }
 /**
@@ -374,14 +383,23 @@ class Float extends CssPropertyFunction {
         super("float")
     }
 }
-
 /**
- * Function that extract z-index elemnt of DOM
+ * Function that extract flottant elemnt of DOM
  * @extends CssPropertyFunction
  */
- class Zindex extends CssPropertyFunction {
+class BackgroundImage extends CssPropertyFunction {
     constructor() {
-        super("z-index")
+        super("background-image")
+    }
+}
+
+/**
+ * Function that extract Z-index
+ * @extends CssPropertyFunction
+ */
+class Zindex extends CssPropertyFunction {
+    constructor() {
+        super("z-index", "float")
     }
 }
 /**
@@ -485,6 +503,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction, Zindex };
+export { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, FontWeight, MarginTop, MarginBottom, MarginRight, MarginLeft, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction, Zindex };
 
 // :wrap=soft:tabSize=2:indentWidth=2:

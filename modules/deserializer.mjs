@@ -1,10 +1,8 @@
-import { AbstractFunction, ConstantFunction } from "./function.mjs";
-import { UniversalQuantifier } from "./quantifier.mjs";
-import { ComposedFunction } from "./composed-function.mjs";
-import { GreaterThan } from "./numbers.mjs"
-import { Opacity } from "./web-element.mjs"
+import { AbstractFunction } from "./function.mjs";
+//import { UniversalQuantifier } from "./quantifier.mjs";
 import {
     BackgroundColor,
+    BackgroundImage,
     BorderColor,
     BorderRadius,
     BorderStyle,
@@ -12,7 +10,9 @@ import {
     CssPropertyFunction,
     Color,
     CompoundDesignator,
+    ComposedFunction,
     ConstantDesignator,
+    ConstantFunction,
     DimensionHeight,
     Display,
     DimensionWidth,
@@ -22,11 +22,15 @@ import {
     Float,
     FontFamily,
     FontSize,
+    FontWeight,
+    GreaterThan,
+    GreaterOrEqual,
     MarginTop,
     MarginBottom,
     MarginRight,
     MarginLeft,
     ObjectNode,
+    Opacity,
     Path,
     PathValue,
     PaddingTop,
@@ -35,49 +39,38 @@ import {
     PaddingLeft,
     Position,
     ReturnValue,
+    TestCondition,
     Tracer,
+    UniversalQuantifier,
     Visibility,
-    Zindex
+    Zindex,
 } from "../index.mjs";
-
-
 class Deserializer {
     constructor() {
+        this.names = [];
     }
+
+
     /**
      * Build method deserialize(j) ,j is a JSON structure , this methode will produce a Function object
      */
+
     deserialize(j) {
         //add the fisrt name in the array
         var names = [j.name]
-        //add the name of all descendants in the array
+            //add the name of all descendants in the array
         var classNames = this.getClassName(j, names)
-        //console.log(classNames);
-        var  instances =[]
-        for(const className in classNames){
+            //console.log(classNames);
+        var instances = []
+        for (const className in classNames) {
             //only letters are accepted
             const validation = /^[A-Za-z]+$/;
-            if(classNames[className].match(validation)){
+            if (classNames[className].match(validation)) {
                 var functionClass = eval(classNames[className])
                 instances.push(functionClass.deserialize(this, j))
             }
-            // else{
-            //     console.log("invalide input: " + classNames[className]);
-            // }
-            //console.log(functionClass);
-            //console.log(functionClass.deserialize(this, j));
-            //console.log(className)
-             //functionClass.deserialize(this, j)
         }
-        //return functionClass.deserialize(this, j) 
-        //var className = j.name
-        // determine  function class in the json object
-        //const functionClass = eval(className)
-        //console.log(functionClass);
-        //return a Function object
-        //return functionClass.deserialize(this, j)
-        //return instances
-        return instances[0];
+        return instances;
     }
 
     getClassName(obj, names = []) {
@@ -106,15 +99,13 @@ var j = {
         },
         {
             "name": "ComposedFunction",
-            "contents": [
-                {
+            "contents": [{
                     "name": "GreaterThan",
                     "contents": []
                 },
                 {
                     "name": "ComposedFunction",
-                    "contents": [
-                        {
+                    "contents": [{
                             "name": "Opacity",
                             "contents": []
                         },
@@ -123,8 +114,7 @@ var j = {
                 },
                 {
                     "name": "ConstantFunction",
-                    "contents": [
-                        {
+                    "contents": [{
                             "name": "Opacity",
                             "contents": []
                         },
@@ -137,8 +127,5 @@ var j = {
 };
 
 var c = new Deserializer().deserialize(j)
-console.log(c);
-console.log("content of phi",c.phi.contents);
-
-console.log(Object.values(c)[0]);
+console.log(c)
 export { Deserializer };
