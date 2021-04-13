@@ -41,10 +41,10 @@ import { Addition, Substraction, Division, GreaterOrEqual, LesserOrEqual, Greate
 import { Enumerate, EnumeratedValue, NthItem } from "./modules/enumerate.mjs";
 import { Argument, ArgumentValue, ComposedFunction, ComposedFunctionValue, FunctionNamedArgument, NamedArgument, NamedArgumentValue } from "./modules/composed-function.mjs";
 import { ExistentialQuantifier, Quantifier, QuantifierConjunctiveVerdict, QuantifierDisjunctiveVerdict, QuantifierVerdict, UniversalQuantifier } from "./modules/quantifier.mjs";
-import { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, MarginTop, MarginBottom, MarginLeft, MarginRight, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, Position, Visibility, WebElementFunction, Zindex } from "./modules/web-element.mjs";
+import { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, FontWeight, MarginTop, MarginBottom, MarginLeft, MarginRight, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, Position, Visibility, WebElementFunction, Zindex } from "./modules/web-element.mjs";
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
-import { isHtmlElement } from "./modules/util.mjs"
-import {Deserializer} from "./modules/deserializer.mjs"
+import { isHtmlElement } from "./modules/util.mjs";
+
 
 /**
  * Evaluates a set of conditions on a DOM tree
@@ -140,6 +140,7 @@ export {
     AtomicFunction,
     AtomicFunctionReturnValue,
     BackgroundColor,
+    BackgroundImage,
     BooleanAnd,
     BooleanNot,
     BooleanOr,
@@ -157,7 +158,6 @@ export {
     ConstantValue,
     Designator,
     DesignatedObject,
-    Deserializer,
     DimensionHeight,
     DimensionWidth,
     Display,
@@ -172,6 +172,7 @@ export {
     Float,
     FontFamily,
     FontSize,
+    FontWeight,
     FunctionNamedArgument,
     GreaterOrEqual,
     GreaterThan,
