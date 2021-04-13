@@ -200,7 +200,7 @@ class GreaterThan extends AtomicFunction {
         var o1 = arguments[0];
         var o2 = arguments[1];
         if (typeof(o1) !== "number" || typeof(o2) !== "number") {
-            throw "Invalid argument type";
+            throw new Error(`Invalid argument type. GreaterThan expects both arguments to be numbers, but the following were received instead: ${typeof o1} (${JSON.stringify(o1)}) and ${typeof o2} (${JSON.stringify(o2)}).`);
         }
         return o1 > o2;
     }
@@ -226,7 +226,7 @@ class LesserThan extends AtomicFunction {
         var o1 = arguments[0];
         var o2 = arguments[1];
         if (typeof(o1) !== "number" || typeof(o2) !== "number") {
-            throw "Invalid argument type";
+            throw new Error(`Invalid argument type. LesserThan expects both arguments to be numbers, but the following were received instead: ${typeof o1} (${JSON.stringify(o1)}) and ${typeof o2} (${JSON.stringify(o2)}).`);
         }
         return o1 < o2;
     }
@@ -253,7 +253,7 @@ class GreaterOrEqual extends AtomicFunction {
         var o1 = arguments[0];
         var o2 = arguments[1];
         if (typeof(o1) !== "number" || typeof(o2) !== "number") {
-            throw "Invalid argument type";
+            throw new Error(`Invalid argument type. GreaterOrEqual expects both arguments to be numbers, but the following were received instead: ${typeof o1} (${JSON.stringify(o1)}) and ${typeof o2} (${JSON.stringify(o2)}).`);
         }
         return o1 >= o2;
     }
@@ -279,7 +279,7 @@ class LesserOrEqual extends AtomicFunction {
         var o1 = arguments[0];
         var o2 = arguments[1];
         if (typeof(o1) !== "number" || typeof(o2) !== "number") {
-            throw "Invalid argument type";
+            throw new Error(`Invalid argument type. LesserOrEqual expects both arguments to be numbers, but the following were received instead: ${typeof o1} (${JSON.stringify(o1)}) and ${typeof o2} (${JSON.stringify(o2)}).`);
         }
         return o1 <= o2;
     }
