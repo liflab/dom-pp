@@ -207,7 +207,7 @@ class BackgroundColor extends CssPropertyFunction {
      * Creates a new instance of the function.
      */
     constructor() {
-        super("background-color");
+        super("background-color").toString();
     }
 }
 /**
@@ -354,6 +354,16 @@ class Float extends CssPropertyFunction {
         super("float")
     }
 }
+
+/**
+ * Function that extract z-index elemnt of DOM
+ * @extends CssPropertyFunction
+ */
+ class Zindex extends CssPropertyFunction {
+    constructor() {
+        super("z-index")
+    }
+}
 /**
  * Designator that points to an element in a DOM tree based on
  * an XPath expression.
@@ -455,6 +465,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction };
+export { BackgroundColor, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, MarginTop, MarginBottom, MarginRight, MarginLeft, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction, Zindex };
 
 // :wrap=soft:tabSize=2:indentWidth=2:

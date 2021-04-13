@@ -69,7 +69,8 @@ import {
   Position,
   ReturnValue,
   Tracer,
-  Visibility
+  Visibility,
+  Zindex
 } from "../index.mjs";
 import { Opacity } from "../modules/web-element.mjs";
 
@@ -351,7 +352,108 @@ describe("Web element tests", () => {
       var h = v.getValue()
       expect(h).to.equal("right")
     })
-  })
+  });
+  
+  //test on the sites: mb3d
+  describe("Implement bugs on MB3D", ()=>{
+    it("Check navbar is fixed", async()=>{
+      var dom = await load_dom("./test/pages/mb3d/index.html")
+      var positionNavbar = dom.window.document.querySelector(".navbar-container")
+      //positionNavbar.style.position = "fixed"
+      var f = new Position()
+      var v = f.evaluate(positionNavbar)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      //console.log(v)
+      expect(h).to.equal("fixed")
+    })
+
+    it("Check background-color of footer", async()=>{
+      var dom = await load_dom("./test/pages/mb3d/index.html")
+      var positionNavbar = dom.window.document.querySelector(".footer")
+      var f = new BackgroundColor()
+      var v = f.evaluate(positionNavbar)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      console.log(h);
+      console.log(v);
+      expect(h).to.equal("rgb(255, 255, 255)")
+    })
+
+    it("Check color of body class", async()=>{
+      var dom = await load_dom("./test/pages/mb3d/index.html")
+      var positionNavbar = dom.window.document.querySelector(".body")
+      var f = new Color()
+      var v = f.evaluate(positionNavbar)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("rgb(51, 51, 51)")
+    })
+    
+    it("Check if background-color and color of body as same", async()=>{
+      var dom = await load_dom("./test/pages/mb3d/index.html")
+      var bodyValues = dom.window.document.querySelector("body")
+      //instance of Color
+      var f1 = new Color()
+      var v1 = f1.evaluate(bodyValues)
+      expect(v1).to.be.an.instanceOf(ElementAttributeValue)
+      var h1 = v1.getValue()
+      
+      //instance of Background-Color
+      var f2 = new BackgroundColor()
+      var v2 = f2.evaluate(bodyValues)
+      expect(v2).to.be.an.instanceOf(ElementAttributeValue)
+      var h2 = v2.getValue()
+      //get result
+      expect(h1).to.not.equal(h2)
+    })
+
+
+    it("Check alignement of Menu", async()=>{
+      var dom = await load_dom("./test/pages/mb3d/index.html")
+      var navbar = dom.window.document.querySelector(".nav-menu")
+      var f = new Display()
+      var v = f.evaluate(navbar)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("flex")
+    })
+
+    it("Implement bug z-index", async()=>{
+      var dom = await load_dom("./test/pages/mb3d/index.html")
+      var navbar = dom.window.document.querySelector(".navbar-container")
+      var f = new Zindex()
+      var v = f.evaluate(navbar)
+      expect(v).to.be.an.instanceOf(ElementAttributeValue)
+      var h = v.getValue()
+      expect(h).to.equal("100")
+    })
+
+    it("Check if the text in a section is visible", async()=>{
+      var dom = await load_dom("./test/pages/mb3d/index.html")
+      var navbar = dom.window.document.querySelector('.blanctest')
+  
+      var f1 = new BackgroundColor()
+      var v1 = f1.evaluate(navbar)
+      expect(v1).to.be.an.instanceOf(ElementAttributeValue)
+      var h1 = v1.getValue()
+
+      var navbar2 = dom.window.document.querySelector(".text-block")
+      var f2 = new Color()
+      var v2 = f2.evaluate(navbar2)
+      expect(v2).to.be.an.instanceOf(ElementAttributeValue)
+      var h2 = v2.getValue()
+      //get result
+      //expect(h1).to.not.equal(h2)
+      console.log("========================");
+      console.log(h1);
+      console.log(h2);
+      expect(h1).to.equal(h2)
+
+    })
+
+
+  });
 
 
 });

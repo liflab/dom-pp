@@ -28,7 +28,7 @@ describe("Test getVerdict return", () => {
             new ComposedFunction(
                 new GreaterThan(),
                 new ComposedFunction(new DimensionWidth(), "$x"),
-                50
+                new ConstantFunction(50)
             )
         );
         var cond = new TestCondition("h2's width > 50", f);
