@@ -57,20 +57,20 @@ class Deserializer {
 
     deserialize(j) {
         //add the fisrt name in the array
-        var names = [j.name]
+        //var names = [j.name]
             //add the name of all descendants in the array
-        var classNames = this.getClassName(j, names)
+        //var classNames = this.getClassName(j, names)
             //console.log(classNames);
-        var instances = []
-        for (const className in classNames) {
+        //var instances;
+        //for (const className in classNames) {
             //only letters are accepted
             const validation = /^[A-Za-z]+$/;
-            if (classNames[className].match(validation)) {
-                var functionClass = eval(classNames[className])
-                instances.push(functionClass.deserialize(this, j))
+            if (j.name.match(validation)) {
+                var functionClass = eval(j.name)
+                return functionClass.deserialize(this, j)
             }
-        }
-        return instances;
+        //}
+        //return instances;
     }
 
     getClassName(obj, names = []) {
@@ -128,4 +128,9 @@ var j = {
 
 var c = new Deserializer().deserialize(j)
 console.log(c)
+
+	
+//var jsonString = JSON.stringify( c, circularReplacer());
+//console.log(JSON.parse(jsonString));
+
 export { Deserializer };
