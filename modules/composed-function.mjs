@@ -63,6 +63,8 @@ class ComposedFunction extends AbstractFunction {
         this.operands.push(AbstractFunction.lift(operands[i]));
       }
     }
+
+    this.members = [operator, operands]
   }
 
   setName(name) {

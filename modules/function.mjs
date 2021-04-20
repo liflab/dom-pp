@@ -34,6 +34,7 @@ import { Value } from "./value.mjs";
 class AbstractFunction {
     constructor() {
         // Nothing to do
+        this.members = [] 
     }
 
     /**
@@ -99,6 +100,8 @@ class AbstractFunction {
 
         return new this(...params);
     }
+
+    
 }
 
 /**
@@ -170,6 +173,7 @@ class ConstantFunction extends AbstractFunction {
     constructor(o) {
         super();
         this.value = Value.lift(o);
+        this.members = [this.value]
     }
 
     evaluate() {

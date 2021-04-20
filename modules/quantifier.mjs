@@ -52,6 +52,8 @@ class Quantifier extends AbstractFunction {
         }
         this.domain = domain;
         this.phi = phi;
+
+        this.members = [index, domain, phi]
     }
 
     getArity() {

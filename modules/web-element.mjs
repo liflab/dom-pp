@@ -464,6 +464,7 @@ class FindBySelector extends Enumerate {
     constructor(selector) {
         super();
         this.selector = selector;
+        this.members = [selector]
     }
 
     evaluate() {

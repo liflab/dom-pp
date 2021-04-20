@@ -194,6 +194,7 @@ class GreaterThan extends AtomicFunction {
      */
     constructor() {
         super(2);
+        this.members =[]
     }
 
     getValue() {

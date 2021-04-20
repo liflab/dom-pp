@@ -56,34 +56,13 @@ class Deserializer {
      */
 
     deserialize(j) {
-        //add the fisrt name in the array
-        //var names = [j.name]
-            //add the name of all descendants in the array
-        //var classNames = this.getClassName(j, names)
-            //console.log(classNames);
-        //var instances;
-        //for (const className in classNames) {
-            //only letters are accepted
-            const validation = /^[A-Za-z]+$/;
-            if (j.name.match(validation)) {
-                var functionClass = eval(j.name)
-                return functionClass.deserialize(this, j)
-            }
-        //}
-        //return instances;
-    }
-
-    getClassName(obj, names = []) {
-        for (const i in obj) {
-            if (Array.isArray(obj[i]) || typeof obj[i] === 'object') {
-                if (obj[i].name != undefined) {
-                    names.push(obj[i].name)
-
-                }
-                this.getClassName(obj[i], names);
-            }
+        //only letters are accepted
+        const validation = /^[A-Za-z]+$/;
+        if (j.name.match(validation)) {
+            var functionClass = eval(j.name)
+            return functionClass.deserialize(this, j)
         }
-        return names;
+
     }
 }
 
@@ -100,37 +79,56 @@ var j = {
         {
             "name": "ComposedFunction",
             "contents": [{
-                    "name": "GreaterThan",
+                "name": "GreaterThan",
+                "contents": []
+            },
+            {
+                "name": "ComposedFunction",
+                "contents": [{
+                    "name": "Opacity",
                     "contents": []
                 },
-                {
-                    "name": "ComposedFunction",
-                    "contents": [{
-                            "name": "Opacity",
-                            "contents": []
-                        },
-                        "$x"
-                    ]
-                },
-                {
-                    "name": "ConstantFunction",
-                    "contents": [{
-                            "name": "Opacity",
-                            "contents": []
-                        },
-                        0.9
-                    ]
-                }
+                    "$x"
+                ]
+            },
+            0.9
             ]
         }
     ]
 };
+var jsonObj = []
+function toJson(result) {
+    var jsonData = {"name": result.name, "contents": result.members}
+    if(jsonData.contents !== []){
+        for (let index = 0; index < jsonData.contents.length; index++) {
+            if (typeof jsonData.contents[index] == "object") {
+                //tempory save the value of the value
+                var temp = jsonData.contents[index]
+                //create json object
+                jsonData.contents[index] = {"name": jsonData.contents[index].constructor.name, "contents": jsonData.contents[index].members} 
+                toJson(temp)
+            }   
+        }
+    }
+    if(jsonData.name == undefined ) jsonData.name = result.constructor.name
+    return jsonData
+}
 
 var c = new Deserializer().deserialize(j)
-console.log(c)
+//console.log(c);
+console.log(toJson(c));
+//var a = toJson(c)
+//console.log(a[0].contents.FindBySelector);
+//console.log(c.phi.operands[1]);
+//console.log(Object.values(c))
 
-	
-//var jsonString = JSON.stringify( c, circularReplacer());
-//console.log(JSON.parse(jsonString));
+//console.log(toJson(c))
+
+console.log("==============================");
+//console.log(c.members[0])
+// console.log(c.members[1].members)
+//console.log(c.members[2])
+//console.log(c.members[2].members[1][0])
+// console.log(c.members[2].members[1][1])
 
 export { Deserializer };
