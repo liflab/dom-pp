@@ -1,5 +1,3 @@
-import { AbstractFunction } from "./function.mjs";
-//import { UniversalQuantifier } from "./quantifier.mjs";
 import {
     BackgroundColor,
     BackgroundImage,
@@ -45,14 +43,12 @@ import {
     Visibility,
     Zindex,
 } from "../index.mjs";
-class Deserializer {
+class Serialization{
     constructor() {
-        this.names = [];
     }
-
-
     /**
-     * Build method deserialize(j) ,j is a JSON structure , this methode will produce a Function object
+     * Build method deserialize(j), j is a JSON structure,
+     * this method will produce a Function object
      */
 
     deserialize(j) {
@@ -63,6 +59,10 @@ class Deserializer {
             return functionClass.deserialize(this, j)
         }
 
+    }
+    serialize(s){
+        var functionClass = eval(s.constructor.name)
+        return functionClass.toJson(s)
     }
 }
 
@@ -91,44 +91,58 @@ var j = {
                     "$x"
                 ]
             },
-            0.9
+                0.9
             ]
         }
     ]
 };
-var jsonObj = []
-function toJson(result) {
-    var jsonData = {"name": result.name, "contents": result.members}
-    if(jsonData.contents !== []){
-        for (let index = 0; index < jsonData.contents.length; index++) {
-            if (typeof jsonData.contents[index] == "object") {
-                //tempory save the value of the value
-                var temp = jsonData.contents[index]
-                //create json object
-                jsonData.contents[index] = {"name": jsonData.contents[index].constructor.name, "contents": jsonData.contents[index].members} 
-                toJson(temp)
-            }   
+
+const circularReplacer = () => {
+
+    // Creating new WeakSet to keep
+    // track of previously seen objects
+    const seen = new WeakSet();
+
+    return (key, value) => {
+
+        // If type of value is an
+        // object or value is null
+        if (typeof(value) === "object" &&
+            value !== null) {
+
+            // If it has been seen before
+            if (seen.has(value)) {
+                return 'Object';
+            }
+
+            // Add current value to the set
+            seen.add(value);
         }
-    }
-    if(jsonData.name == undefined ) jsonData.name = result.constructor.name
-    return jsonData
+
+        // return the value
+        return value;
+    };
+};
+
+var v = {
+    "name": "ComposedFunction",
+    "contents": [
+        "$x",
+        {
+            "name": "FindBySelector",
+            "contents": [
+                "#h2"
+            ]
+        }
+    ]
 }
-
-var c = new Deserializer().deserialize(j)
+var c = new Serialization().deserialize(j)
 //console.log(c);
-console.log(toJson(c));
-//var a = toJson(c)
-//console.log(a[0].contents.FindBySelector);
-//console.log(c.phi.operands[1]);
-//console.log(Object.values(c))
+console.log("****************json*****************");
+var b = new Serialization().serialize(c)
+console.log(b);
+console.log("--------------------------------------");
+console.log(b.contents[1]);
+console.log(b.contents[2]);
 
-//console.log(toJson(c))
-
-console.log("==============================");
-//console.log(c.members[0])
-// console.log(c.members[1].members)
-//console.log(c.members[2])
-//console.log(c.members[2].members[1][0])
-// console.log(c.members[2].members[1][1])
-
-export { Deserializer };
+export { Serialization };

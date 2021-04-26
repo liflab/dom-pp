@@ -27,6 +27,49 @@
 // Local imports
 import { Designator } from "./designator.mjs";
 import { Value } from "./value.mjs";
+import {
+    BackgroundColor,
+    BackgroundImage,
+    BorderColor,
+    BorderRadius,
+    BorderStyle,
+    BorderWidth,
+    CssPropertyFunction,
+    Color,
+    CompoundDesignator,
+    ComposedFunction,
+    ConstantDesignator,
+    DimensionHeight,
+    Display,
+    DimensionWidth,
+    ElementAttributeValue,
+    EnumeratedValue,
+    FindBySelector,
+    Float,
+    FontFamily,
+    FontSize,
+    FontWeight,
+    GreaterThan,
+    GreaterOrEqual,
+    MarginTop,
+    MarginBottom,
+    MarginRight,
+    MarginLeft,
+    ObjectNode,
+    Opacity,
+    Path,
+    PathValue,
+    PaddingTop,
+    PaddingBottom,
+    PaddingRight,
+    PaddingLeft,
+    Position,
+    TestCondition,
+    Tracer,
+    UniversalQuantifier,
+    Visibility,
+    Zindex,
+} from "../index.mjs";
 //import { extractJSON } from "./extractJson.mjs";
 /**
  * Abstract class representing a function.
@@ -99,6 +142,26 @@ class AbstractFunction {
         }
 
         return new this(...params);
+    }
+    static toJson(result) {
+        //console.log(result.members.length);
+        var jsonData = { "name": result.constructor.name, "contents": result.members }
+            for (let index = 0; index < result.members.length; index++) {
+                //tempory save the value of the value
+                var temp = result.members[index]
+                if (typeof result.members[index] == "object") {
+                    //check if member extend AbstractFunction
+                    if(AbstractFunction.isPrototypeOf(eval(temp.constructor.name))){
+                        //console.log(temp.constructor.name);
+                        jsonData.contents[index] = this.toJson(temp)
+                    }else{
+                        //store value in content
+                        jsonData.contents[index] = temp  
+                    }
+                }
+            }
+            return jsonData
+            //return JSON.stringify(jsonData, circularReplacer())
     }
 
     
