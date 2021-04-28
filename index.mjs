@@ -44,6 +44,7 @@ import { ExistentialQuantifier, Quantifier, QuantifierConjunctiveVerdict, Quanti
 import { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, FontWeight, MarginTop, MarginBottom, MarginLeft, MarginRight, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, Position, Visibility, WebElementFunction, Zindex } from "./modules/web-element.mjs";
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 import { isHtmlElement } from "./modules/util.mjs";
+import { Serialization } from "./modules/serialization.mjs"
 
 
 /**
@@ -208,6 +209,7 @@ export {
     QuantifierDisjunctiveVerdict,
     QuantifierVerdict,
     ReturnValue,
+    Serialization,
     Substraction,
     TestCondition,
     TestDriver,

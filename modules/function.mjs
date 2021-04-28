@@ -28,6 +28,7 @@
 import { Designator } from "./designator.mjs";
 import { Value } from "./value.mjs";
 import {
+    Addition,
     BackgroundColor,
     BackgroundImage,
     BorderColor,
@@ -51,6 +52,7 @@ import {
     FontWeight,
     GreaterThan,
     GreaterOrEqual,
+    IsEqualTo,
     MarginTop,
     MarginBottom,
     MarginRight,

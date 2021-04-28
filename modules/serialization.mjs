@@ -1,4 +1,5 @@
 import {
+    Addition,
     BackgroundColor,
     BackgroundImage,
     BorderColor,
@@ -23,6 +24,7 @@ import {
     FontWeight,
     GreaterThan,
     GreaterOrEqual,
+    IsEqualTo,
     MarginTop,
     MarginBottom,
     MarginRight,
@@ -140,9 +142,9 @@ var c = new Serialization().deserialize(j)
 //console.log(c);
 console.log("****************json*****************");
 var b = new Serialization().serialize(c)
-console.log(b);
-console.log("--------------------------------------");
-console.log(b.contents[1]);
-console.log(b.contents[2]);
+//console.log(b);
+//console.log("--------------------------------------");
+//console.log(b.contents[1]);
+//console.log(b.contents[2]);
 
 export { Serialization };
