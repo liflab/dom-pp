@@ -218,13 +218,13 @@ class AndNode extends TraceabilityNode {
     
     setShortElaboration(e)
 	{
-		m_shortElaboration = e;
+		var shortElaboration = e;
 	}
 
     getShort()
 	{
-        var m_shortElaboration = new ConstantElaboration()
-		return m_shortElaboration
+        var shortElaboration = new ConstantElaboration()
+		return shortElaboration
 	}
     getLong(){
         // ... will be implemented
@@ -266,11 +266,11 @@ class OrNode extends TraceabilityNode {
     //added
     setShortElaboration(e)
 	{
-		m_shortElaboration = e;
+		var shortElaboration = e;
 	}
     getShort()
 	{
-		return m_shortElaboration;
+		return shortElaboration;
 	}
     getLong(){
         // ...will be implemented

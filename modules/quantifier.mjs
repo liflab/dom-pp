@@ -1,27 +1,27 @@
 /*
-	A lineage library for DOM nodes
-	MIT License
+    A lineage library for DOM nodes
+    MIT License
 
-	Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
-	Eckinox Média and Université du Québec à Chicoutimi
+    Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
+    Eckinox Média and Université du Québec à Chicoutimi
 
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
 
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
 
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-	SOFTWARE.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
 */
 
 /**
@@ -30,6 +30,7 @@
 import { AbstractFunction, ReturnValue } from "./function.mjs";
 import { Value } from "./value.mjs";
 import { Verdict } from "./verdict.mjs";
+import { ConstantElaboration } from "./elaboration.mjs"
 
 /**
  * Base class for the implementation of the universal and existential
@@ -45,7 +46,7 @@ class Quantifier extends AbstractFunction {
      */
     constructor(index, domain, phi) {
         super();
-        if (typeof(index) === "number") {
+        if (typeof (index) === "number") {
             this.index = index;
         } else {
             this.variable = index;
@@ -77,7 +78,7 @@ class Quantifier extends AbstractFunction {
             var cf = this.phi.set(this.variable, x);
             var ret_val = cf.evaluate(...arguments);
             var o_b = ret_val.getValue();
-            if (typeof(o_b) !== "boolean") {
+            if (typeof (o_b) !== "boolean") {
                 throw "Invalid argument type";
             }
             var b = o_b;
@@ -128,6 +129,14 @@ class QuantifierDisjunctiveVerdict extends QuantifierVerdict {
     query(q, d, root, factory) {
         var leaves = [];
         var n = factory.getOrNode();
+        //added
+        var val = " is false";
+        if (this.value) {
+            val = " is true";
+        }
+        var ce = new ConstantElaboration(Quantifier.toString() + val);
+        n.setShortElaboration(ce);
+        //end add
         for (var i = 0; i < this.verdicts.length; i++) {
             var vv = this.verdicts[i];
             var v = vv.verdict;
@@ -135,14 +144,22 @@ class QuantifierDisjunctiveVerdict extends QuantifierVerdict {
             var sub_leaves = v.query(q, ReturnValue.instance, n, sub_factory);
             leaves.push(...sub_leaves);
         }
+
+        //added
         var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
         if (this.verdicts.length === 1) {
-            tn.addChild(n.getChildren()[0]);
+            edge = n.getChildren().get(0);
+            edge.getNode().setShortElaboration(ce);
+            tn.addChild(edge);
+            //tn.addChild(n.getChildren()[0]);
         } else {
-            tn.addChild(n);
+            tn.addChild(n, Quality.EXACT);
+            //tn.addChild(n);
         }
-        root.addChild(tn);
+        root.addChild(tn, Quality.EXACT);
+        //root.addChild(tn);
         return leaves;
+        //end add
     }
 }
 
@@ -156,6 +173,15 @@ class QuantifierConjunctiveVerdict extends QuantifierVerdict {
     query(q, d, root, factory) {
         var leaves = [];
         var n = factory.getAndNode();
+        //added
+        var val = " is false";
+        if (this.value) {
+            val = " is true";
+        }
+        var ce = new ConstantElaboration(Quantifier.toString() + val);
+        n.setShortElaboration(ce);
+        //end add
+
         for (var i = 0; i < this.verdicts.length; i++) {
             var vv = this.verdicts[i];
             var v = vv.verdict;
@@ -163,14 +189,22 @@ class QuantifierConjunctiveVerdict extends QuantifierVerdict {
             var sub_leaves = v.query(q, ReturnValue.instance, n, sub_factory);
             leaves.push(...sub_leaves);
         }
+
+        //added
         var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
         if (this.verdicts.length === 1) {
-            tn.addChild(n.getChildren()[0]);
+            edge = n.getChildren().get(0);
+			edge.getNode().setShortElaboration(ce);
+			tn.addChild(edge);
+            //tn.addChild(n.getChildren()[0]);
         } else {
-            tn.addChild(n);
+            tn.addChild(n, Quality.EXACT);
+            //tn.addChild(n);
         }
-        root.addChild(tn);
+        root.addChild(tn, Quality.EXACT);
+        //root.addChild(tn);
         return leaves;
+        //end add
     }
 }
 

@@ -134,12 +134,12 @@ class AtomicFunctionReturnValue extends Value {
         var n = factory.getAndNode();
         //added
         var short_s = new StringBuilder();
-        short_s.append(AtomicFunction.this.toString()).append("(");
-        for (let i = 0; i < m_inputValues.length; i++) {
+        short_s.append(AtomicFunction.toString()).append("(");
+        for (let i = 0; i < this.inputValues.length; i++) {
             if (i > 0) {
                 short_s.append(",");
             }
-            short_s.append(m_inputValues[i]);
+            short_s.append(this.inputValues[i]);
         }
         short_s.append(")");
         var ce = new ConstantElaboration(short_s.toString())

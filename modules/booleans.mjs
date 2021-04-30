@@ -1,27 +1,27 @@
 /*
-	A lineage library for DOM nodes
-	MIT License
+    A lineage library for DOM nodes
+    MIT License
 
-	Copyright (c) 2020-2021 Amadou Ba, Sylvain HalléfBooleanConnective
-	Eckinox Média and Université du Québec à Chicoutimi
+    Copyright (c) 2020-2021 Amadou Ba, Sylvain HalléfBooleanConnective
+    Eckinox Média and Université du Québec à Chicoutimi
 
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
 
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
 
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-	SOFTWARE.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
 */
 
 // Local imports
@@ -29,6 +29,7 @@ import { InputArgument, ReturnValue } from "./function.mjs";
 import { AtomicFunction } from "./atomic-function.mjs";
 import { NaryValue } from "./value.mjs";
 import { CompoundDesignator } from "./designator.mjs";
+import { ConstantElaboration } from "./elaboration.mjs"
 
 /**
  * Abstract class representing the binary Boolean connectives "and" and "or".
@@ -46,7 +47,7 @@ class BooleanConnective extends AtomicFunction {
         var true_positions = [];
         for (var i = 0; i < arguments.length; i++) {
             var o = arguments[i].getValue();
-            if (typeof(o) !== "boolean") {
+            if (typeof (o) !== "boolean") {
                 throw "Invalid argument type";
             }
             if (o === true) {
@@ -67,9 +68,23 @@ class BooleanConnective extends AtomicFunction {
  * @extends NaryValue
  */
 class NaryDisjunctiveVerdict extends NaryValue {
+    constructor(value, verdicts = []) {
+        super(value, verdicts)
+        this.value = value
+        this.verdicts = verdicts
+    }
     query(q, d, root, factory) {
         var leaves = [];
         var n = factory.getOrNode();
+        //added 
+        var val = " is false";
+        if (this.value) {
+            val = " is true";
+        }
+        var ce = new ConstantElaboration(BooleanConnective.toString() + val);
+        n.setShortElaboration(ce);
+
+        //end add
         for (var i = 0; i < this.values.length; i++) {
             var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
             var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
@@ -123,15 +138,15 @@ class NaryConjunctiveVerdict extends NaryValue {
  */
 class BooleanAnd extends BooleanConnective {
     constructor(arity = 2) {
-            super(arity);
-        }
-        /**
-         * Gets the Boolean value.
-         * @param false_values
-         * @param true_values
-         * @param false_positions
-         * @param true_positions
-         */
+        super(arity);
+    }
+    /**
+     * Gets the Boolean value.
+     * @param false_values
+     * @param true_values
+     * @param false_positions
+     * @param true_positions
+     */
     getBooleanValue(false_values = [], true_values = [], false_positions = [], true_positions = []) {
         if (false_values.length === 0) {
             return new NaryConjunctiveVerdict(true, true_values, true_positions);
@@ -175,7 +190,7 @@ class BooleanNot extends AtomicFunction {
     }
 
     getValue() {
-        if (typeof(arguments[0]) !== "boolean") {
+        if (typeof (arguments[0]) !== "boolean") {
             throw "Invalid argument type";
         }
         return !arguments[0];

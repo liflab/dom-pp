@@ -73,8 +73,10 @@ describe("Elaboration test",function () {
         expect(v).to.be.an.instanceof(NaryDisjunctiveVerdict);
         expect(v.getValue()).to.be.false;
 		var t = new Tracer();
+        console.log(t);
 		var root = t.getAndNode();
         var leaves = v.query(null, ReturnValue.instance, root, t);
+        console.log(leaves);
 
         console.log(root);
 		//v.query((null, ReturnValue.instance, root, t));
