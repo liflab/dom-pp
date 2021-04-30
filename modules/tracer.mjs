@@ -28,6 +28,7 @@
 import { All, Nothing, Unknown } from "./designator.mjs";
 import { ReturnValue } from "./function.mjs";
 import { map_contains, map_get, map_put, same_object, set_contains } from "./util.mjs";
+import {ConstantElaboration} from './elaboration.mjs'
 
 /**
  * Manages the nodes of a designation and-or graph.
@@ -214,6 +215,20 @@ class AndNode extends TraceabilityNode {
     constructor() {
         super();
     }
+    
+    setShortElaboration(e)
+	{
+		m_shortElaboration = e;
+	}
+
+    getShort()
+	{
+        var m_shortElaboration = new ConstantElaboration()
+		return m_shortElaboration
+	}
+    getLong(){
+        // ... will be implemented
+    }
 
     toString() {
         var indent = "";
@@ -244,9 +259,23 @@ class AndNode extends TraceabilityNode {
  * @extends TraceabilityNode
  */
 class OrNode extends TraceabilityNode {
+
     constructor() {
         super();
     }
+    //added
+    setShortElaboration(e)
+	{
+		m_shortElaboration = e;
+	}
+    getShort()
+	{
+		return m_shortElaboration;
+	}
+    getLong(){
+        // ...will be implemented
+    }
+    //end add
 
     toString() {
         var indent = "";
@@ -277,6 +306,7 @@ class OrNode extends TraceabilityNode {
  * @extends TraceabilityNode
  */
 class UnknownNode extends TraceabilityNode {
+    s_unknown = new ConstantElaboration("?");
     constructor() {
         super();
     }
@@ -284,6 +314,31 @@ class UnknownNode extends TraceabilityNode {
     toString() {
         return "?";
     }
+
+    setShortElaboration(e)
+	{
+		// Do nothing   
+	}
+	
+	// getShort()
+	// {
+	// 	if (!m_children.isEmpty())
+	// 	{
+	// 		LabeledEdge edge = m_children.get(0);
+	// 		return edge.getNode().getShort();
+	// 	}
+	// 	return s_unknown;
+	// }
+
+	// getLong() 
+	// {
+	// 	if (!m_children.isEmpty())
+	// 	{
+	// 		LabeledEdge edge = m_children.get(0);
+	// 		return edge.getNode().getLong();
+	// 	}
+	// 	return s_unknown;
+	// }
 }
 
 /**
@@ -315,6 +370,49 @@ class ObjectNode extends TraceabilityNode {
     toString() {
         return this.designatedObject.toString();
     }
+
+    // added
+    
+    // toString(indent)
+	// {
+	// 	var out = new StringBuilder();
+	// 	out.append(indent).append(m_object.toString()).append("\n");
+	// 	for (LabeledEdge le : m_children)
+	// 	{
+	// 		out.append(indent).append(le.getQuality());
+	// 		out.append(((ConcreteTraceabilityNode) le.getNode()).toString(indent + " "));
+	// 	}
+	// 	return out.toString();
+	// }
+	
+	setShortElaboration(e)
+	{
+		m_shortElaboration = e;
+	}
+
+	getShort()
+	{
+		if (m_shortElaboration == null)
+		{
+			return new ConstantElaboration(m_object);
+		}
+		else
+		{
+			return m_shortElaboration;
+		}
+	}
+
+	// getLong() 
+	// {
+	// 	ComposedElaboration ce = new ComposedElaboration(getShort());
+	// 	if (!m_children.isEmpty())
+	// 	{
+	// 		//ce.add(new ConstantElaboration(m_object.getDesignator()));
+	// 		LabeledEdge edge = m_children.get(0);
+	// 		ce.add(edge.getNode().getLong());
+	// 	}
+	// 	return ce;
+	// }
 }
 
 /**

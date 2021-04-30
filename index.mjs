@@ -45,7 +45,8 @@ import { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyl
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 import { isHtmlElement } from "./modules/util.mjs";
 import { Serialization } from "./modules/serialization.mjs"
-
+import {StringBuilder} from "./modules/StringBuilder.mjs"
+import {AndElaboration, Elaboration, ConstantElaboration, ComposedElaboration, OrElaboration } from "./modules/elaboration.mjs"
 
 /**
  * Evaluates a set of conditions on a DOM tree
@@ -151,6 +152,11 @@ export {
     BorderWidth,
     CssPropertyFunction,
     Color,
+    AndElaboration, 
+    Elaboration, 
+    ConstantElaboration,
+    ComposedElaboration, 
+    OrElaboration ,
     ComposedFunction,
     ComposedFunctionValue,
     CompoundDesignator,
@@ -210,6 +216,7 @@ export {
     QuantifierVerdict,
     ReturnValue,
     Serialization,
+    StringBuilder,
     Substraction,
     TestCondition,
     TestDriver,

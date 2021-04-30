@@ -1,33 +1,37 @@
 /*
-	A lineage library for DOM nodes
-	MIT License
+    A lineage library for DOM nodes
+    MIT License
 
-	Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
-	Eckinox Média and Université du Québec à Chicoutimi
+    Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
+    Eckinox Média and Université du Québec à Chicoutimi
 
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
 
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
 
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-	SOFTWARE.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
 */
 
 // Local imports
 import { CompoundDesignator } from "./designator.mjs";
 import { AbstractFunction, InputArgument, ReturnValue } from "./function.mjs";
 import { Value } from "./value.mjs";
+import{AndNode} from "./tracer.mjs"
+
+import { StringBuilder } from './stringBuilder.mjs'
+import { ConstantElaboration } from "./elaboration.mjs";
 //import { NaryConjunctiveVerdict, NaryDisjunctiveVerdict } from "./booleans.mjs"
 
 /**
@@ -128,6 +132,20 @@ class AtomicFunctionReturnValue extends Value {
     query(type, d, root, factory) {
         var leaves = [];
         var n = factory.getAndNode();
+        //added
+        var short_s = new StringBuilder();
+        short_s.append(AtomicFunction.this.toString()).append("(");
+        for (let i = 0; i < m_inputValues.length; i++) {
+            if (i > 0) {
+                short_s.append(",");
+            }
+            short_s.append(m_inputValues[i]);
+        }
+        short_s.append(")");
+        var ce = new ConstantElaboration(short_s.toString())
+        n.setShortElaboration(ce)
+
+        //end add
         for (var i = 0; i < this.inputValues.length; i++) {
             if (this.inputValues[i] === null) {
                 continue;
