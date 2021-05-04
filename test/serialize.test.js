@@ -68,12 +68,43 @@ import { expect_to_throw } from "./test-util.mjs";
 
 
 describe("Test Serialization", () => {
-    const sampleserizalisation = new Serialization()
-    let deserialized
-    var expectedJsonExample = {
-        "name": "GreaterThan",
-        "contents": []
-    }
+    const sampleserizalisation = new Serialization();
+    const expectedJsonExample = {
+        "name": "UniversalQuantifier",
+        "contents": [
+            "$x",
+            {
+                "name": "FindBySelector",
+                "contents": [
+                    "#h2"
+                ]
+            },
+            {
+                "name": "ComposedFunction",
+                "contents": [
+                    {
+                        "name": "GreaterThan",
+                        "contents": []
+                    },
+                    {
+                        "name": "ComposedFunction",
+                        "contents": [
+                            {
+                                "name": "Opacity",
+                                "contents": []
+                            },
+                            "$x"
+                        ]
+                    },
+                    {
+                        "name": "ConstantFunction",
+                        "contents": [0.9]
+                    }
+                ]
+            }
+        ]
+    };
+    let deserialized;
 
     it("should be return true when input json is object", function () {
         expect(expectedJsonExample).to.be.an("object")
@@ -82,8 +113,7 @@ describe("Test Serialization", () => {
     it("should deserialize and serialize an object json ", function () {
         deserialized = sampleserizalisation.deserialize(expectedJsonExample)
         const serialized = sampleserizalisation.serialize(deserialized)
-        expect(expectedJsonExample).to.be.deep.equal(serialized)
-        //expect(j).to.be.deep.equal(f)
+        expect(serialized).to.be.deep.equal(expectedJsonExample)
     })
 
     it("Test opacity from json structure", async () => {
