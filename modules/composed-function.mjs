@@ -45,6 +45,7 @@ class ComposedFunction extends AbstractFunction {
      */
   constructor(operator, ...operands) {
     super();
+    this.members = [operator, ...operands];
     this.operator = operator;
     this.operands = [];
     for (var i = 0; i < operands.length; i++) {
@@ -63,8 +64,6 @@ class ComposedFunction extends AbstractFunction {
         this.operands.push(AbstractFunction.lift(operands[i]));
       }
     }
-
-    this.members = [operator, operands]
   }
 
   setName(name) {
