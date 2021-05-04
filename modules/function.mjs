@@ -78,8 +78,7 @@ import {
  */
 class AbstractFunction {
     constructor() {
-        // Nothing to do
-        this.members = [] 
+        this.members = []; 
     }
 
     /**
@@ -145,25 +144,22 @@ class AbstractFunction {
 
         return new this(...params);
     }
-    static toJson(result) {
-        //console.log(result.members.length);
-        var jsonData = { "name": result.constructor.name, "contents": result.members }
-            for (let index = 0; index < result.members.length; index++) {
-                //tempory save the value of the value
-                var temp = result.members[index]
-                if (typeof result.members[index] == "object") {
-                    //check if member extend AbstractFunction
-                    if(AbstractFunction.isPrototypeOf(eval(temp.constructor.name))){
-                        //console.log(temp.constructor.name);
-                        jsonData.contents[index] = this.toJson(temp)
-                    }else{
-                        //store value in content
-                        jsonData.contents[index] = temp  
-                    }
-                }
+
+    toJson() {
+        const serializedMembers = [];
+
+        for (const member of this.members) {
+            if (typeof member == "object" && AbstractFunction.isPrototypeOf(member.constructor)) {
+                serializedMembers.push(member.toJson())
+            } else {
+                serializedMembers.push(member);
             }
-            return jsonData
-            //return JSON.stringify(jsonData, circularReplacer())
+        }
+
+        return {
+            "name": this.constructor.name,
+            "contents": serializedMembers
+        };
     }
 
     
@@ -237,8 +233,8 @@ class ConstantFunction extends AbstractFunction {
      */
     constructor(o) {
         super();
+        this.members = [o];
         this.value = Value.lift(o);
-        this.members = [this.value]
     }
 
     evaluate() {
