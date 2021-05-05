@@ -1,8 +1,8 @@
 class ConcreteLabeledEdge {
-    constructor(node, q) {
+    constructor(node, q={EXACT, OVER, UNDER, NONE}) {
         //super();
         this.node = node;
-        q = {EXACT, OVER, UNDER, NONE};
+        //q = {EXACT, OVER, UNDER, NONE};
         this.q = q;
     }
 
@@ -18,3 +18,4 @@ class ConcreteLabeledEdge {
         return this.node + ":" + this.q;
     }
 }
+export {ConcreteLabeledEdge}

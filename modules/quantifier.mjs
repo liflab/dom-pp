@@ -31,6 +31,7 @@ import { AbstractFunction, ReturnValue } from "./function.mjs";
 import { Value } from "./value.mjs";
 import { Verdict } from "./verdict.mjs";
 import { ConstantElaboration } from "./elaboration.mjs"
+import {ConcreteLabeledEdge} from "./concreteLabeledEdge.mjs"
 
 /**
  * Base class for the implementation of the universal and existential
@@ -146,19 +147,21 @@ class QuantifierDisjunctiveVerdict extends QuantifierVerdict {
         }
 
         //added
-        var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
-        if (this.verdicts.length === 1) {
-            edge = n.getChildren().get(0);
-            edge.getNode().setShortElaboration(ce);
-            tn.addChild(edge);
-            //tn.addChild(n.getChildren()[0]);
-        } else {
-            tn.addChild(n, Quality.EXACT);
-            //tn.addChild(n);
-        }
-        root.addChild(tn, Quality.EXACT);
-        //root.addChild(tn);
-        return leaves;
+        // var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
+        // if (this.verdicts.length === 1) {
+        //     // edge = n.getChildren().get(0);
+        //     var edge = n.getChildren()[0];
+        //     console.log(edge);
+        //     edge.getNode().setShortElaboration(ce);
+        //     tn.addChild(edge);
+        //     //tn.addChild(n.getChildren()[0]);
+        // } else {
+        //     tn.addChild(n, Quality.EXACT);
+        //     //tn.addChild(n);
+        // }
+        // root.addChild(tn, Quality.EXACT);
+        // //root.addChild(tn);
+        // return leaves;
         //end add
     }
 }
@@ -193,9 +196,10 @@ class QuantifierConjunctiveVerdict extends QuantifierVerdict {
         //added
         var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
         if (this.verdicts.length === 1) {
-            edge = n.getChildren().get(0);
-			edge.getNode().setShortElaboration(ce);
-			tn.addChild(edge);
+            //edge = n.getChildren().get(0);
+            var edge = n.getChildren()[0];
+            edge.getNode().setShortElaboration(ce);
+            tn.addChild(edge);
             //tn.addChild(n.getChildren()[0]);
         } else {
             tn.addChild(n, Quality.EXACT);

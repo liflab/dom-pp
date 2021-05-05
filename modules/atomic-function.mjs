@@ -30,7 +30,6 @@ import { AbstractFunction, InputArgument, ReturnValue } from "./function.mjs";
 import { Value } from "./value.mjs";
 import{AndNode} from "./tracer.mjs"
 
-import { StringBuilder } from './stringBuilder.mjs'
 import { ConstantElaboration } from "./elaboration.mjs";
 //import { NaryConjunctiveVerdict, NaryDisjunctiveVerdict } from "./booleans.mjs"
 
@@ -133,15 +132,15 @@ class AtomicFunctionReturnValue extends Value {
         var leaves = [];
         var n = factory.getAndNode();
         //added
-        var short_s = new StringBuilder();
-        short_s.append(AtomicFunction.toString()).append("(");
+        var short_s = ""
+        short_s += this.referenceFunction.toString()+"(" 
         for (let i = 0; i < this.inputValues.length; i++) {
             if (i > 0) {
-                short_s.append(",");
+                short_s += ","
             }
-            short_s.append(this.inputValues[i]);
+            short_s += this.inputValues[i]
         }
-        short_s.append(")");
+        short_s += ")"
         var ce = new ConstantElaboration(short_s.toString())
         n.setShortElaboration(ce)
 
