@@ -1,34 +1,33 @@
 /*
-    A lineage library for DOM nodes
-    MIT License
+	A lineage library for DOM nodes
+	MIT License
 
-    Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
-    Eckinox Média and Université du Québec à Chicoutimi
+	Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
+	Eckinox Média and Université du Québec à Chicoutimi
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
 
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 */
 
 // Local imports
 import { All, Nothing, Unknown } from "./designator.mjs";
 import { ReturnValue } from "./function.mjs";
 import { map_contains, map_get, map_put, same_object, set_contains } from "./util.mjs";
-import { ConstantElaboration } from './elaboration.mjs'
 
 /**
  * Manages the nodes of a designation and-or graph.
@@ -152,8 +151,8 @@ class Tracer {
             }
         } else {
             // Query is non-trivial, and object is not trackable: nothing to do
-            var n = this.getObjectNode(Unknown.instance, o);
-            root.addChild(n);
+            //var n = this.getObjectNode(Unknown.instance, o);
+            //root.addChild(n);
         }
     }
 }
@@ -186,47 +185,17 @@ class TraceabilityNode {
     getId() {
         return this.id;
     }
-    //added
-    addChild(n, q) {
-        addChild(n, q, false);
-    }
-    addChild(n, q, check_duplicates) {
-        // if (n == this) {
-        //     Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, "Attempting to connect a node to itself");
-        // }
-        var le = new ConcreteLabeledEdge(n, q);
-        if (check_duplicates) {
-            for (c_le in this.children) {
-                if (n == (c_le.getNode())) {
-                    break;
-                }
-            }
-            this.children.push(le);
-        }
-        else {
-            this.children.push(le);
-        }
-    }
+
     /**
      * Adds a child to the node.
      * @return The node to add
      */
-    addChild(e) {
-        this.children.push(e);
-    }
-    hashCode() {
-        return this.id;
-    }
-    equals(o) {
-        if (o == null || !(o instanceof TraceabilityNode)) {
-            return false;
+    addChild(n) {
+        if (n == this) {
+            return;
         }
-        return this.id == o.id;
+        this.children.push(n);
     }
-    toString(indent) {
-        return indent;
-    }
-    //end added
 
     /**
      * Gets the children of this node.
@@ -244,18 +213,6 @@ class TraceabilityNode {
 class AndNode extends TraceabilityNode {
     constructor() {
         super();
-    }
-
-    setShortElaboration(e) {
-        var shortElaboration = e;
-    }
-
-    getShort() {
-        var shortElaboration = new ConstantElaboration()
-        return shortElaboration
-    }
-    getLong() {
-        // ... will be implemented
     }
 
     toString() {
@@ -287,21 +244,9 @@ class AndNode extends TraceabilityNode {
  * @extends TraceabilityNode
  */
 class OrNode extends TraceabilityNode {
-
     constructor() {
         super();
     }
-    //added
-    setShortElaboration(e) {
-        var shortElaboration = e;
-    }
-    getShort() {
-        return shortElaboration;
-    }
-    getLong() {
-        // ...will be implemented
-    }
-    //end add
 
     toString() {
         var indent = "";
@@ -332,7 +277,6 @@ class OrNode extends TraceabilityNode {
  * @extends TraceabilityNode
  */
 class UnknownNode extends TraceabilityNode {
-    s_unknown = new ConstantElaboration("?");
     constructor() {
         super();
     }
@@ -340,30 +284,6 @@ class UnknownNode extends TraceabilityNode {
     toString() {
         return "?";
     }
-
-    setShortElaboration(e) {
-        // Do nothing   
-    }
-
-    // getShort()
-    // {
-    // 	if (!m_children.isEmpty())
-    // 	{
-    // 		LabeledEdge edge = m_children.get(0);
-    // 		return edge.getNode().getShort();
-    // 	}
-    // 	return s_unknown;
-    // }
-
-    // getLong() 
-    // {
-    // 	if (!m_children.isEmpty())
-    // 	{
-    // 		LabeledEdge edge = m_children.get(0);
-    // 		return edge.getNode().getLong();
-    // 	}
-    // 	return s_unknown;
-    // }
 }
 
 /**
@@ -395,45 +315,6 @@ class ObjectNode extends TraceabilityNode {
     toString() {
         return this.designatedObject.toString();
     }
-
-    // added
-
-    // toString(indent)
-    // {
-    // 	var out = new StringBuilder();
-    // 	out.append(indent).append(m_object.toString()).append("\n");
-    // 	for (LabeledEdge le : m_children)
-    // 	{
-    // 		out.append(indent).append(le.getQuality());
-    // 		out.append(((ConcreteTraceabilityNode) le.getNode()).toString(indent + " "));
-    // 	}
-    // 	return out.toString();
-    // }
-
-    setShortElaboration(e) {
-        m_shortElaboration = e;
-    }
-
-    getShort() {
-        if (m_shortElaboration == null) {
-            return new ConstantElaboration(m_object);
-        }
-        else {
-            return m_shortElaboration;
-        }
-    }
-
-    // getLong() 
-    // {
-    // 	ComposedElaboration ce = new ComposedElaboration(getShort());
-    // 	if (!m_children.isEmpty())
-    // 	{
-    // 		//ce.add(new ConstantElaboration(m_object.getDesignator()));
-    // 		LabeledEdge edge = m_children.get(0);
-    // 		ce.add(edge.getNode().getLong());
-    // 	}
-    // 	return ce;
-    // }
 }
 
 /**
