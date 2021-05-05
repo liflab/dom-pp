@@ -72,6 +72,8 @@ class NaryDisjunctiveVerdict extends NaryValue {
         super(value, verdicts)
         this.value = value
         this.verdicts = verdicts
+
+        this.referenceFunction = arguments[0]
     }
     query(q, d, root, factory) {
         var leaves = [];
@@ -81,24 +83,40 @@ class NaryDisjunctiveVerdict extends NaryValue {
         if (this.value) {
             val = " is true";
         }
-        var ce = new ConstantElaboration(BooleanConnective.toString() + val);
+        var ce = new ConstantElaboration(this.referenceFunction.toString() + val);
+        console.log("=========================================================================");
+        console.log(n);
         n.setShortElaboration(ce);
 
-        //end add
-        for (var i = 0; i < this.values.length; i++) {
-            var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
-            var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
-            var sub_leaves = [];
-            sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
-            leaves.push(...sub_leaves);
-            n.addChild(sub_root);
+        for (var v of this.value)
+        {
+            leaves.push(v.query(q, Function.ReturnValue.instance, n, factory));
         }
         if (n.getChildren().length === 1) {
-            root.addChild(n.getChildren()[0]);
-        } else {
-            root.addChild(n);
+            var edge = n.getChildren()[0];
+            edge.getNode().setShortElaboration(ce);
+            root.addChild(edge);
+        }
+        else {
+            root.addChild(n, Quality.EXACT);
         }
         return leaves;
+        // for (var i = 0; i < this.values.length; i++) {
+        //     var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
+        //     var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
+        //     var sub_leaves = [];
+        //     sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
+        //     leaves.push(...sub_leaves);
+        //     n.addChild(sub_root);
+        // }
+        // if (n.getChildren().length === 1) {
+        //     root.addChild(n.getChildren()[0]);
+        // } else {
+        //     root.addChild(n);
+        // }
+        // return leaves;
+        
+        //end add
     }
 }
 
@@ -108,27 +126,47 @@ class NaryDisjunctiveVerdict extends NaryValue {
  * @extends NaryValue
  */
 class NaryConjunctiveVerdict extends NaryValue {
-    constructor(value, values = [], positions = []) {
-        super(value, values, positions);
+    constructor(value, values = []) {
+        super(value, values);
+        this.value = value
+        //this.verdicts = verdicts
+
+        this.referenceFunction = arguments[0]
     }
 
     query(q, d, root, factory) {
         var leaves = [];
         var n = factory.getAndNode();
-        for (var i = 0; i < this.values.length; i++) {
-            var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
-            var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
-            var sub_leaves = [];
-            sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
-            leaves.push(...sub_leaves);
-            n.addChild(sub_root);
+
+        //added
+        var val = " is false";
+        if (this.value) {
+            val = " is true";
+        }
+        var ce = new ConstantElaboration(this.referenceFunction.toString() + val);
+        n.setShortElaboration(ce);
+        for (var v of this.value) {
+            leaves.push(v.query(q, Function.ReturnValue.instance, n, factory));
         }
         if (n.getChildren().length === 1) {
-            root.addChild(n.getChildren()[0]);
-        } else {
-            root.addChild(n);
+            var edge = n.getChildren()[0];
+            edge.getNode().setShortElaboration(ce);
+            root.addChild(edge);
+        }
+        else {
+            root.addChild(n, Quality.EXACT);
         }
         return leaves;
+        //for (var i = 0; i < this.values.length; i++) {
+        //     var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
+        //     var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
+        //     var sub_leaves = [];
+        //     sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
+        //     leaves.push(...sub_leaves);
+        //     n.addChild(sub_root);
+        // }
+        //end
+        // 
     }
 }
 

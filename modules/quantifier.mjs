@@ -31,7 +31,7 @@ import { AbstractFunction, ReturnValue } from "./function.mjs";
 import { Value } from "./value.mjs";
 import { Verdict } from "./verdict.mjs";
 import { ConstantElaboration } from "./elaboration.mjs"
-import {ConcreteLabeledEdge} from "./concreteLabeledEdge.mjs"
+import { ConcreteLabeledEdge } from "./concreteLabeledEdge.mjs"
 
 /**
  * Base class for the implementation of the universal and existential
@@ -127,6 +127,11 @@ class QuantifierVerdict extends Value {
  * @extends QuantifierVerdict
  */
 class QuantifierDisjunctiveVerdict extends QuantifierVerdict {
+    constructor(value, verdicts) {
+        super()
+        this.value = value
+        this.verdicts = []
+    }
     query(q, d, root, factory) {
         var leaves = [];
         var n = factory.getOrNode();
@@ -135,7 +140,7 @@ class QuantifierDisjunctiveVerdict extends QuantifierVerdict {
         if (this.value) {
             val = " is true";
         }
-        var ce = new ConstantElaboration(Quantifier.toString() + val);
+        var ce = new ConstantElaboration(this.referenceFunction.toString() + val);
         n.setShortElaboration(ce);
         //end add
         for (var i = 0; i < this.verdicts.length; i++) {
@@ -145,24 +150,14 @@ class QuantifierDisjunctiveVerdict extends QuantifierVerdict {
             var sub_leaves = v.query(q, ReturnValue.instance, n, sub_factory);
             leaves.push(...sub_leaves);
         }
-
         //added
-        // var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
-        // if (this.verdicts.length === 1) {
-        //     // edge = n.getChildren().get(0);
-        //     var edge = n.getChildren()[0];
-        //     console.log(edge);
-        //     edge.getNode().setShortElaboration(ce);
-        //     tn.addChild(edge);
-        //     //tn.addChild(n.getChildren()[0]);
-        // } else {
-        //     tn.addChild(n, Quality.EXACT);
-        //     //tn.addChild(n);
-        // }
-        // root.addChild(tn, Quality.EXACT);
-        // //root.addChild(tn);
-        // return leaves;
-        //end add
+        tn = factory.getObjectNode(Function.ReturnValue.instance, this.referenceFunction);
+        if (this.verdicts.length == 1) {
+            var edge = n.getChildren().get(0);
+            edge.getNode().setShortElaboration(ce);
+            tn.addChild(edge);
+        }
+        //end
     }
 }
 
@@ -181,7 +176,7 @@ class QuantifierConjunctiveVerdict extends QuantifierVerdict {
         if (this.value) {
             val = " is true";
         }
-        var ce = new ConstantElaboration(Quantifier.toString() + val);
+        var ce = new ConstantElaboration(this.referenceFunction.toString() + val);
         n.setShortElaboration(ce);
         //end add
 
@@ -196,11 +191,9 @@ class QuantifierConjunctiveVerdict extends QuantifierVerdict {
         //added
         var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
         if (this.verdicts.length === 1) {
-            //edge = n.getChildren().get(0);
             var edge = n.getChildren()[0];
             edge.getNode().setShortElaboration(ce);
             tn.addChild(edge);
-            //tn.addChild(n.getChildren()[0]);
         } else {
             tn.addChild(n, Quality.EXACT);
             //tn.addChild(n);

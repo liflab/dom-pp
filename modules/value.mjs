@@ -26,6 +26,8 @@
 
 // Local imports
 import { CompoundDesignator, Designator } from "./designator.mjs";
+import {AndElaboration, Elaboration, ConstantElaboration, ComposedElaboration, OrElaboration} from "./elaboration.mjs"
+
 
 /**
  * Object produced by the call(this) to a function, and whose lineage
@@ -123,6 +125,9 @@ class ConstantValue extends Value {
         var leaves = [];
         var new_d = CompoundDesignator.create(d, new ConstantDesignator());
         var n = factory.getObjectNode(new_d, this.value);
+        //added
+        n.setShortElaboration(new ConstantElaboration(this.value));
+        //end
         root.addChild(n);
         leaves.push(n);
         return leaves;

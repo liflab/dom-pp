@@ -31,6 +31,7 @@ import { CompoundDesignator, Designator } from "./designator.mjs";
 import { AbstractFunction, InputArgument, ReturnValue } from "./function.mjs";
 import { Value } from "./value.mjs";
 import { ObjectNode } from "./tracer.mjs";
+import {AndElaboration, Elaboration, ConstantElaboration, ComposedElaboration, OrElaboration} from "./elaboration.mjs"
 
 /**
  * A function that is defined as the composition of other functions.
@@ -139,6 +140,7 @@ class ComposedFunctionValue extends Value {
     }
     var new_d = CompoundDesignator.create(ReturnValue.instance, d.tail());
     var sub_root = factory.getObjectNode(new_d, this.referenceFunction.operator);
+    sub_root.setShortElaboration(new ConstantElaboration(this.operator + " equals " + this.returnValue));
     var sub_leaves = this.returnValue.query(q, d, sub_root, factory);
     var new_sub_leaves = [];
     for (var i = 0; i < sub_leaves.length; i++) {
@@ -334,6 +336,9 @@ class ArgumentValue extends Value {
     var leaves = [];
     var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.index, this.value));
     var n = factory.getObjectNode(new_d, this.value);
+    //added
+    n.setShortElaboration(new ConstantElaboration("Argument " + this.index + " equals " + this.value));
+    //end
     var sub_leaves = this.value.query(q, d, n, factory);
     leaves.push(...sub_leaves);
     root.addChild(n);
