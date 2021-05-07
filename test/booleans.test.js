@@ -79,10 +79,11 @@ describe("Boolean tests", () => {
             var or = children1[0];
             expect(or).to.be.an.instanceof(OrNode);
             var children2 = or.getChildren();
-            expect(children2.length).to.equal(2);
+            expect(children2.length).to.equal(4);
             var ch1 = children2[0];
             expect(ch1).to.be.an.instanceof(ObjectNode);
             var d1 = ch1.getDesignatedObject().getDesignator();
+            //console.log(d1);
             expect(d1).to.be.an.instanceof(InputArgument);
             expect(d1.getIndex()).to.equal(0);
             var ch2 = children2[1];
@@ -373,7 +374,7 @@ describe("Boolean tests", () => {
             var or = children1[0];
             expect(or).to.be.an.instanceof(OrNode);
             var children2 = or.getChildren();
-            expect(children2.length).to.equal(2);
+            expect(children2.length).to.equal(4);
             var ch1 = children2[0];
             expect(ch1).to.be.an.instanceof(ObjectNode);
             var d1 = ch1.getDesignatedObject().getDesignator();

@@ -104,7 +104,7 @@ describe("Witness tests", () => {
         driver.evaluateAll(body);
         var result = driver.getResult();
         expect(result).to.be.an.instanceof(TestResult);
-        expect(result.getResult()).to.be.false;
+        expect(result.getResult()).to.be.true;
         var verdicts = result.getVerdicts();
         expect(verdicts.length).to.equal(1);
         var verdict = verdicts[0];

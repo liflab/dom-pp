@@ -31,7 +31,8 @@ import { AbstractFunction, ReturnValue } from "./function.mjs";
 import { Value } from "./value.mjs";
 import { Verdict } from "./verdict.mjs";
 import { ConstantElaboration } from "./elaboration.mjs"
-import { ConcreteLabeledEdge } from "./concreteLabeledEdge.mjs"
+import {ConcreteLabeledEdge, Quality} from "./concreteLabeledEdge.mjs"
+
 
 /**
  * Base class for the implementation of the universal and existential
@@ -131,6 +132,7 @@ class QuantifierDisjunctiveVerdict extends QuantifierVerdict {
         super()
         this.value = value
         this.verdicts = []
+        this.referenceFunction = arguments[0]
     }
     query(q, d, root, factory) {
         var leaves = [];
@@ -151,7 +153,7 @@ class QuantifierDisjunctiveVerdict extends QuantifierVerdict {
             leaves.push(...sub_leaves);
         }
         //added
-        tn = factory.getObjectNode(Function.ReturnValue.instance, this.referenceFunction);
+        var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
         if (this.verdicts.length == 1) {
             var edge = n.getChildren().get(0);
             edge.getNode().setShortElaboration(ce);

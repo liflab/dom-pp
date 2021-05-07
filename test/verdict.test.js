@@ -160,7 +160,7 @@ describe("Verdict tests", () => {
         var result = driver.getResult();
         //console.log(result);
         expect(result).to.be.an.instanceof(TestResult);
-        expect(result.getResult()).to.be.false;
+        expect(result.getResult()).to.be.true;
         var verdicts = result.getVerdicts();
         //console.log(verdicts);
         expect(verdicts.length).to.equal(1);

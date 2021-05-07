@@ -1,13 +1,12 @@
 class ConcreteLabeledEdge {
-    constructor(node, q={EXACT, OVER, UNDER, NONE}) {
+    constructor(node, quality) {
         //super();
         this.node = node;
-        //q = {EXACT, OVER, UNDER, NONE};
-        this.q = q;
+        this.quality = quality;
     }
 
     getQuality() {
-        return this.q;
+        return this.quality;
     }
 
     getNode() {
@@ -15,7 +14,20 @@ class ConcreteLabeledEdge {
     }
 
     toString() {
-        return this.node + ":" + this.q;
+        return this.node + ":" + this.quality;
     }
 }
-export {ConcreteLabeledEdge}
+class Quality {
+    static EXACT = new Quality('EXACT');
+    static OVER = new Quality('OVER');
+    static UNDER = new Quality('UNDER');
+    static NONE = new Quality('NONE');
+  
+    constructor(name) {
+      this.name = name;
+    }
+    toString() {
+      return `Quality.${this.name}`;
+    }
+  }
+export {ConcreteLabeledEdge, Quality}

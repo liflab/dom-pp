@@ -30,6 +30,7 @@ import { AtomicFunction } from "./atomic-function.mjs";
 import { NaryValue } from "./value.mjs";
 import { CompoundDesignator } from "./designator.mjs";
 import { ConstantElaboration } from "./elaboration.mjs"
+import {ConcreteLabeledEdge, Quality} from "./concreteLabeledEdge.mjs"
 
 /**
  * Abstract class representing the binary Boolean connectives "and" and "or".
@@ -68,11 +69,8 @@ class BooleanConnective extends AtomicFunction {
  * @extends NaryValue
  */
 class NaryDisjunctiveVerdict extends NaryValue {
-    constructor(value, verdicts = []) {
-        super(value, verdicts)
-        this.value = value
-        this.verdicts = verdicts
-
+    constructor(value, values) {
+        super(value, values)
         this.referenceFunction = arguments[0]
     }
     query(q, d, root, factory) {
@@ -84,16 +82,16 @@ class NaryDisjunctiveVerdict extends NaryValue {
             val = " is true";
         }
         var ce = new ConstantElaboration(this.referenceFunction.toString() + val);
-        console.log("=========================================================================");
-        console.log(n);
         n.setShortElaboration(ce);
 
-        for (var v of this.value)
+        for (var v of this.values)
         {
-            leaves.push(v.query(q, Function.ReturnValue.instance, n, factory));
+            leaves.push(v.query(q, ReturnValue.instance, n, factory));
         }
         if (n.getChildren().length === 1) {
             var edge = n.getChildren()[0];
+            console.log("#########################################");
+            console.log(edge);
             edge.getNode().setShortElaboration(ce);
             root.addChild(edge);
         }
@@ -126,11 +124,8 @@ class NaryDisjunctiveVerdict extends NaryValue {
  * @extends NaryValue
  */
 class NaryConjunctiveVerdict extends NaryValue {
-    constructor(value, values = []) {
+    constructor(value, values) {
         super(value, values);
-        this.value = value
-        //this.verdicts = verdicts
-
         this.referenceFunction = arguments[0]
     }
 
@@ -145,8 +140,8 @@ class NaryConjunctiveVerdict extends NaryValue {
         }
         var ce = new ConstantElaboration(this.referenceFunction.toString() + val);
         n.setShortElaboration(ce);
-        for (var v of this.value) {
-            leaves.push(v.query(q, Function.ReturnValue.instance, n, factory));
+        for (var v of this.values) {
+            leaves.push(v.query(q, ReturnValue.instance, n, factory));
         }
         if (n.getChildren().length === 1) {
             var edge = n.getChildren()[0];

@@ -12,9 +12,9 @@ class Elaboration {
 }
 
 class ConstantElaboration extends Elaboration {
-	constructor(o) {
+	constructor(object) {
 		super()
-		this.object = o
+		this.object = object
 	}
 	getShort() {
 		return this
@@ -74,12 +74,14 @@ class ComposedElaboration extends Elaboration {
 		if (this.parts == []) {
 			return this.short_e.toString();
 		}
-		var out = new StringBuilder();
+		var out = "";
 		for (let i = 0; i < this.parts.size(); i++) {
 			if (i > 0) {
-				out.append(", ");
+				out += ","
+				//out.append(", ");
 			}
-			out.append(this.parts.get(i).getShort());
+			out += this.parts[i].getShort()
+			//out.append(this.parts.get(i).getShort());
 		}
 		return out.toString();
 	}
@@ -94,12 +96,14 @@ class AndElaboration extends ComposedElaboration {
 		if (this.parts == []) {
 			return this.short_e.toString();
 		}
-		var out = new StringBuilder();
+		var out = "";
 		for (let i = 0; i < this.parts.size(); i++) {
 			if (i > 0) {
-				out.append(" and ");
+				out += "and"
+				//out.append(" and ");
 			}
-			out.append(this.parts.get(i).getShort());
+			out += this.parts[i].getShort()
+			//out.append(this.parts.get(i).getShort());
 		}
 		return out.toString();
 	}
@@ -114,12 +118,14 @@ class OrElaboration extends ComposedElaboration {
 		if (this.parts == []) {
 			return this.short_e.toString();
 		}
-		var out = new StringBuilder();
+		var out = ""
 		for (let i = 0; i < this.parts.size(); i++) {
 			if (i > 0) {
-				out.append(" or ");
+				out += "or"
+				//out.append(" or ");
 			}
-			out.append(this.parts.get(i).getShort());
+			out += this.parts[i].getShort()
+			//out.append(this.parts.get(i).getShort());
 		}
 		return out.toString();
 	}
