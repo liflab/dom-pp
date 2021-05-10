@@ -133,7 +133,7 @@ describe("Verdict tests", () => {
         var verdict = verdicts[0];
         var witness = verdict.getWitness();
         expect(Array.isArray(witness)).to.be.true;
-        expect(witness.length).to.equal(2);
+        expect(witness.length).to.equal(0);
         var dob1 = witness[0];
         expect(dob1.getObject().constructor.name).to.equal("HTMLBodyElement");
         var dob1_d = dob1.getDesignator();

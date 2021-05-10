@@ -226,8 +226,10 @@ class AndNode extends TraceabilityNode {
     getLong() {
         var ce = new AndElaboration(this.shortElaboration);
         for (var edge of this.children) {
-            var child = edge.getNode();
-            ce.push(child.getLong());
+            // var child = edge.getNode();
+            // ce.push(child.getLong());
+            ce.push(edge.getLong());
+            
         }
         return ce;
     }
@@ -303,8 +305,9 @@ class OrNode extends TraceabilityNode {
     getLong() {
         var ce = new OrElaboration(this.shortElaboration);
         for (var edge of this.children) {
-            var child = edge.getNode();
-            ce.push(child.getLong());
+            // var child = edge.getNode();
+            // ce.push(child.getLong());
+            ce.push(edge.getLong())
         }
         return ce;
     }
@@ -379,7 +382,9 @@ class ObjectNode extends TraceabilityNode {
 		if (this.children !== [])
 		{
 			var edge = this.children[0];
-			ce.push(edge.getNode().getLong());
+			// ce.push(edge.getNode().getLong());
+            ce.push(edge.getLong())
+            
 		}
 		return ce;
 	}

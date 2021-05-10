@@ -193,15 +193,15 @@ class QuantifierConjunctiveVerdict extends QuantifierVerdict {
         //added
         var tn = factory.getObjectNode(ReturnValue.instance, this.referenceFunction);
         if (this.verdicts.length === 1) {
-            var edge = n.getChildren()[0];
-            edge.getNode().setShortElaboration(ce);
+            var edge = n.getChildren()[0].setShortElaboration(ce);
+            //edge.getNode().setShortElaboration(ce);
             tn.addChild(edge);
         } else {
-            tn.addChild(n, Quality.EXACT);
+            //tn.addChild(n, Quality.EXACT);
             //tn.addChild(n);
         }
-        root.addChild(tn, Quality.EXACT);
-        //root.addChild(tn);
+        //root.addChild(tn, Quality.EXACT);
+        root.addChild(tn);
         return leaves;
         //end add
     }

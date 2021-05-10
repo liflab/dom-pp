@@ -89,14 +89,15 @@ class NaryDisjunctiveVerdict extends NaryValue {
             leaves.push(v.query(q, ReturnValue.instance, n, factory));
         }
         if (n.getChildren().length === 1) {
-            var edge = n.getChildren()[0];
-            console.log("#########################################");
-            console.log(edge);
-            edge.getNode().setShortElaboration(ce);
+            var edge = n.getChildren()[0].setShortElaboration(ce);
+            //console.log("#########################################");
+            //console.log(edge);
+            //edge.getNode().setShortElaboration(ce);
             root.addChild(edge);
         }
         else {
-            root.addChild(n, Quality.EXACT);
+            //root.addChild(n, Quality.EXACT);
+            root.addChild(n)
         }
         return leaves;
         // for (var i = 0; i < this.values.length; i++) {
@@ -145,16 +146,17 @@ class NaryConjunctiveVerdict extends NaryValue {
         }
         if (n.getChildren().length === 1) {
             console.log(n.getChildren());
-            var edge = n.getChildren()[0]; //appel directement setShort
-            console.log("#####################################################");
-            console.log(edge);  //retourne ObjectNode , pas de méthode getNode ???
+            var edge = n.getChildren()[0].setShortElaboration(ce); //appel directement setShort
+            //console.log("#####################################################");
+            //console.log(edge);  //retourne ObjectNode , pas de méthode getNode ???
                                 //setShortElaboration pas dans la classe ObjectNode
             //console.log(edge.getDesignatedObject());
             //edge.getNode().setShortElaboration(ce);
             root.addChild(edge);
         }
         else {
-            root.addChild(n, Quality.EXACT);
+            //root.addChild(n, Quality.EXACT);
+            root.addChild(n);
         }
         return leaves;
         //for (var i = 0; i < this.values.length; i++) {
