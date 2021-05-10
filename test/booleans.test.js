@@ -342,6 +342,8 @@ describe("Boolean tests", () => {
             var children1 = root.getChildren();
             expect(children1.length).to.equal(1);
             var ch1 = children1[0];
+            console.log("**************************************");
+            console.log(ch1);
             expect(ch1).to.be.an.instanceof(ObjectNode);
             var d1 = ch1.getDesignatedObject().getDesignator();
             expect(d1).to.be.an.instanceof(InputArgument);

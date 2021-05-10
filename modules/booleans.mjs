@@ -144,8 +144,13 @@ class NaryConjunctiveVerdict extends NaryValue {
             leaves.push(v.query(q, ReturnValue.instance, n, factory));
         }
         if (n.getChildren().length === 1) {
-            var edge = n.getChildren()[0];
-            edge.getNode().setShortElaboration(ce);
+            console.log(n.getChildren());
+            var edge = n.getChildren()[0]; //appel directement setShort
+            console.log("#####################################################");
+            console.log(edge);  //retourne ObjectNode , pas de méthode getNode ???
+                                //setShortElaboration pas dans la classe ObjectNode
+            //console.log(edge.getDesignatedObject());
+            //edge.getNode().setShortElaboration(ce);
             root.addChild(edge);
         }
         else {
