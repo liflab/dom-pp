@@ -61,6 +61,7 @@ class Tracer {
      */
     setSimplify(b) {
         this.simplify = b;
+        return this
     }
 
     /**
@@ -332,7 +333,30 @@ class OrNode extends TraceabilityNode {
 class UnknownNode extends TraceabilityNode {
     constructor() {
         super();
+        this.children = []
     }
+    setShortElaboration(e)
+	{
+		// Do nothing
+	}
+    getShort()
+	{
+		if (this.children.length == 0)
+		{
+			var edge = this.children[0];
+			return edge.getShort();
+		}
+		return new ConstantElaboration("?");
+	}
+    getLong() 
+	{
+		if (this.children.length == 0)
+		{
+			var edge = this.children[0];
+			return edge.getLong();
+		}
+		return new ConstantElaboration("?");
+	}
 
     toString() {
         return "?";
