@@ -1,4 +1,3 @@
-import { StringBuilder } from './stringBuilder.mjs'
 class Elaboration {
 	constructor() {
 
