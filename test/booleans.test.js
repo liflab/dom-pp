@@ -84,6 +84,7 @@ describe("Boolean tests", () => {
             expect(ch1).to.be.an.instanceof(ObjectNode);
             var d1 = ch1.getDesignatedObject().getDesignator();
             console.log("==================================================");
+            console.log(children2);
             console.log(ch1.getDesignatedObject());
             console.log(d1);
             console.log(InputArgument);

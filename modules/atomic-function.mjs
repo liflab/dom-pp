@@ -156,13 +156,16 @@ class AtomicFunctionReturnValue extends Value {
             leaves.push(...sub_leaves);
             n.addChild(sub_root);
         }
-        var f_root = factory.getObjectNode(d, this.referenceFunction);
+        //var f_root = factory.getObjectNode(d, this.referenceFunction);
         if (n.getChildren().length === 1) {
-            f_root.addChild(n.getChildren()[0]);
+            //f_root.addChild(n.getChildren()[0]);
+            root.addChild(n.getChildren()[0]);
         } else {
-            f_root.addChild(n);
+            //f_root.addChild(n);
+            root.addChild(n);
         }
-        root.addChild(f_root);
+        //root.addChild(f_root);
+        root.addChild(root);
         return leaves;
     }
 }

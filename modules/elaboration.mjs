@@ -33,14 +33,6 @@ class ComposedElaboration extends Elaboration {
 	 * The elements of the elaboration.
 	 */
 	parts = [];
-
-	static create(short_e, [...parts]) {
-		if (parts.length == 0) {
-			return short_e;
-		}
-		return new ComposedElaboration(short_e, parts);
-	}
-
 	constructor(short_e, [...parts]) {
 		super();
 		this.short_e = short_e
@@ -52,6 +44,12 @@ class ComposedElaboration extends Elaboration {
 				this.parts.push(new ConstantElaboration(part));
 			}
 		}
+	}
+	static create(short_e, [...parts]) {
+		if (parts.length == 0) {
+			return short_e;
+		}
+		return new ComposedElaboration(short_e, parts);
 	}
 
 	add(e) {
