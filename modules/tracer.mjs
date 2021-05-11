@@ -265,7 +265,7 @@ class AndNode extends TraceabilityNode {
  * @extends TraceabilityNode
  */
 class OrNode extends TraceabilityNode {
-    constructor(shortElaboration) {
+    constructor() {
         super();
         this.shortElaboration = null
     }
@@ -292,6 +292,7 @@ class OrNode extends TraceabilityNode {
             this.children.push(n);
         }
     }
+    
 
     //added
     toString() {
@@ -333,7 +334,6 @@ class OrNode extends TraceabilityNode {
 class UnknownNode extends TraceabilityNode {
     constructor() {
         super();
-        this.children = []
     }
     setShortElaboration(e)
 	{

@@ -94,30 +94,16 @@ class NaryDisjunctiveVerdict extends NaryValue {
         }
         //var f_root = factory.getObjectNode(d, this.referenceFunction);
         if (n.getChildren().length === 1) {
-            //f_root.addChild(n.getChildren()[0]);
-            root.addChild(n.getChildren()[0]);
+            var edge = n.getChildren()[0].setShortElaboration(ce);
+            //edge.getNode().setShortElaboration(ce);
+            root.addChild(edge);
         } else {
             //f_root.addChild(n);
             root.addChild(n);
         }
         //root.addChild(f_root);
-        root.addChild(root);
+        //root.addChild(root);
         return leaves;
-        // for (var i = 0; i < this.values.length; i++) {
-        //     var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
-        //     var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
-        //     var sub_leaves = [];
-        //     sub_leaves = this.values[i].query(q, ReturnValue.instance, sub_root, factory);
-        //     leaves.push(...sub_leaves);
-        //     n.addChild(sub_root);
-        // }
-        // if (n.getChildren().length === 1) {
-        //     root.addChild(n.getChildren()[0]);
-        // } else {
-        //     root.addChild(n);
-        // }
-        // return leaves;
-
         //end add
     }
 }
@@ -144,10 +130,10 @@ class NaryConjunctiveVerdict extends NaryValue {
         }
         var ce = new ConstantElaboration(this.referenceFunction.toString() + val);
         n.setShortElaboration(ce);
-        for (var v of this.values) {
-            leaves.push(v.query(q, ReturnValue.instance, n, factory));
-        }
-        for (var i = 0; i < this.values.length; i++){
+        // for (var v of this.values) {
+        //     leaves.push(v.query(q, ReturnValue.instance, n, factory));
+        // }
+        for (var i = 0; i < this.values.length; i++) {
             //leaves.addAll(v.query(q, Function.ReturnValue.instance, n, factory));
             var v = this.values[i];
             var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
@@ -158,8 +144,8 @@ class NaryConjunctiveVerdict extends NaryValue {
             n.addChild(sub_root);
         }
         if (n.getChildren().length === 1) {
-            console.log(n.getChildren());
             var edge = n.getChildren()[0].setShortElaboration(ce);
+            //edge.getNode().setShortElaboration(ce);
             root.addChild(edge);
         }
         else {
