@@ -30,7 +30,7 @@ import { AtomicFunction } from "./atomic-function.mjs";
 import { NaryValue } from "./value.mjs";
 import { CompoundDesignator } from "./designator.mjs";
 import { ConstantElaboration } from "./elaboration.mjs"
-import {ConcreteLabeledEdge, Quality} from "./concreteLabeledEdge.mjs"
+import { ConcreteLabeledEdge, Quality } from "./concreteLabeledEdge.mjs"
 
 /**
  * Abstract class representing the binary Boolean connectives "and" and "or".
@@ -69,8 +69,8 @@ class BooleanConnective extends AtomicFunction {
  * @extends NaryValue
  */
 class NaryDisjunctiveVerdict extends NaryValue {
-    constructor(value, values) {
-        super(value, values)
+    constructor(value, values, positions = []) {
+        super(value, values, positions)
         this.referenceFunction = arguments[0]
     }
     query(q, d, root, factory) {
@@ -83,22 +83,25 @@ class NaryDisjunctiveVerdict extends NaryValue {
         }
         var ce = new ConstantElaboration(this.referenceFunction.toString() + val);
         n.setShortElaboration(ce);
-
-        for (var v of this.values)
-        {
-            leaves.push(v.query(q, ReturnValue.instance, n, factory));
+        for (var i = 0; i < this.values.length; i++) {
+            var v = this.values[i];
+            var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
+            var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
+            var sub_leaves = []
+            sub_leaves = v.query(q, ReturnValue.instance, sub_root, factory);
+            leaves.push(...sub_leaves);
+            n.addChild(sub_root);
         }
+        //var f_root = factory.getObjectNode(d, this.referenceFunction);
         if (n.getChildren().length === 1) {
-            var edge = n.getChildren()[0].setShortElaboration(ce);
-            //console.log("#########################################");
-            //console.log(edge);
-            //edge.getNode().setShortElaboration(ce);
-            root.addChild(edge);
+            //f_root.addChild(n.getChildren()[0]);
+            root.addChild(n.getChildren()[0]);
+        } else {
+            //f_root.addChild(n);
+            root.addChild(n);
         }
-        else {
-            //root.addChild(n, Quality.EXACT);
-            root.addChild(n)
-        }
+        //root.addChild(f_root);
+        root.addChild(root);
         return leaves;
         // for (var i = 0; i < this.values.length; i++) {
         //     var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
@@ -114,7 +117,7 @@ class NaryDisjunctiveVerdict extends NaryValue {
         //     root.addChild(n);
         // }
         // return leaves;
-        
+
         //end add
     }
 }
@@ -125,8 +128,8 @@ class NaryDisjunctiveVerdict extends NaryValue {
  * @extends NaryValue
  */
 class NaryConjunctiveVerdict extends NaryValue {
-    constructor(value, values) {
-        super(value, values);
+    constructor(value, values, positions = []) {
+        super(value, values, positions);
         this.referenceFunction = arguments[0]
     }
 
@@ -144,14 +147,19 @@ class NaryConjunctiveVerdict extends NaryValue {
         for (var v of this.values) {
             leaves.push(v.query(q, ReturnValue.instance, n, factory));
         }
+        for (var i = 0; i < this.values.length; i++){
+            //leaves.addAll(v.query(q, Function.ReturnValue.instance, n, factory));
+            var v = this.values[i];
+            var new_d = CompoundDesignator.create(d.tail(), new InputArgument(this.positions[i]));
+            var sub_root = factory.getObjectNode(new_d, this.referenceFunction);
+            var sub_leaves = []
+            sub_leaves = v.query(q, ReturnValue.instance, sub_root, factory);
+            leaves.push(...sub_leaves);
+            n.addChild(sub_root);
+        }
         if (n.getChildren().length === 1) {
             console.log(n.getChildren());
-            var edge = n.getChildren()[0].setShortElaboration(ce); //appel directement setShort
-            //console.log("#####################################################");
-            //console.log(edge);  //retourne ObjectNode , pas de méthode getNode ???
-                                //setShortElaboration pas dans la classe ObjectNode
-            //console.log(edge.getDesignatedObject());
-            //edge.getNode().setShortElaboration(ce);
+            var edge = n.getChildren()[0].setShortElaboration(ce);
             root.addChild(edge);
         }
         else {

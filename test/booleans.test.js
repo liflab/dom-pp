@@ -83,15 +83,13 @@ describe("Boolean tests", () => {
             var ch1 = children2[0];
             expect(ch1).to.be.an.instanceof(ObjectNode);
             var d1 = ch1.getDesignatedObject().getDesignator();
-            console.log("==================================================");
-            console.log(children2);
-            console.log(ch1.getDesignatedObject());
-            console.log(d1);
-            console.log(InputArgument);
-            console.log("======end=======");
             expect(d1).to.be.an.instanceof(InputArgument);
             expect(d1.getIndex()).to.equal(0);
-            var ch2 = children2[1];
+            //var ch2 = children2[1];
+            var ch2 = children2[2]
+            console.log("==================================================");
+            console.log(children2);
+            console.log(ch2);
             expect(ch2).to.be.an.instanceof(ObjectNode);
             var d2 = ch2.getDesignatedObject().getDesignator();
             expect(d2).to.be.an.instanceof(InputArgument);
@@ -120,7 +118,8 @@ describe("Boolean tests", () => {
             expect(children1.length).to.equal(1);
             var ch1 = children1[0];
             console.log("++++++++++++++++++++++++++++++++++++++++++++++++");
-            console.log(root);
+            console.log(children1);
+            console.log(children1[0]);
             expect(ch1).to.be.an.instanceof(ObjectNode);
             var d1 = ch1.getDesignatedObject().getDesignator();
             expect(d1).to.be.an.instanceof(InputArgument);
