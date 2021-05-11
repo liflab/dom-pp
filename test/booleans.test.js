@@ -88,6 +88,7 @@ describe("Boolean tests", () => {
             console.log(ch1.getDesignatedObject());
             console.log(d1);
             console.log(InputArgument);
+            console.log("======end=======");
             expect(d1).to.be.an.instanceof(InputArgument);
             expect(d1.getIndex()).to.equal(0);
             var ch2 = children2[1];
