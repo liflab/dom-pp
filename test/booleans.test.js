@@ -295,7 +295,7 @@ describe("Boolean tests", () => {
             var leaves = v.query(null, ReturnValue.instance, root, t);
             var children1 = root.getChildren();
             expect(children1.length).to.equal(1);
-            var ch1 = children1[0].getChildren()[0];
+            var ch1 = children1[0];
             expect(ch1).to.be.an.instanceof(ObjectNode);
             var d1 = ch1.getDesignatedObject().getDesignator();
             expect(d1).to.be.an.instanceof(InputArgument);
@@ -322,7 +322,7 @@ describe("Boolean tests", () => {
             var leaves = v.query(null, ReturnValue.instance, root, t);
             var children1 = root.getChildren();
             expect(children1.length).to.equal(1);
-            var ch1 = children1[0];
+            var ch1 = children1[0].getChildren()[0]; //add getchildren()
             expect(ch1).to.be.an.instanceof(ObjectNode);
             var d1 = ch1.getDesignatedObject().getDesignator();
             expect(d1).to.be.an.instanceof(InputArgument);
@@ -349,9 +349,7 @@ describe("Boolean tests", () => {
             var leaves = v.query(null, ReturnValue.instance, root, t);
             var children1 = root.getChildren();
             expect(children1.length).to.equal(1);
-            var ch1 = children1[0];
-            console.log("**************************************");
-            console.log(ch1);
+            var ch1 = children1[0].getChildren()[0]; //add getchildren()
             expect(ch1).to.be.an.instanceof(ObjectNode);
             var d1 = ch1.getDesignatedObject().getDesignator();
             expect(d1).to.be.an.instanceof(InputArgument);
