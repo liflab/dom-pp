@@ -129,8 +129,8 @@ describe("Function tests", () => {
       expect(leaves.length).to.equal(2);
       expect(root.getChildren().length).to.equal(1);
       var under = root.getChildren()[0];
-      expect(under).to.be.an.instanceof(ObjectNode);
-      var do0 = under.getDesignatedObject();
+      expect(under.getChildren()[0]).to.be.an.instanceof(ObjectNode);
+      var do0 = under.getChildren()[0].getDesignatedObject();
       expect(do0.getObject()).to.equal(f);
       expect(do0.getDesignator()).to.be.an.instanceof(ReturnValue);
       expect(under.getChildren().length).to.equal(1);
