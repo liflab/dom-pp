@@ -94,7 +94,8 @@ class NaryDisjunctiveVerdict extends NaryValue {
         }
         //var f_root = factory.getObjectNode(d, this.referenceFunction);
         if (n.getChildren().length === 1) {
-            var edge = n.getChildren()[0].setShortElaboration(ce);
+            var edge = n.getChildren()[0]
+            edge.setShortElaboration(ce);
             //edge.getNode().setShortElaboration(ce);
             root.addChild(edge);
         } else {
@@ -144,7 +145,8 @@ class NaryConjunctiveVerdict extends NaryValue {
             n.addChild(sub_root);
         }
         if (n.getChildren().length === 1) {
-            var edge = n.getChildren()[0].setShortElaboration(ce);
+            var edge = n.getChildren()[0]
+            edge.setShortElaboration(ce);
             //edge.getNode().setShortElaboration(ce);
             root.addChild(edge);
         }

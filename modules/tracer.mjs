@@ -220,6 +220,7 @@ class AndNode extends TraceabilityNode {
     //added
     setShortElaboration(e) {
         this.shortElaboration = e;
+        return this
     }
     getShort() {
         return this.shortElaboration;
@@ -300,6 +301,7 @@ class OrNode extends TraceabilityNode {
     }
     setShortElaboration(e) {
         this.shortElaboration = e;
+        return this
     }
     getShort() {
         return this.shortElaboration;
@@ -338,10 +340,12 @@ class UnknownNode extends TraceabilityNode {
     setShortElaboration(e)
 	{
 		// Do nothing
+        this.shortElaboration = e;
+        return this
 	}
     getShort()
 	{
-		if (this.children.length == 0)
+		if (this.children.length === 0)
 		{
 			var edge = this.children[0];
 			return edge.getShort();
@@ -388,6 +392,7 @@ class ObjectNode extends TraceabilityNode {
     setShortElaboration(e)
 	{
 		this.shortElaboration = e;
+        return this
 	}
     getShort()
 	{

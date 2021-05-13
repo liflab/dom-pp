@@ -59,6 +59,7 @@ describe("Enumerate tests", () => {
         expect(ch_d).to.be.an.instanceof(CompoundDesignator);
         expect(ch_d.elements.length).to.equal(2);
         console.log("@@@@@@@@@@@@@@@@@@@@@@@");
+        console.log(ch_d);
         console.log(ch_d.head());
         expect(ch_d.head()).to.be.an.instanceof(InputArgument);
         var tail = ch_d.tail();
