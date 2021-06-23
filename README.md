@@ -154,7 +154,7 @@ function is an object that can be *evaluated*: input arguments are passed to
 it, and return values are produced. However, function calls in dom-pp follow
 a slightly unusual syntax:
 
-```java
+```javascript
 var f = new IsGreaterThan();
 var v = f.evaluate(2, 1);
 ```
@@ -166,7 +166,7 @@ the value returned by the call is an instance of a special dom-pp class called
 `Value`. A value contains, among other things, the actual "value" of the return
 function; it can be obtained by calling its method `get`:
 
-```java
+```javascript
 var b = f.get(); // b == true
 ```
 
@@ -198,7 +198,7 @@ by passing three parameters to it:
 For example, to assert that all elements in the CSS class `foo` have a width
 greater than 10, one would write:
 
-```java
+```javascript
 var q = new UniversalQuantifier(
   "$x",
   new FindBySelector("foo"),
@@ -213,7 +213,7 @@ than the constant 10.
 
 Since a quantifier is also a function, it can be evaluated:
 
-```java
+```javascript
 var body = document.getElementById("body");
 var v = q.evaluate(body);
 var b = v.get(); // either true or false
@@ -228,7 +228,7 @@ Quantifiers are similar to a construct that can be found in other testing
 frameworks, and spares the user from writing `for` loops to repeatedly evaluate
 a condition on a list of objects:
 
-```java
+```javascript
 var elems = document.getElementsByClassName("foo");
 for (var i = 0; i < elems.length; i++) {
   assert(elems[i].width > 10);
@@ -252,7 +252,7 @@ We have seen an example of a composed function in the code example above.
 The instantiation of the `ComposedFunction` inside the quantifier is the dom-pp
 equivalent of writing something like the following, in classical programming:
 
-```java
+```javascript
 function g(x) {
   return x > 10;
 }
@@ -264,7 +264,7 @@ comparing this argument to the value 10 using the `IsGreaterThan` function.
 Composed functions can be nested; for example, it is possible to write that
 x+1 is greater than 10:
 
-```java
+```javascript
 new ComposedFunction(new IsGreaterThan(),
   new ComposedFunction(new Addition(), "$x", 1),
   10);
@@ -299,7 +299,7 @@ the existing functions provided by the library:
 
 For example, in order to state that all "foo" elements have the same width:
 
-```java
+```javascript
 var q = new UniversalQuantifier("$x", new FindBySelector("foo"),
   new UniversalQuantifier("$y", new FindBySelector("foo"),
     new ComposedFunction(new Equals(), "$x", "$y")));
@@ -315,7 +315,7 @@ and not its return value directly. Another purpose of the `Value` object is
 that it can be used to generate a tree explaining the result produced by
 the function that returns it:
 
-```java
+```javascript
 var tree = Explainer.explain(v);
 var list = Verdict.getWitness(tree);
 ```
