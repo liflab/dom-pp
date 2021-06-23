@@ -181,8 +181,8 @@ Since conditions are expressed on elements of a page, the first step is to
 select a set of such elements so that one can write assertions about them.
 This is done using either a *universal* or an *existential* quantifier.
 
-The universal quantifier is called `ForAll`; it is instantiated by passing
-three parameters to it:
+The universal quantifier is called `UniversalQuantifier`; it is instantiated
+by passing three parameters to it:
 
 1. The first is a string containing the name of a variable called the
    *quantified variable*. By convention, quantified variables start
@@ -307,6 +307,30 @@ var q = new UniversalQuantifier("$x", new FindBySelector("foo"),
 
 The complete list of available function can be found in the auto-generated API
 documentation: https://liflab.github.io/dom-pp/jsdoc/
+
+### Explaining the result
+
+We mentioned earlier that a function returns a special object called a `Value`,
+and not its return value directly. Another purpose of the `Value` object is
+that it can be used to generate a tree explaining the result produced by
+the function that returns it:
+
+```java
+var tree = Explainer.explain(v);
+var list = Verdict.getWitness(tree);
+```
+
+These instructions produce a list of instances of `DesignatedObject`. A
+designated object is a pair comprising an object, as well as something that
+refers to a *part* of this object (called a `Designator`). Taken together, the
+designated objects in the list represent one possible way of explaining the
+return value of the function contained in `v`.
+
+On a `DesignatedObject`, it is possible to call method `getObject` to get a
+reference to the object, and `getDesignator` to obtain a reference to the
+part of the object that is being referred to. Finally, a textual representation
+of the designator can be obtained by calling method `toString` on the
+designator.
 
 Installing and building DOM-PP
 ------------------------------
