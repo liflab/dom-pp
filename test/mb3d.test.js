@@ -29,7 +29,7 @@
  */
 // Chai for assertions
 import pkg_chai from "chai";
-const { expect } = pkg_chai;
+const { expect, timeout } = pkg_chai;
 
 // JSDOM for DOM trees
 import pkg_jsdom from "jsdom";
@@ -47,12 +47,15 @@ import { load_dom, load_file_in_puppeteer, terminate_puppeteer_browser } from ".
 import {
 	getVerdict,
 	evaluateDom,
+	Addition,
     BackgroundColor,
     BooleanAnd,
 	BooleanNot,
+    ClientOffsetTop,
     Color,
     ComposedFunction,
     ConstantFunction,
+    DimensionHeight,
     DimensionWidth,
     Display,
     ExistentialQuantifier,
@@ -61,6 +64,7 @@ import {
     GreaterThan,
     IsEqualTo,
     LesserOrEqual,
+    PageOffsetTop,
     TestCondition,
     UniversalQuantifier,
     Zindex
@@ -84,7 +88,17 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
     const { window } = new JSDOM(dom, { resources: 'usable', url: url })
     const { document } = window
 
-	it("Text having the same color as his background", async() => {
+    function delay(time) {
+    	return new Promise(function(resolve) {
+    		setTimeout(resolve,time);
+    	});
+    }
+
+    beforeEach(function() {
+		mb3dPage.setViewport({ width: 1920, height: 1080 });
+    });
+
+	it("The text from .text-block should not be the same color as its background", async() => {
 
 		let selector = ".text-block";
 		let currentElem = document.querySelector(selector);
@@ -118,13 +132,14 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		expect(tree).to.equal(null);
 	});
 
-	it("Check that burger menu icon color is not the same as the navbar bakground", async() => {
+	it("The burger menu icon should not be the same color as its background after a scroll ", async() => {
 
 		await mb3dPage.setViewport({ width: 768, height: 640 });
 
-		const result = await mb3dPage.evaluate(function() {
+		await mb3dPage.evaluate(function() { window.scroll(0,300); });
+		await delay(1000)
 
-			window.scroll(0,500);
+		const result = await mb3dPage.evaluate(function() {
 
 			let body = document.querySelector(".body");
 			let f = new dompp.ExistentialQuantifier(
@@ -147,14 +162,14 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 			let cond = new dompp.TestCondition(".navbar-container backgroundColor != w-icon-nav-menu color", f);
 			let result = cond.evaluate(body).getValue();
 			window.scroll(0,0);
-			return result;
+		    return result;
 		});
 
 		expect(result).to.equal(true);
-        await mb3dPage.setViewport({ width: 1920, height: 1080 });
 	});
 
-	it("Check if the .navbar-container gets wider than the viewport", async() => {
+
+	/*it("Check if the .navbar-container gets wider than the viewport", async() => {
 
 		await mb3dPage.setViewport({ width: 320, height: 640 })
 		await mb3dPage.screenshot({ path: 'screen1.png' })
@@ -173,9 +188,38 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 
 		expect(result).to.equal(true);
         await mb3dPage.setViewport({ width: 1920, height: 1080 })
+	});*/
+
+	//Le test suivant permet de remplacer la vérification du viewport ?
+
+	it("The body width and scrollWidth should always be the same", async() => {
+
+		await mb3dPage.setViewport({ width: 320, height: 640 })
+
+		const result = await mb3dPage.evaluate(function() {
+
+			let body = document.querySelector(".body");
+			let scrollwidth = body.scrollWidth;
+
+			let f = new dompp.ComposedFunction(
+				new dompp.IsEqualTo(),
+				new dompp.ComposedFunction(new dompp.DimensionWidth(), "$x"),
+			 	scrollwidth
+			)
+
+			let cond = new dompp.TestCondition(".body width <= body scrollwidth", f);
+			let result = cond.evaluate(body).getValue();
+			return result;
+		});
+
+		expect(result).to.equal(true);
 	});
 
-	it("Check that the two logos are not visible at the same time", async() => {
+	it("The two versions of the logo in the navbar should not be visible at the same time", async() => {
+
+		await mb3dPage.evaluate(function() { window.scroll(0,300); });
+		await mb3dPage.evaluate(function() { window.scroll(0,0); });
+		await delay(1000);
 
 		const result = await mb3dPage.evaluate(function() {
 
@@ -213,54 +257,135 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		expect(result).to.equal(true);
 	});
 
+	//Besoin de la gestion de l'hérédité
+
 	it("Check that the logo wont go under the hero h2", async() => {
+
+		await mb3dPage.evaluate(function() { window.scroll(0,300); });
+		await delay(500);
+		const result = await mb3dPage.evaluate(function() {
+
+			// let body = document.querySelector(".body");
+			// let f = new dompp.ExistentialQuantifier(
+			// 	"$x",
+			// 	new dompp.FindBySelector(".logo-img.scroll"),
+			// 	new dompp.ExistentialQuantifier(
+			// 		"$y",
+			// 		new dompp.FindBySelector(".h2-hero"),
+			// 		new dompp.ComposedFunction(
+			// 			new dompp.GreaterOrEqual(),
+			// 			new dompp.ComposedFunction(new dompp.Zindex(), "$x"),
+			// 			new dompp.ComposedFunction(new dompp.Zindex(), "$y")
+			// 		)
+			// 	)
+
+			// )
+
+			// let cond = new dompp.TestCondition(".logo-img.scroll z-index > .h2-hero z-index", f);
+			// let result = cond.evaluate(body).getValue();
+			let logo = document.querySelector(".h2-hero");
+			let f = new dompp.Zindex();
+			let result = f.evaluate(logo).getValue();
+
+			window.scrollTo(0,0);
+			return result;
+		});
+
+		// let logo = document.querySelector(".h2-hero");
+		// let f = new Zindex();
+		// let result = f.evaluate(logo).getValue();
+
+		expect(result).to.equal(true);
+	});
+
+	it("After using the arrow button to scroll to the next section, navbar should not be on top of the section", async() => {
+
+		await mb3dPage.click(".hero-wrapper .fleche-container a");
+		await delay(1200);
 
 		const result = await mb3dPage.evaluate(function() {
 
-			window.scrollTo(0,200);
-
+			let navbar = document.querySelector(".section-courant");
 			let body = document.querySelector(".body");
 			let f = new dompp.ExistentialQuantifier(
 				"$x",
-				new dompp.FindBySelector(".logo-img.scroll"),
+				new dompp.FindBySelector(".navbar-container"),
 				new dompp.ExistentialQuantifier(
 					"$y",
-					new dompp.FindBySelector(".h2-hero"),
+					new dompp.FindBySelector(".section-courant"),
 					new dompp.ComposedFunction(
-						new dompp.GreaterOrEqual(),
-						new dompp.ComposedFunction(new dompp.Zindex(), "$x"),
-						new dompp.ComposedFunction(new dompp.Zindex(), "$y")
+						new dompp.LesserOrEqual(),
+						new dompp.ComposedFunction(
+							new dompp.Addition(),
+							new dompp.ComposedFunction(new dompp.ClientOffsetTop(), "$x"),
+							new dompp.ComposedFunction(new dompp.DimensionHeight(), "$x")
+						),
+						new dompp.ComposedFunction(new dompp.ClientOffsetTop(), "$y")
 					)
 				)
+			);
 
-			)
-
-			let cond = new dompp.TestCondition(".logo-img.scroll z-index > .h2-hero z-index", f);
+			let cond = new dompp.TestCondition(".navbar-container clientOffsetTop + height <= .section-courant clientOffsetTop", f);
 			let result = cond.evaluate(body).getValue();
-			window.scrollTo(0,0);
 			return result;
 		});
 
 		expect(result).to.equal(true);
 	});
 
-	it("Test scroll puppeteer", async() => {
+	it("All navigation links should have the same top offset", async() => {
 
-		await mb3dPage.screenshot({ path: 'screen2.png' })
-		await mb3dPage.evaluate(function() {
-			window.scrollTo(0,200);
-		});
-		setTimeout(function() {}, 1000);
-		await mb3dPage.screenshot({ path: 'screen3.png' })
-		await mb3dPage.screenshot({ path: 'screen4.png' })
 		const result = await mb3dPage.evaluate(function() {
-			var navbar = document.querySelector(".navbar-container");
-			var g = new dompp.BackgroundColor();
-			var result = g.evaluate(navbar);
+
+			let body = document.querySelector(".body");
+			let f = new dompp.UniversalQuantifier(
+				"$x",
+				new dompp.FindBySelector(".nav-link"),
+				new dompp.UniversalQuantifier(
+					"$y",
+					new dompp.FindBySelector(".nav-link"),
+					new dompp.ComposedFunction(
+						new dompp.IsEqualTo(),
+						new dompp.ComposedFunction(new dompp.PageOffsetTop(), "$x"),
+						new dompp.ComposedFunction(new dompp.PageOffsetTop(), "$y")
+					)
+				)
+			);
+
+			let cond = new dompp.TestCondition("for all pairs (x,y) of .nav-link, x pageOffsetTop = y pageOffsetTop", f);
+			let result = cond.evaluate(body).getValue();
 			return result;
 		});
+
+		expect(result).to.equal(true);
 	});
 
+	it("After scrolling, the navbar background should be white", async() => {
+
+		await mb3dPage.evaluate(function() { window.scroll(0,300); });
+		await delay(1000);
+
+		const result = await mb3dPage.evaluate(function() {
+
+			let body = document.querySelector(".body");
+			let f = new dompp.ExistentialQuantifier(
+				"$x",
+				new dompp.FindBySelector(".navbar-container"),
+				new dompp.ComposedFunction(
+					new dompp.IsEqualTo(),
+					new dompp.ComposedFunction(new dompp.BackgroundColor(), "$x"),
+					new dompp.ConstantFunction("rgb(255, 255, 255)")
+				)
+			)
+
+			let cond = new dompp.TestCondition(".navbar-container background color = rgb(255, 255, 255)", f);
+			let result = cond.evaluate(body).getValue();
+			window.scroll(0,0);
+			return result;
+		});
+		//expect(false).to.equal(true);
+		expect(result).to.equal(true);
+	});
 
 	after(async function() {
         //await terminate_puppeteer_browser();

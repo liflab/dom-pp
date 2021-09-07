@@ -11,6 +11,273 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./index.mjs":
+/*!*******************!*\
+  !*** ./index.mjs ***!
+  \*******************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getVerdict": () => (/* binding */ getVerdict),
+/* harmony export */   "evaluateDom": () => (/* binding */ evaluateDom),
+/* harmony export */   "getTreeFromWitness": () => (/* binding */ getTreeFromWitness),
+/* harmony export */   "AbstractFunction": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.AbstractFunction),
+/* harmony export */   "Addition": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Addition),
+/* harmony export */   "All": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.All),
+/* harmony export */   "AndNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.AndNode),
+/* harmony export */   "Argument": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.Argument),
+/* harmony export */   "ArgumentValue": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.ArgumentValue),
+/* harmony export */   "AtomicFunction": () => (/* reexport safe */ _modules_atomic_function_mjs__WEBPACK_IMPORTED_MODULE_4__.AtomicFunction),
+/* harmony export */   "AtomicFunctionReturnValue": () => (/* reexport safe */ _modules_atomic_function_mjs__WEBPACK_IMPORTED_MODULE_4__.AtomicFunctionReturnValue),
+/* harmony export */   "BackgroundColor": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BackgroundColor),
+/* harmony export */   "BackgroundImage": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BackgroundImage),
+/* harmony export */   "BooleanAnd": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.BooleanAnd),
+/* harmony export */   "BooleanNot": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.BooleanNot),
+/* harmony export */   "BooleanOr": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.BooleanOr),
+/* harmony export */   "BorderColor": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BorderColor),
+/* harmony export */   "BorderRadius": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BorderRadius),
+/* harmony export */   "BorderStyle": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BorderStyle),
+/* harmony export */   "BorderWidth": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BorderWidth),
+/* harmony export */   "ClientOffsetTop": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.ClientOffsetTop),
+/* harmony export */   "ClientOffsetLeft": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.ClientOffsetLeft),
+/* harmony export */   "CssPropertyFunction": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.CssPropertyFunction),
+/* harmony export */   "CssRecursivePropertyFunction": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.CssRecursivePropertyFunction),
+/* harmony export */   "Color": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Color),
+/* harmony export */   "ComposedFunction": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.ComposedFunction),
+/* harmony export */   "ComposedFunctionValue": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.ComposedFunctionValue),
+/* harmony export */   "CompoundDesignator": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.CompoundDesignator),
+/* harmony export */   "ConstantFunction": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.ConstantFunction),
+/* harmony export */   "ConstantDesignator": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.ConstantDesignator),
+/* harmony export */   "ConstantValue": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.ConstantValue),
+/* harmony export */   "Designator": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.Designator),
+/* harmony export */   "DesignatedObject": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.DesignatedObject),
+/* harmony export */   "DimensionHeight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.DimensionHeight),
+/* harmony export */   "DimensionWidth": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.DimensionWidth),
+/* harmony export */   "Display": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Display),
+/* harmony export */   "Division": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Division),
+/* harmony export */   "ElementAttribute": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.ElementAttribute),
+/* harmony export */   "ElementAttributeValue": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.ElementAttributeValue),
+/* harmony export */   "Enumerate": () => (/* reexport safe */ _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__.Enumerate),
+/* harmony export */   "EnumeratedValue": () => (/* reexport safe */ _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__.EnumeratedValue),
+/* harmony export */   "ExistentialQuantifier": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.ExistentialQuantifier),
+/* harmony export */   "Explainer": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.Explainer),
+/* harmony export */   "FindBySelector": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FindBySelector),
+/* harmony export */   "Float": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Float),
+/* harmony export */   "FontFamily": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FontFamily),
+/* harmony export */   "FontSize": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FontSize),
+/* harmony export */   "FontWeight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FontWeight),
+/* harmony export */   "FunctionNamedArgument": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.FunctionNamedArgument),
+/* harmony export */   "GreaterOrEqual": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.GreaterOrEqual),
+/* harmony export */   "GreaterThan": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.GreaterThan),
+/* harmony export */   "Identity": () => (/* reexport safe */ _modules_atomic_function_mjs__WEBPACK_IMPORTED_MODULE_4__.Identity),
+/* harmony export */   "InputArgument": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.InputArgument),
+/* harmony export */   "IsEqualTo": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.IsEqualTo),
+/* harmony export */   "LesserThan": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.LesserThan),
+/* harmony export */   "LesserOrEqual": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.LesserOrEqual),
+/* harmony export */   "MarginTop": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginTop),
+/* harmony export */   "MarginBottom": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginBottom),
+/* harmony export */   "MarginLeft": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginLeft),
+/* harmony export */   "MarginRight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginRight),
+/* harmony export */   "Multiplication": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Multiplication),
+/* harmony export */   "NamedArgument": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.NamedArgument),
+/* harmony export */   "NamedArgumentValue": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.NamedArgumentValue),
+/* harmony export */   "NaryConjunctiveVerdict": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.NaryConjunctiveVerdict),
+/* harmony export */   "NaryDisjunctiveVerdict": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.NaryDisjunctiveVerdict),
+/* harmony export */   "NaryValue": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.NaryValue),
+/* harmony export */   "NthItem": () => (/* reexport safe */ _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__.NthItem),
+/* harmony export */   "Nothing": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.Nothing),
+/* harmony export */   "ObjectNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.ObjectNode),
+/* harmony export */   "Opacity": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Opacity),
+/* harmony export */   "OrNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.OrNode),
+/* harmony export */   "PageOffsetTop": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PageOffsetTop),
+/* harmony export */   "PageOffsetLeft": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PageOffsetLeft),
+/* harmony export */   "Path": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Path),
+/* harmony export */   "PathValue": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PathValue),
+/* harmony export */   "PaddingTop": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PaddingTop),
+/* harmony export */   "PaddingBottom": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PaddingBottom),
+/* harmony export */   "PaddingRight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PaddingRight),
+/* harmony export */   "PaddingLeft": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PaddingLeft),
+/* harmony export */   "Position": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Position),
+/* harmony export */   "Quantifier": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.Quantifier),
+/* harmony export */   "QuantifierConjunctiveVerdict": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.QuantifierConjunctiveVerdict),
+/* harmony export */   "QuantifierDisjunctiveVerdict": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.QuantifierDisjunctiveVerdict),
+/* harmony export */   "QuantifierVerdict": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.QuantifierVerdict),
+/* harmony export */   "ReturnValue": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.ReturnValue),
+/* harmony export */   "Serialization": () => (/* reexport safe */ _modules_serialization_mjs__WEBPACK_IMPORTED_MODULE_14__.Serialization),
+/* harmony export */   "Substraction": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Substraction),
+/* harmony export */   "TestCondition": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.TestCondition),
+/* harmony export */   "TestDriver": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.TestDriver),
+/* harmony export */   "TestResult": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.TestResult),
+/* harmony export */   "Tracer": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.Tracer),
+/* harmony export */   "UniversalQuantifier": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.UniversalQuantifier),
+/* harmony export */   "Unknown": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.Unknown),
+/* harmony export */   "UnknownNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.UnknownNode),
+/* harmony export */   "Value": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.Value),
+/* harmony export */   "Verdict": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.Verdict),
+/* harmony export */   "Visibility": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Visibility),
+/* harmony export */   "WebElementFunction": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.WebElementFunction),
+/* harmony export */   "Zindex": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Zindex)
+/* harmony export */ });
+/* harmony import */ var data_tree__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! data-tree */ "./node_modules/data-tree/index.js");
+/* harmony import */ var _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/designator.mjs */ "./modules/designator.mjs");
+/* harmony import */ var _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/function.mjs */ "./modules/function.mjs");
+/* harmony import */ var _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/value.mjs */ "./modules/value.mjs");
+/* harmony import */ var _modules_atomic_function_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/atomic-function.mjs */ "./modules/atomic-function.mjs");
+/* harmony import */ var _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/booleans.mjs */ "./modules/booleans.mjs");
+/* harmony import */ var _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/tracer.mjs */ "./modules/tracer.mjs");
+/* harmony import */ var _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/numbers.mjs */ "./modules/numbers.mjs");
+/* harmony import */ var _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/enumerate.mjs */ "./modules/enumerate.mjs");
+/* harmony import */ var _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/composed-function.mjs */ "./modules/composed-function.mjs");
+/* harmony import */ var _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/quantifier.mjs */ "./modules/quantifier.mjs");
+/* harmony import */ var _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/web-element.mjs */ "./modules/web-element.mjs");
+/* harmony import */ var _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/verdict.mjs */ "./modules/verdict.mjs");
+/* harmony import */ var _modules_util_mjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/util.mjs */ "./modules/util.mjs");
+/* harmony import */ var _modules_serialization_mjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./modules/serialization.mjs */ "./modules/serialization.mjs");
+/*
+	A lineage library for DOM nodes
+	MIT License
+
+	Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
+	Eckinox Média and Université du Québec à Chicoutimi
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+*/
+
+/**
+ * Imports
+ */
+// DataTree for tree management
+ // Local imports
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Evaluates a set of conditions on a DOM tree
+ * @param root A DOM node corresponding to the root of the page
+ * @param conditions A list of {@link Function}, each corresponding to a
+ * Boolean condition to evaluate on the page.
+ * @return An array of data trees corresponding to the explanation for
+ * each condition that evaluates to <tt>false</tt>.
+ */
+
+function evaluateDom(root, conditions = []) {
+  var verdicts = [];
+
+  for (var i = 0; i < conditions.length; i++) {
+    var verdict = getVerdict(root, conditions[i]);
+
+    if (verdict != null) {
+      verdicts.push(verdict);
+    }
+  }
+
+  return verdicts;
+}
+/**
+ * Evaluates a single condition on a DOM tree. <strong>This is a stub for
+ * testing purposes.</strong>
+ * @param root A DOM node corresponding to the root of the page
+ * @param conditions A {@link Function} that corresponds to a
+ * Boolean condition to evaluate on the page.
+ * @return A data tree explaining the violation of the condition if it
+ * evaluates to <tt>false</tt>, and <tt>null</tt> if the condition is fulfilled.
+ */
+
+
+function getVerdict(root, condition) {
+  if (root === null) {
+    return null;
+  }
+
+  const returnValue = condition.evaluate(root);
+
+  if (returnValue.value === true) {
+    return null;
+  }
+
+  const verdict = new _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.Verdict(returnValue, condition);
+  const witness = verdict.getWitness();
+  const trees = getTreeFromWitness(witness);
+  return trees;
+}
+
+function getTreeFromWitness(witnesses = []) {
+  const tree = data_tree__WEBPACK_IMPORTED_MODULE_0__.create();
+
+  for (const designatedObject of witnesses) {
+    const part = [];
+    let subject = null;
+    let elementAttribute = null;
+    let lastPartType; // First form
+
+    if ((0,_modules_util_mjs__WEBPACK_IMPORTED_MODULE_13__.isHtmlElement)(designatedObject.getObject())) {
+      const elements = designatedObject.getDesignator().elements;
+      subject = elements[elements.length - 2].toString() || null;
+      elementAttribute = elements[elements.length - 3].toString() || null;
+      lastPartType = "Path";
+    } // Second form
+    else {
+        subject = designatedObject.getObject();
+        lastPartType = "ConstantDesignator";
+      } // Build the leaf's "part"
+
+
+    for (const element of designatedObject.getDesignator().elements) {
+      if (element.constructor.name === lastPartType) {
+        break;
+      }
+
+      part.push(element.toString());
+    }
+
+    tree.insert({
+      elementAttribute,
+      part,
+      subject
+    });
+  }
+
+  return tree;
+}
+/**
+ * Export public API
+ */
+
+
+ // :wrap=soft:tabSize=2:
+
+/***/ }),
+
 /***/ "./modules/atomic-function.mjs":
 /*!*************************************!*\
   !*** ./modules/atomic-function.mjs ***!
@@ -529,6 +796,7 @@ class ComposedFunction extends _function_mjs__WEBPACK_IMPORTED_MODULE_1__.Abstra
      */
   constructor(operator, ...operands) {
     super();
+    this.members = [operator, ...operands];
     this.operator = operator;
     this.operands = [];
 
@@ -1342,54 +1610,6 @@ class NthItem extends _designator_mjs__WEBPACK_IMPORTED_MODULE_1__.Designator {
 
 /***/ }),
 
-/***/ "./modules/extractJSON.mjs":
-/*!*********************************!*\
-  !*** ./modules/extractJSON.mjs ***!
-  \*********************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "extractJSON": () => (/* binding */ extractJSON)
-/* harmony export */ });
-// //this method will return all descendant of json structure
-// function extractJSON(obj, descendant = []) {
-//     for (const i in obj) {
-//         if (Array.isArray(obj[i]) || typeof obj[i] === 'object') {
-//             if (obj[i].name != undefined) {
-//                 descendant.push(obj[i])
-//             }
-//             descendant = extractJSON(obj[i], descendant);
-//         }
-//     }
-//     return descendant;
-// }
-// export { extractJSON }
-//this method will return all descendant of json structure
-function extractJSON(obj, descendant, isFirstIteration) {
-  for (const i in obj) {
-    if (isFirstIteration === true) {
-      descendant.push(obj);
-      isFirstIteration = false;
-    }
-
-    if (Array.isArray(obj[i]) || typeof obj[i] === 'object') {
-      if (obj[i].name != undefined) {
-        descendant.push(obj[i]);
-      }
-
-      descendant = extractJSON(obj[i], descendant, false);
-    }
-  }
-
-  return descendant;
-}
-
-
-
-/***/ }),
-
 /***/ "./modules/function.mjs":
 /*!******************************!*\
   !*** ./modules/function.mjs ***!
@@ -1406,6 +1626,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _designator_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./designator.mjs */ "./modules/designator.mjs");
 /* harmony import */ var _value_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./value.mjs */ "./modules/value.mjs");
+/* harmony import */ var _index_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../index.mjs */ "./index.mjs");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /*
@@ -1435,6 +1656,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 */
 // Local imports
 
+
  //import { extractJSON } from "./extractJson.mjs";
 
 /**
@@ -1442,7 +1664,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  */
 
 class AbstractFunction {
-  constructor() {// Nothing to do
+  constructor() {
+    this.members = [];
   }
   /**
    * Converts an arbitrary object into a {@link Function}.
@@ -1498,16 +1721,6 @@ class AbstractFunction {
 
     return o == this;
   } // d is a deserializer and j is a JSON structure
-  // static deserialize(d, j) {
-  //         var instance = new this();
-  //         var descendant = []
-  //         var getDescendants = instance.extractJSON(j, descendant)
-  //         for (const descendant in getDescendants) {
-  //             //we can obtain j' with descendants[d] 
-  //             d.deserialize(getDescendants[descendant]);
-  //         }
-  //         return instance
-  //     }
 
 
   static deserialize(d, j) {
@@ -1522,51 +1735,24 @@ class AbstractFunction {
     }
 
     return new this(...params);
-  } //this method will return all descendant of json structure
+  }
 
+  toJson() {
+    const serializedMembers = [];
 
-  extractJSON(obj, descendant = []) {
-    for (const i in obj) {
-      if (Array.isArray(obj[i]) || typeof obj[i] === 'object') {
-        if (obj[i].name != undefined) {
-          descendant.push(obj[i]);
-        } //this.extractJSON(obj[i], descendant);
-
+    for (const member of this.members) {
+      if (typeof member == "object" && AbstractFunction.isPrototypeOf(member.constructor)) {
+        serializedMembers.push(member.toJson());
+      } else {
+        serializedMembers.push(member);
       }
     }
 
-    return descendant;
-  } //////////////////////////
-  // d is a deserializer and j is a JSON structure
-  // static deserialize(d, j) {
-  //         var instance = new this();
-  //         //var getDescendants = this.constructor.extractJSON(j, descendant = [])
-  //         for (const descendant in getDescendants) {
-  //             //we can obtain j' with descendants[d] 
-  //             d.deserialize(getDescendants[descendant]);
-  //         }
-  //         return instance
-  //     }
-  // static deserialize(d, j) {
-  //         // var instance = new this();
-  //         var descendant;
-  //         var getDescendants = extractJSON(j, descendant = [], true);
-  //         var instance = new this(getDescendants[0].contents[0], getDescendants[1].name, getDescendants[2].contents);
-  //         return instance;
-  //     }
-  //     //this method will return all descendant of json structure
-  // extractJSON(obj, descendant = []) {
-  //     for (const i in obj) {
-  //         if (Array.isArray(obj[i]) || typeof obj[i] === 'object') {
-  //             if (obj[i].name != undefined) {
-  //                 descendant.push(obj[i])
-  //             }
-  //             descendant = extractJSON(obj[i], descendant);
-  //         }
-  //     }
-  //     return descendant;
-  // }
-
+    return {
+      "name": this.constructor.name,
+      "contents": serializedMembers
+    };
+  }
 
 }
 /**
@@ -1646,6 +1832,7 @@ class ConstantFunction extends AbstractFunction {
    */
   constructor(o) {
     super();
+    this.members = [o];
     this.value = _value_mjs__WEBPACK_IMPORTED_MODULE_1__.Value.lift(o);
   }
 
@@ -2118,6 +2305,7 @@ class Quantifier extends _function_mjs__WEBPACK_IMPORTED_MODULE_0__.AbstractFunc
 
     this.domain = domain;
     this.phi = phi;
+    this.members = [index, domain, phi];
   }
 
   getArity() {
@@ -2287,19 +2475,7 @@ class UniversalQuantifier extends Quantifier {
 
   set(variable, value) {
     return new UniversalQuantifier(this.variable, this.domain.set(variable, value), this.phi.set(variable, value));
-  } // static deserialize(d, j) {
-  //     var instance = new this();
-  //     return instance
-  //var instance = new this(j.contents[0], j.contents[1].contents[0], j.contents[2]);
-  // var descendant = []
-  // var getDescendants = instance.extractJSON(j, descendant)
-  // for (const descendant in getDescendants) {
-  //     //we can obtain j' with descendants[d] 
-  //     d.deserialize(getDescendants[descendant]);
-  // }
-  //return instance;
-  //}
-
+  }
 
 }
 /**
@@ -2332,6 +2508,43 @@ class ExistentialQuantifier extends Quantifier {
 
 
  // :wrap=soft:tabSize=2:indentWidth=2:
+
+/***/ }),
+
+/***/ "./modules/serialization.mjs":
+/*!***********************************!*\
+  !*** ./modules/serialization.mjs ***!
+  \***********************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Serialization": () => (/* binding */ Serialization)
+/* harmony export */ });
+/* harmony import */ var _index_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index.mjs */ "./index.mjs");
+
+
+class Serialization {
+  constructor() {}
+  /**
+   * Build method deserialize(j), j is a JSON structure,
+   * this method will produce a Function object
+   */
+
+
+  deserialize(j) {
+    const functionClass = _index_mjs__WEBPACK_IMPORTED_MODULE_0__[j.name];
+    return functionClass.deserialize(this, j);
+  }
+
+  serialize(s) {
+    return s.toJson();
+  }
+
+}
+
+
 
 /***/ }),
 
@@ -3410,7 +3623,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "BorderRadius": () => (/* binding */ BorderRadius),
 /* harmony export */   "BorderStyle": () => (/* binding */ BorderStyle),
 /* harmony export */   "BorderWidth": () => (/* binding */ BorderWidth),
+/* harmony export */   "ClientOffsetTop": () => (/* binding */ ClientOffsetTop),
+/* harmony export */   "ClientOffsetLeft": () => (/* binding */ ClientOffsetLeft),
 /* harmony export */   "CssPropertyFunction": () => (/* binding */ CssPropertyFunction),
+/* harmony export */   "CssRecursivePropertyFunction": () => (/* binding */ CssRecursivePropertyFunction),
 /* harmony export */   "Color": () => (/* binding */ Color),
 /* harmony export */   "DimensionHeight": () => (/* binding */ DimensionHeight),
 /* harmony export */   "DimensionWidth": () => (/* binding */ DimensionWidth),
@@ -3427,6 +3643,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MarginRight": () => (/* binding */ MarginRight),
 /* harmony export */   "MarginLeft": () => (/* binding */ MarginLeft),
 /* harmony export */   "Opacity": () => (/* binding */ Opacity),
+/* harmony export */   "PageOffsetTop": () => (/* binding */ PageOffsetTop),
+/* harmony export */   "PageOffsetLeft": () => (/* binding */ PageOffsetLeft),
 /* harmony export */   "Path": () => (/* binding */ Path),
 /* harmony export */   "PathValue": () => (/* binding */ PathValue),
 /* harmony export */   "PaddingTop": () => (/* binding */ PaddingTop),
@@ -3602,6 +3820,47 @@ class CssPropertyFunction extends WebElementFunction {
 
 }
 /**
+ * 
+ *
+ */
+
+
+class CssRecursivePropertyFunction extends WebElementFunction {
+  constructor(name, returnType = null) {
+    if (["float", "int", "string", null].indexOf(returnType) == -1) {
+      throw new Error(`CssPropertyFunction returnType expects one of the following values: "float", "int", "string", null. Received ${returnType} instead.`);
+    }
+
+    super(name);
+    this.returnType = returnType;
+  }
+
+  get(element) {
+    const value = this.getRecursive(element);
+
+    switch (this.returnType) {
+      case "float":
+        return parseFloat(value);
+
+      case "int":
+        return parseInt(value);
+
+      case "string":
+        return typeof value == "string" ? value : value.toString();
+    }
+
+    return value;
+  }
+
+  getRecursive(element) {
+    if (!element) return null;
+    const style = this.getElementComputedStyle(element);
+    const value = style.getPropertyValue(this.name);
+    if (value == "" || value == "auto") return this.getRecursive(element.parentElement);else return value;
+  }
+
+}
+/**
  * Function that extracts the width of a DOM node.
  * @extends CssPropertyFunction
  */
@@ -3616,6 +3875,7 @@ class DimensionWidth extends WebElementFunction {
   }
 
   get(element) {
+    //console.log(element.tagName +  : " + element.offsetWidth);
     return element.offsetWidth;
   }
 
@@ -3636,6 +3896,92 @@ class DimensionHeight extends WebElementFunction {
 
   get(element) {
     return element.offsetHeight;
+  }
+
+}
+/** 
+ * Function that extracts the offset from the top of the page of a DOM node.
+ * @extends WebElementFunction
+ */
+
+
+class PageOffsetTop extends WebElementFunction {
+  /**
+   * Creates a new instance of the function.
+   */
+  constructor() {
+    super("PageOffsetTop");
+  }
+
+  get(element) {
+    return this.getOffsetTop(element);
+  }
+
+  getOffsetTop(element) {
+    if (!element) return 0;
+    return this.getOffsetTop(element.offsetParent) + element.offsetTop;
+  }
+
+}
+/**
+ * Function that extracts the offset from the left of the page of a DOM node.
+ * @extends WebElementFunction
+ */
+
+
+class PageOffsetLeft extends WebElementFunction {
+  /**
+  * Creates a new instance of the function.
+  */
+  constructor() {
+    super("PageOffsetLeft");
+  }
+
+  get(element) {
+    return this.getOffsetLeft(element);
+  }
+
+  getOffsetLeft(element) {
+    if (!element) return 0;
+    return this.getOffsetLeft(element.offsetParent) + element.offsetLeft;
+  }
+
+}
+/** 
+ * Function that extracts the offset from the top of the viewport of a DOM node.
+ * @extends WebElementFunction
+ */
+
+
+class ClientOffsetTop extends WebElementFunction {
+  /**
+   * Creates a new instance of the function.
+   */
+  constructor() {
+    super("clientOffsetTop");
+  }
+
+  get(element) {
+    return element.getBoundingClientRect().top;
+  }
+
+}
+/** 
+ * Function that extracts the offset from the left of the viewport of a DOM node.
+ * @extends WebElementFunction
+ */
+
+
+class ClientOffsetLeft extends WebElementFunction {
+  /**
+   * Creates a new instance of the function.
+   */
+  constructor() {
+    super("clientOffsetLeft");
+  }
+
+  get(element) {
+    return element.getBoundingClientRect().left;
   }
 
 }
@@ -3920,11 +4266,11 @@ class BackgroundImage extends CssPropertyFunction {
 }
 /**
  * Function that extract Z-index
- * @extends CssPropertyFunction
+ * @extends CssRecursivePropertyFunction
  */
 
 
-class Zindex extends CssPropertyFunction {
+class Zindex extends CssRecursivePropertyFunction {
   constructor() {
     super("z-index", "float");
   }
@@ -3998,6 +4344,7 @@ class FindBySelector extends _enumerate_mjs__WEBPACK_IMPORTED_MODULE_3__.Enumera
   constructor(selector) {
     super();
     this.selector = selector;
+    this.members = [selector];
   }
 
   evaluate() {
@@ -5158,267 +5505,12 @@ module.exports = (function(){
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
-/*!*******************!*\
-  !*** ./index.mjs ***!
-  \*******************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getVerdict": () => (/* binding */ getVerdict),
-/* harmony export */   "evaluateDom": () => (/* binding */ evaluateDom),
-/* harmony export */   "getTreeFromWitness": () => (/* binding */ getTreeFromWitness),
-/* harmony export */   "AbstractFunction": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.AbstractFunction),
-/* harmony export */   "Addition": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Addition),
-/* harmony export */   "All": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.All),
-/* harmony export */   "AndNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.AndNode),
-/* harmony export */   "Argument": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.Argument),
-/* harmony export */   "ArgumentValue": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.ArgumentValue),
-/* harmony export */   "AtomicFunction": () => (/* reexport safe */ _modules_atomic_function_mjs__WEBPACK_IMPORTED_MODULE_4__.AtomicFunction),
-/* harmony export */   "AtomicFunctionReturnValue": () => (/* reexport safe */ _modules_atomic_function_mjs__WEBPACK_IMPORTED_MODULE_4__.AtomicFunctionReturnValue),
-/* harmony export */   "BackgroundColor": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BackgroundColor),
-/* harmony export */   "BackgroundImage": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BackgroundImage),
-/* harmony export */   "BooleanAnd": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.BooleanAnd),
-/* harmony export */   "BooleanNot": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.BooleanNot),
-/* harmony export */   "BooleanOr": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.BooleanOr),
-/* harmony export */   "BorderColor": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BorderColor),
-/* harmony export */   "BorderRadius": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BorderRadius),
-/* harmony export */   "BorderStyle": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BorderStyle),
-/* harmony export */   "BorderWidth": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.BorderWidth),
-/* harmony export */   "CssPropertyFunction": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.CssPropertyFunction),
-/* harmony export */   "Color": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Color),
-/* harmony export */   "ComposedFunction": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.ComposedFunction),
-/* harmony export */   "ComposedFunctionValue": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.ComposedFunctionValue),
-/* harmony export */   "CompoundDesignator": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.CompoundDesignator),
-/* harmony export */   "ConstantFunction": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.ConstantFunction),
-/* harmony export */   "ConstantDesignator": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.ConstantDesignator),
-/* harmony export */   "ConstantValue": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.ConstantValue),
-/* harmony export */   "Designator": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.Designator),
-/* harmony export */   "DesignatedObject": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.DesignatedObject),
-/* harmony export */   "DimensionHeight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.DimensionHeight),
-/* harmony export */   "DimensionWidth": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.DimensionWidth),
-/* harmony export */   "Display": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Display),
-/* harmony export */   "Division": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Division),
-/* harmony export */   "ElementAttribute": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.ElementAttribute),
-/* harmony export */   "ElementAttributeValue": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.ElementAttributeValue),
-/* harmony export */   "Enumerate": () => (/* reexport safe */ _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__.Enumerate),
-/* harmony export */   "EnumeratedValue": () => (/* reexport safe */ _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__.EnumeratedValue),
-/* harmony export */   "ExistentialQuantifier": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.ExistentialQuantifier),
-/* harmony export */   "Explainer": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.Explainer),
-/* harmony export */   "extractJSON": () => (/* reexport safe */ _modules_extractJSON_mjs__WEBPACK_IMPORTED_MODULE_14__.extractJSON),
-/* harmony export */   "FindBySelector": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FindBySelector),
-/* harmony export */   "Float": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Float),
-/* harmony export */   "FontFamily": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FontFamily),
-/* harmony export */   "FontSize": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FontSize),
-/* harmony export */   "FontWeight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FontWeight),
-/* harmony export */   "FunctionNamedArgument": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.FunctionNamedArgument),
-/* harmony export */   "GreaterOrEqual": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.GreaterOrEqual),
-/* harmony export */   "GreaterThan": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.GreaterThan),
-/* harmony export */   "Identity": () => (/* reexport safe */ _modules_atomic_function_mjs__WEBPACK_IMPORTED_MODULE_4__.Identity),
-/* harmony export */   "InputArgument": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.InputArgument),
-/* harmony export */   "IsEqualTo": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.IsEqualTo),
-/* harmony export */   "LesserThan": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.LesserThan),
-/* harmony export */   "LesserOrEqual": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.LesserOrEqual),
-/* harmony export */   "MarginTop": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginTop),
-/* harmony export */   "MarginBottom": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginBottom),
-/* harmony export */   "MarginLeft": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginLeft),
-/* harmony export */   "MarginRight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginRight),
-/* harmony export */   "Multiplication": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Multiplication),
-/* harmony export */   "NamedArgument": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.NamedArgument),
-/* harmony export */   "NamedArgumentValue": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.NamedArgumentValue),
-/* harmony export */   "NaryConjunctiveVerdict": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.NaryConjunctiveVerdict),
-/* harmony export */   "NaryDisjunctiveVerdict": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.NaryDisjunctiveVerdict),
-/* harmony export */   "NaryValue": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.NaryValue),
-/* harmony export */   "NthItem": () => (/* reexport safe */ _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__.NthItem),
-/* harmony export */   "Nothing": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.Nothing),
-/* harmony export */   "ObjectNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.ObjectNode),
-/* harmony export */   "Opacity": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Opacity),
-/* harmony export */   "OrNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.OrNode),
-/* harmony export */   "Path": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Path),
-/* harmony export */   "PathValue": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PathValue),
-/* harmony export */   "PaddingTop": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PaddingTop),
-/* harmony export */   "PaddingBottom": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PaddingBottom),
-/* harmony export */   "PaddingRight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PaddingRight),
-/* harmony export */   "PaddingLeft": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PaddingLeft),
-/* harmony export */   "Position": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Position),
-/* harmony export */   "Quantifier": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.Quantifier),
-/* harmony export */   "QuantifierConjunctiveVerdict": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.QuantifierConjunctiveVerdict),
-/* harmony export */   "QuantifierDisjunctiveVerdict": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.QuantifierDisjunctiveVerdict),
-/* harmony export */   "QuantifierVerdict": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.QuantifierVerdict),
-/* harmony export */   "ReturnValue": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.ReturnValue),
-/* harmony export */   "Substraction": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Substraction),
-/* harmony export */   "TestCondition": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.TestCondition),
-/* harmony export */   "TestDriver": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.TestDriver),
-/* harmony export */   "TestResult": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.TestResult),
-/* harmony export */   "Tracer": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.Tracer),
-/* harmony export */   "UniversalQuantifier": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.UniversalQuantifier),
-/* harmony export */   "Unknown": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.Unknown),
-/* harmony export */   "UnknownNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.UnknownNode),
-/* harmony export */   "Value": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.Value),
-/* harmony export */   "Verdict": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.Verdict),
-/* harmony export */   "Visibility": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Visibility),
-/* harmony export */   "WebElementFunction": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.WebElementFunction),
-/* harmony export */   "Zindex": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Zindex)
-/* harmony export */ });
-/* harmony import */ var data_tree__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! data-tree */ "./node_modules/data-tree/index.js");
-/* harmony import */ var _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/designator.mjs */ "./modules/designator.mjs");
-/* harmony import */ var _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/function.mjs */ "./modules/function.mjs");
-/* harmony import */ var _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/value.mjs */ "./modules/value.mjs");
-/* harmony import */ var _modules_atomic_function_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/atomic-function.mjs */ "./modules/atomic-function.mjs");
-/* harmony import */ var _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/booleans.mjs */ "./modules/booleans.mjs");
-/* harmony import */ var _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/tracer.mjs */ "./modules/tracer.mjs");
-/* harmony import */ var _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/numbers.mjs */ "./modules/numbers.mjs");
-/* harmony import */ var _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/enumerate.mjs */ "./modules/enumerate.mjs");
-/* harmony import */ var _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/composed-function.mjs */ "./modules/composed-function.mjs");
-/* harmony import */ var _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/quantifier.mjs */ "./modules/quantifier.mjs");
-/* harmony import */ var _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/web-element.mjs */ "./modules/web-element.mjs");
-/* harmony import */ var _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/verdict.mjs */ "./modules/verdict.mjs");
-/* harmony import */ var _modules_util_mjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/util.mjs */ "./modules/util.mjs");
-/* harmony import */ var _modules_extractJSON_mjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./modules/extractJSON.mjs */ "./modules/extractJSON.mjs");
-/*
-	A lineage library for DOM nodes
-	MIT License
-
-	Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
-	Eckinox Média and Université du Québec à Chicoutimi
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-	SOFTWARE.
-*/
-
-/**
- * Imports
- */
-// DataTree for tree management
- // Local imports
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * Evaluates a set of conditions on a DOM tree
- * @param root A DOM node corresponding to the root of the page
- * @param conditions A list of {@link Function}, each corresponding to a
- * Boolean condition to evaluate on the page.
- * @return An array of data trees corresponding to the explanation for
- * each condition that evaluates to <tt>false</tt>.
- */
-
-function evaluateDom(root, conditions = []) {
-  var verdicts = [];
-
-  for (var i = 0; i < conditions.length; i++) {
-    var verdict = getVerdict(root, conditions[i]);
-
-    if (verdict != null) {
-      verdicts.push(verdict);
-    }
-  }
-
-  return verdicts;
-}
-/**
- * Evaluates a single condition on a DOM tree. <strong>This is a stub for
- * testing purposes.</strong>
- * @param root A DOM node corresponding to the root of the page
- * @param conditions A {@link Function} that corresponds to a
- * Boolean condition to evaluate on the page.
- * @return A data tree explaining the violation of the condition if it
- * evaluates to <tt>false</tt>, and <tt>null</tt> if the condition is fulfilled.
- */
-
-
-function getVerdict(root, condition) {
-  if (root === null) {
-    return null;
-  }
-
-  const returnValue = condition.evaluate(root);
-
-  if (returnValue.value === true) {
-    return null;
-  }
-
-  const verdict = new _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.Verdict(returnValue, condition);
-  const witness = verdict.getWitness();
-  const trees = getTreeFromWitness(witness);
-  return trees;
-}
-
-function getTreeFromWitness(witnesses = []) {
-  const tree = data_tree__WEBPACK_IMPORTED_MODULE_0__.create();
-
-  for (const designatedObject of witnesses) {
-    const part = [];
-    let subject = null;
-    let elementAttribute = null;
-    let lastPartType; // First form
-
-    if ((0,_modules_util_mjs__WEBPACK_IMPORTED_MODULE_13__.isHtmlElement)(designatedObject.getObject())) {
-      const elements = designatedObject.getDesignator().elements;
-      subject = elements[elements.length - 2].toString() || null;
-      elementAttribute = elements[elements.length - 3].toString() || null;
-      lastPartType = "Path";
-    } // Second form
-    else {
-        subject = designatedObject.getObject();
-        lastPartType = "ConstantDesignator";
-      } // Build the leaf's "part"
-
-
-    for (const element of designatedObject.getDesignator().elements) {
-      if (element.constructor.name === lastPartType) {
-        break;
-      }
-
-      part.push(element.toString());
-    }
-
-    tree.insert({
-      elementAttribute,
-      part,
-      subject
-    });
-  }
-
-  return tree;
-}
-/**
- * Export public API
- */
-
-
- // :wrap=soft:tabSize=2:
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./index.mjs");
+/******/ 	
 /******/ 	return __webpack_exports__;
 /******/ })()
 ;

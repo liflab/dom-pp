@@ -41,7 +41,7 @@ import { Addition, Substraction, Division, GreaterOrEqual, LesserOrEqual, Greate
 import { Enumerate, EnumeratedValue, NthItem } from "./modules/enumerate.mjs";
 import { Argument, ArgumentValue, ComposedFunction, ComposedFunctionValue, FunctionNamedArgument, NamedArgument, NamedArgumentValue } from "./modules/composed-function.mjs";
 import { ExistentialQuantifier, Quantifier, QuantifierConjunctiveVerdict, QuantifierDisjunctiveVerdict, QuantifierVerdict, UniversalQuantifier } from "./modules/quantifier.mjs";
-import { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, FontWeight, MarginTop, MarginBottom, MarginLeft, MarginRight, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, Position, Visibility, WebElementFunction, Zindex } from "./modules/web-element.mjs";
+import { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyle, BorderWidth, ClientOffsetTop, ClientOffsetLeft, CssPropertyFunction, CssRecursivePropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, FontWeight, MarginTop, MarginBottom, MarginLeft, MarginRight, Opacity, PageOffsetTop, PageOffsetLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, Position, Visibility, WebElementFunction, Zindex } from "./modules/web-element.mjs";
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 import { isHtmlElement } from "./modules/util.mjs";
 import { Serialization } from "./modules/serialization.mjs"
@@ -149,7 +149,10 @@ export {
     BorderRadius,
     BorderStyle,
     BorderWidth,
+    ClientOffsetTop,
+    ClientOffsetLeft,
     CssPropertyFunction,
+    CssRecursivePropertyFunction,
     Color,
     ComposedFunction,
     ComposedFunctionValue,
@@ -197,6 +200,8 @@ export {
     ObjectNode,
     Opacity,
     OrNode,
+    PageOffsetTop,
+    PageOffsetLeft,
     Path,
     PathValue,
     PaddingTop,

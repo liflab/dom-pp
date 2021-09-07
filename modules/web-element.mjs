@@ -148,6 +148,50 @@ class CssPropertyFunction extends WebElementFunction {
     }
 }
 
+/**
+ * 
+ *
+ */
+class CssRecursivePropertyFunction extends WebElementFunction {
+    constructor(name, returnType = null) {
+        if (["float", "int", "string", null].indexOf(returnType) == -1) {
+            throw new Error(`CssPropertyFunction returnType expects one of the following values: "float", "int", "string", null. Received ${returnType} instead.`);
+        }
+
+        super(name);
+        this.returnType = returnType;
+    }
+
+    get(element) {
+        const value = this.getRecursive(element);
+
+        switch (this.returnType) {
+            case "float":
+                return parseFloat(value);
+
+            case "int":
+                return parseInt(value);
+
+            case "string":
+                return typeof value == "string" ? value : value.toString();
+        }
+
+        return value;   
+    }
+
+    getRecursive(element) {
+        if(!element) return null;
+
+        const style = this.getElementComputedStyle(element);
+        const value = style.getPropertyValue(this.name);
+
+        if(value == "" || value == "auto")
+            return this.getRecursive(element.parentElement);
+        else
+            return value;
+    }
+}
+
 
 /**
  * Function that extracts the width of a DOM node.
@@ -162,6 +206,7 @@ class DimensionWidth extends WebElementFunction {
     }
 
     get(element) {
+        //console.log(element.tagName +  : " + element.offsetWidth);
         return element.offsetWidth;
     }
 }
@@ -180,6 +225,81 @@ class DimensionHeight extends WebElementFunction {
 
     get(element) {
         return element.offsetHeight;
+    }
+}
+/** 
+ * Function that extracts the offset from the top of the page of a DOM node.
+ * @extends WebElementFunction
+ */
+class PageOffsetTop extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("PageOffsetTop");
+    }
+
+    get(element) {
+        return this.getOffsetTop(element);
+    }
+
+    getOffsetTop(element) {
+        if(!element) return 0;
+        return this.getOffsetTop(element.offsetParent) + element.offsetTop;
+    }
+
+}
+/**
+ * Function that extracts the offset from the left of the page of a DOM node.
+ * @extends WebElementFunction
+ */
+class PageOffsetLeft extends WebElementFunction {
+    /**
+    * Creates a new instance of the function.
+    */
+    constructor() {
+        super("PageOffsetLeft");
+    }
+
+    get(element) {
+        return this.getOffsetLeft(element);
+    }
+
+    getOffsetLeft(element) {
+        if(!element) return 0;
+        return this.getOffsetLeft(element.offsetParent) + element.offsetLeft;
+    }
+}
+/** 
+ * Function that extracts the offset from the top of the viewport of a DOM node.
+ * @extends WebElementFunction
+ */
+class ClientOffsetTop extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("clientOffsetTop");
+    }
+
+    get(element) {
+        return element.getBoundingClientRect().top;
+    }
+}
+/** 
+ * Function that extracts the offset from the left of the viewport of a DOM node.
+ * @extends WebElementFunction
+ */
+class ClientOffsetLeft extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("clientOffsetLeft");
+    }
+
+    get(element) {
+        return element.getBoundingClientRect().left;
     }
 }
 /**
@@ -395,9 +515,9 @@ class BackgroundImage extends CssPropertyFunction {
 
 /**
  * Function that extract Z-index
- * @extends CssPropertyFunction
+ * @extends CssRecursivePropertyFunction
  */
-class Zindex extends CssPropertyFunction {
+class Zindex extends CssRecursivePropertyFunction {
     constructor() {
         super("z-index", "float")
     }
@@ -504,6 +624,6 @@ class FindBySelector extends Enumerate {
 /**
  * Package exports
  */
-export { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, FontWeight, MarginTop, MarginBottom, MarginRight, MarginLeft, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction, Zindex };
+export { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyle, BorderWidth, ClientOffsetTop, ClientOffsetLeft, CssPropertyFunction, CssRecursivePropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, FontWeight, MarginTop, MarginBottom, MarginRight, MarginLeft, Opacity, PageOffsetTop, PageOffsetLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction, Zindex };
 
 // :wrap=soft:tabSize=2:indentWidth=2:
