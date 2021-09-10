@@ -27,52 +27,7 @@
 // Local imports
 import { Designator } from "./designator.mjs";
 import { Value } from "./value.mjs";
-import {
-    Addition,
-    BackgroundColor,
-    BackgroundImage,
-    BorderColor,
-    BorderRadius,
-    BorderStyle,
-    BorderWidth,
-    CssPropertyFunction,
-    Color,
-    CompoundDesignator,
-    ComposedFunction,
-    ConstantDesignator,
-    DimensionHeight,
-    Display,
-    DimensionWidth,
-    ElementAttributeValue,
-    EnumeratedValue,
-    FindBySelector,
-    Float,
-    FontFamily,
-    FontSize,
-    FontWeight,
-    GreaterThan,
-    GreaterOrEqual,
-    IsEqualTo,
-    MarginTop,
-    MarginBottom,
-    MarginRight,
-    MarginLeft,
-    ObjectNode,
-    Opacity,
-    Path,
-    PathValue,
-    PaddingTop,
-    PaddingBottom,
-    PaddingRight,
-    PaddingLeft,
-    Position,
-    TestCondition,
-    Tracer,
-    UniversalQuantifier,
-    Visibility,
-    Zindex,
-} from "../index.mjs";
-//import { extractJSON } from "./extractJson.mjs";
+
 /**
  * Abstract class representing a function.
  */
