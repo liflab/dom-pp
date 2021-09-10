@@ -149,17 +149,18 @@ class CssPropertyFunction extends WebElementFunction {
 }
 
 /**
- * 
- *
+ * value of a css attribute, but in case the value is undefined or does not meet certain criteria, retrieve the value of the parent element
+ * @extends WebElementFunction
  */
 class CssRecursivePropertyFunction extends WebElementFunction {
-    constructor(name, returnType = null) {
+    constructor(name, returnType = null, defaultValue = null) {
         if (["float", "int", "string", null].indexOf(returnType) == -1) {
             throw new Error(`CssPropertyFunction returnType expects one of the following values: "float", "int", "string", null. Received ${returnType} instead.`);
         }
 
         super(name);
         this.returnType = returnType;
+        this.defaultValue = defaultValue;
     }
 
     get(element) {
@@ -180,15 +181,20 @@ class CssRecursivePropertyFunction extends WebElementFunction {
     }
 
     getRecursive(element) {
-        if(!element) return null;
+        if(!element) return this.defaultValue;
 
         const style = this.getElementComputedStyle(element);
         const value = style.getPropertyValue(this.name);
 
-        if(value == "" || value == "auto")
+        if(this.filter(value))
             return this.getRecursive(element.parentElement);
         else
             return value;
+    }
+
+    //to be overridden by descendants to add additionnal filters depending on property
+    filter(value) {
+        return value == "";
     }
 }
 
@@ -206,7 +212,6 @@ class DimensionWidth extends WebElementFunction {
     }
 
     get(element) {
-        //console.log(element.tagName +  : " + element.offsetWidth);
         return element.offsetWidth;
     }
 }
@@ -351,12 +356,16 @@ class Opacity extends CssPropertyFunction {
  * Function that extracts the background-color of a DOM.
  * @extends CssPropertyFunction
  */
-class BackgroundColor extends CssPropertyFunction {
+class BackgroundColor extends CssRecursivePropertyFunction {
     /**
      * Creates a new instance of the function.
      */
     constructor() {
-        super("background-color");
+        super("background-color", null, "rgba(0, 0, 0, 0)");
+    }
+
+    filter(value) {
+        return (value == "" || value == "transparent" || value == "rgba(0, 0, 0, 0)")
     }
 }
 /**
@@ -519,9 +528,14 @@ class BackgroundImage extends CssPropertyFunction {
  */
 class Zindex extends CssRecursivePropertyFunction {
     constructor() {
-        super("z-index", "float")
+        super("z-index", "float", 0);
+    }
+
+    filter(value) {
+        return value == "" || value == "auto";
     }
 }
+
 /**
  * Designator that points to an element in a DOM tree based on
  * an XPath expression.
@@ -540,6 +554,7 @@ class Path extends Designator {
     toString() {
         return this.path;
     }
+
 }
 
 /**

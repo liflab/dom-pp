@@ -51,6 +51,7 @@ import {
     BackgroundColor,
     BooleanAnd,
 	BooleanNot,
+	BooleanOr,
     ClientOffsetTop,
     Color,
     ComposedFunction,
@@ -67,6 +68,7 @@ import {
     PageOffsetTop,
     TestCondition,
     UniversalQuantifier,
+    Verdict,
     Zindex
 } from "../index.mjs";
 
@@ -105,12 +107,6 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		let g = new BackgroundColor();
 		let bgColor = g.evaluate(currentElem).getValue();
 
-		while(bgColor == "" || bgColor == "transparent" || bgColor == "rgba(0, 0, 0, 0)")
-		{
-			currentElem = currentElem.parentElement;
-			bgColor = g.evaluate(currentElem).getValue();
-		}
-
 		let body = document.body;
 		let f = new UniversalQuantifier(
 			"$x",
@@ -120,7 +116,7 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 				new ComposedFunction(
 					new IsEqualTo(),
 					new ComposedFunction(new Color(), "$x"),
-					new ConstantFunction(bgColor)
+					new ComposedFunction(new BackgroundColor(), "$x")
 				)
 			)
 		)
@@ -259,41 +255,34 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 
 	//Besoin de la gestion de l'hérédité
 
-	it("Check that the logo wont go under the hero h2", async() => {
+	it("Navigation logo should have a higher Zindex than the hero title", async() => {
 
 		await mb3dPage.evaluate(function() { window.scroll(0,300); });
 		await delay(500);
 		const result = await mb3dPage.evaluate(function() {
 
-			// let body = document.querySelector(".body");
-			// let f = new dompp.ExistentialQuantifier(
-			// 	"$x",
-			// 	new dompp.FindBySelector(".logo-img.scroll"),
-			// 	new dompp.ExistentialQuantifier(
-			// 		"$y",
-			// 		new dompp.FindBySelector(".h2-hero"),
-			// 		new dompp.ComposedFunction(
-			// 			new dompp.GreaterOrEqual(),
-			// 			new dompp.ComposedFunction(new dompp.Zindex(), "$x"),
-			// 			new dompp.ComposedFunction(new dompp.Zindex(), "$y")
-			// 		)
-			// 	)
+			let body = document.querySelector(".body");
+			let f = new dompp.ExistentialQuantifier(
+				"$x",
+				new dompp.FindBySelector(".logo-img.scroll"),
+				new dompp.ExistentialQuantifier(
+					"$y",
+					new dompp.FindBySelector(".h2-hero"),
+					new dompp.ComposedFunction(
+						new dompp.GreaterOrEqual(),
+						new dompp.ComposedFunction(new dompp.Zindex(), "$x"),
+						new dompp.ComposedFunction(new dompp.Zindex(), "$y")
+					)
+				)
 
-			// )
+			)
 
-			// let cond = new dompp.TestCondition(".logo-img.scroll z-index > .h2-hero z-index", f);
-			// let result = cond.evaluate(body).getValue();
-			let logo = document.querySelector(".h2-hero");
-			let f = new dompp.Zindex();
-			let result = f.evaluate(logo).getValue();
+			let cond = new dompp.TestCondition(".logo-img.scroll z-index > .h2-hero z-index", f);
+			let result = cond.evaluate(body).getValue();
 
 			window.scrollTo(0,0);
 			return result;
 		});
-
-		// let logo = document.querySelector(".h2-hero");
-		// let f = new Zindex();
-		// let result = f.evaluate(logo).getValue();
 
 		expect(result).to.equal(true);
 	});
@@ -383,8 +372,27 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 			window.scroll(0,0);
 			return result;
 		});
-		//expect(false).to.equal(true);
 		expect(result).to.equal(true);
+	});
+
+	it("Test", async() => {
+
+		var res = await mb3dPage.evaluate(function() {
+
+			document.getElementsByClassName('container-plan')[0].style.width = "50";
+			var body = document.querySelector(".container-plan");
+			//return document.getElementsByClassName('navbar-container')[0].style.backgroundColor;
+			//body.style.backgroundColor = "rgb(255,0,0)";
+			//window.scroll(0,500);
+
+			var f = new dompp.DimensionWidth();
+
+			return f.evaluate(body).getValue(); 
+		});
+		await mb3dPage.screenshot({ path: 'screen1.png' })
+
+
+		console.log(res);
 	});
 
 	after(async function() {
