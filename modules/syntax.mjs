@@ -30,7 +30,7 @@ import { ComposedFunction } from "./composed-function.mjs";
 import { BooleanAnd, BooleanNot, BooleanOr } from "./booleans.mjs";
 import { ExistentialQuantifier, UniversalQuantifier } from "./quantifier.mjs";
 import { Enumerate } from "./enumerate.mjs";
-import { GreaterOrEqual, GreaterThan, LesserThan, LesserOrEqual } from "./numbers.mjs";
+import { Addition, GreaterOrEqual, GreaterThan, IsEqualTo, LesserThan, LesserOrEqual, Substraction } from "./numbers.mjs";
 import { DimensionHeight, DimensionWidth, FindBySelector } from "./web-element.mjs";
 
 /**
@@ -120,10 +120,23 @@ import { DimensionHeight, DimensionWidth, FindBySelector } from "./web-element.m
         return new ComposedFunction(new DimensionHeight(), o);
     }
 
+    function Equals(op1, op2) {
+        return new ComposedFunction(new IsEqualTo(), op1, op2);
+    }
+
+    function Plus() {
+        return new ComposedFunction(new Addition(arguments.length), ...arguments);
+    }
+
+    function Minus() {
+        return new ComposedFunction(new Substraction(arguments.length), ...arguments);
+    }
+
 //}
 
 export {
     And,
+    Equals,
     Exists,
     Find,
     ForAll,
@@ -133,6 +146,8 @@ export {
     IsGreaterThan,
     IsLessOrEqual,
     IsLessThan,
+    Minus,
     Not,
     Or,
+    Plus,
     Width };

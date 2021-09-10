@@ -33,12 +33,18 @@ import pkg_chai from "chai";
 const { expect } = pkg_chai;
 
 // Syntax
-import { Find, ForAll, IsGreaterOrEqual, Width } from "../modules/syntax.mjs";
+import { Find, ForAll, IsGreaterOrEqual, Minus, Plus, Width } from "../modules/syntax.mjs";
 
 // Utilities
 import { expect_to_throw } from "./test-util.mjs";
 
 describe("Syntax tests", () => {
+
+    it("Arithmetic expression 1", () => {
+        var exp = Plus("@0", Minus(5, "@1"));
+        var v = exp.evaluate(10, 3);
+        expect(v.getValue()).to.equal(12);
+    })
 
     it("Quantifier expression 1", () => {
         var exp = ForAll("$x", IsGreaterOrEqual("$x", 10));
