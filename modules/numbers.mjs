@@ -95,7 +95,7 @@ class Addition extends AtomicFunction {
  * @extends AtomicFunction
  */
 class Substraction extends AtomicFunction {
-    constructor(arity = 3) {
+    constructor(arity = 2) {
         super(arity);
     }
 
@@ -120,7 +120,7 @@ class Substraction extends AtomicFunction {
  * @extends AtomicFunction
  */
 class Multiplication extends AtomicFunction {
-    constructor(arity = 5) {
+    constructor(arity = 2) {
         super(arity);
     }
     compute() {
@@ -162,7 +162,7 @@ class Multiplication extends AtomicFunction {
  * @extends AtomicFunction
  */
 class Division extends AtomicFunction {
-    constructor(arity = 4) {
+    constructor(arity = 2) {
         super(arity);
     }
 
