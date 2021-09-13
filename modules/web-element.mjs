@@ -201,7 +201,7 @@ class CssRecursivePropertyFunction extends WebElementFunction {
 
 /**
  * Function that extracts the width of a DOM node.
- * @extends CssPropertyFunction
+ * @extends WebElementFunction
  */
 class DimensionWidth extends WebElementFunction {
     /**

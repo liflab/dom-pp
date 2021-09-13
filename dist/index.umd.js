@@ -3820,8 +3820,8 @@ class CssPropertyFunction extends WebElementFunction {
 
 }
 /**
- * 
- *
+ * value of a css attribute, but in case the value is undefined or does not meet certain criteria, retrieve the value of the parent element
+ * @extends WebElementFunction
  */
 
 
@@ -3868,7 +3868,7 @@ class CssRecursivePropertyFunction extends WebElementFunction {
 }
 /**
  * Function that extracts the width of a DOM node.
- * @extends CssPropertyFunction
+ * @extends WebElementFunction
  */
 
 

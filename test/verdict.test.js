@@ -158,24 +158,24 @@ describe("Verdict tests", () => {
         var driver = new TestDriver(cond);
         driver.evaluateAll(body);
         var result = driver.getResult();
-        //console.log(result);
+
         expect(result).to.be.an.instanceof(TestResult);
         expect(result.getResult()).to.be.false;
         var verdicts = result.getVerdicts();
-        //console.log(verdicts);
+
         expect(verdicts.length).to.equal(1);
         var verdict = verdicts[0];
         var witness = verdict.getWitness();
         expect(Array.isArray(witness)).to.be.true;
         expect(witness.length).to.equal(2);
         var dob1 = witness[0];
-        //console.log(dob1);
+
         expect(dob1.getObject().constructor.name).to.equal("HTMLBodyElement");
         var dob1_d = dob1.getDesignator();
-        //console.log(dob1_d);
+
         expect(dob1_d).to.be.an.instanceof(CompoundDesignator);
         var dob2 = witness[1];
-        //console.log(dob2);
+        
         expect(dob2.getObject()).to.equal(1);
     });
 });

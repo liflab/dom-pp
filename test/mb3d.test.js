@@ -124,7 +124,6 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 
 		let cond = new TestCondition(".text-block color != body backgroundColor", f);
 		let tree = getVerdict(body, cond);
-		//console.log(tree);
 		expect(tree).to.equal(null);
 	});
 
@@ -375,27 +374,4 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		expect(result).to.equal(true);
 	});
 
-	it("Test", async() => {
-
-		var res = await mb3dPage.evaluate(function() {
-
-			document.getElementsByClassName('container-plan')[0].style.width = "50";
-			var body = document.querySelector(".container-plan");
-			//return document.getElementsByClassName('navbar-container')[0].style.backgroundColor;
-			//body.style.backgroundColor = "rgb(255,0,0)";
-			//window.scroll(0,500);
-
-			var f = new dompp.DimensionWidth();
-
-			return f.evaluate(body).getValue(); 
-		});
-		await mb3dPage.screenshot({ path: 'screen1.png' })
-
-
-		console.log(res);
-	});
-
-	after(async function() {
-        //await terminate_puppeteer_browser();
-    })
 });
