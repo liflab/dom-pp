@@ -166,14 +166,14 @@ describe("Arithmetic function tests", () => {
     describe("Multiplying numbers", () => {
         it("Multiplication", () => {
             var f = new Multiplication();
-            var v = f.evaluate(1, 1, 1, 0, 1);
+            var v = f.evaluate(1, 0);
             expect(v).to.be.equal(0);
         });
     });
     describe("Dividing numbers", () => {
         it("Division", () => {
             var f = new Division();
-            var v = f.evaluate(60, 2, 2, 3);
+            var v = f.evaluate(60, 12);
             expect(v.getValue()).to.be.equal(5);
         });
     });

@@ -48,6 +48,7 @@ import {
 	getVerdict,
 	evaluateDom,
 	Addition,
+	And,
     BackgroundColor,
     BooleanAnd,
 	BooleanNot,
@@ -59,16 +60,29 @@ import {
     DimensionHeight,
     DimensionWidth,
     Display,
+    Equals,
+    Exists,
     ExistentialQuantifier,
+    Find,
     FindBySelector,
+    ForAll,
     GreaterOrEqual,
     GreaterThan,
+    Height,
     IsEqualTo,
+    IsGreaterOrEqual,
+    IsGreaterThan,
+    IsLessOrEqual,
+    IsLessThan,
     LesserOrEqual,
+    Not,
+    Or,
     PageOffsetTop,
+    Plus,
     TestCondition,
     UniversalQuantifier,
     Verdict,
+    Width,
     Zindex
 } from "../index.mjs";
 
@@ -102,19 +116,12 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 
 	it("The text from .text-block should not be the same color as its background", async() => {
 
-		let selector = ".text-block";
-		let currentElem = document.querySelector(selector);
-		let g = new BackgroundColor();
-		let bgColor = g.evaluate(currentElem).getValue();
-
 		let body = document.body;
-		let f = new UniversalQuantifier(
+		let f = ForAll(
 			"$x",
-			new FindBySelector(selector),
-			new ComposedFunction(
-				new BooleanNot(),
-				new ComposedFunction(
-					new IsEqualTo(),
+			Find(".text-block"),
+			Not(
+				Equals(
 					new ComposedFunction(new Color(), "$x"),
 					new ComposedFunction(new BackgroundColor(), "$x")
 				)
@@ -137,16 +144,14 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		const result = await mb3dPage.evaluate(function() {
 
 			let body = document.querySelector(".body");
-			let f = new dompp.ExistentialQuantifier(
+			let f = dompp.Exists(
 				"$x",
-				new dompp.FindBySelector(".navbar-container"),
-				new dompp.ExistentialQuantifier(
+				dompp.Find(".navbar-container"),
+				dompp.Exists(
 					"$y",
-					new dompp.FindBySelector(".w-icon-nav-menu"),
-					new dompp.ComposedFunction(
-						new dompp.BooleanNot(),
-						new dompp.ComposedFunction(
-							new dompp.IsEqualTo(),
+					dompp.Find(".w-icon-nav-menu"),
+					dompp.Not(
+						new dompp.Equals(
 							new dompp.ComposedFunction(new dompp.BackgroundColor(), "$x"),
 							new dompp.ComposedFunction(new dompp.Color(), "$y")
 						)
@@ -196,9 +201,8 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 			let body = document.querySelector(".body");
 			let scrollwidth = body.scrollWidth;
 
-			let f = new dompp.ComposedFunction(
-				new dompp.IsEqualTo(),
-				new dompp.ComposedFunction(new dompp.DimensionWidth(), "$x"),
+			let f = dompp.Equals(
+				dompp.Width("$x"),
 			 	scrollwidth
 			)
 
@@ -219,23 +223,19 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		const result = await mb3dPage.evaluate(function() {
 
 			let body = document.querySelector(".body");
-			let f = new dompp.ExistentialQuantifier(
+			let f = dompp.Exists(
 				"$x",
-				new dompp.FindBySelector(".logo-img:first-child"),
-				new dompp.ExistentialQuantifier(
+				dompp.Find(".logo-img:first-child"),
+				dompp.Exists(
 					"$y",
-					new dompp.FindBySelector(".logo-img.scroll"),
-					new dompp.ComposedFunction(
-						new dompp.BooleanNot(),
-						new dompp.ComposedFunction(
-							new dompp.BooleanAnd(),
-							new dompp.ComposedFunction(
-								new dompp.IsEqualTo(),
+					dompp.Find(".logo-img.scroll"),
+					dompp.Not(
+						dompp.And(
+							dompp.Equals(
 								new dompp.ComposedFunction(new dompp.Display(), "$x"),
 								new dompp.ConstantFunction("block")
 							),
-							new dompp.ComposedFunction(
-								new dompp.IsEqualTo(),
+							dompp.Equals(
 								new dompp.ComposedFunction(new dompp.Display(), "$y"),
 								new dompp.ConstantFunction("inline-block")
 							)
@@ -261,14 +261,13 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		const result = await mb3dPage.evaluate(function() {
 
 			let body = document.querySelector(".body");
-			let f = new dompp.ExistentialQuantifier(
+			let f = dompp.Exists(
 				"$x",
-				new dompp.FindBySelector(".logo-img.scroll"),
-				new dompp.ExistentialQuantifier(
+				dompp.Find(".logo-img.scroll"),
+				dompp.Exists(
 					"$y",
-					new dompp.FindBySelector(".h2-hero"),
-					new dompp.ComposedFunction(
-						new dompp.GreaterOrEqual(),
+					dompp.Find(".h2-hero"),
+					dompp.IsGreaterOrEqual(
 						new dompp.ComposedFunction(new dompp.Zindex(), "$x"),
 						new dompp.ComposedFunction(new dompp.Zindex(), "$y")
 					)
@@ -295,18 +294,16 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 
 			let navbar = document.querySelector(".section-courant");
 			let body = document.querySelector(".body");
-			let f = new dompp.ExistentialQuantifier(
+			let f = dompp.Exists(
 				"$x",
-				new dompp.FindBySelector(".navbar-container"),
-				new dompp.ExistentialQuantifier(
+				dompp.Find(".navbar-container"),
+				dompp.Exists(
 					"$y",
-					new dompp.FindBySelector(".section-courant"),
-					new dompp.ComposedFunction(
-						new dompp.LesserOrEqual(),
-						new dompp.ComposedFunction(
-							new dompp.Addition(),
+					dompp.Find(".section-courant"),
+					dompp.IsLessOrEqual(
+						dompp.Plus(
 							new dompp.ComposedFunction(new dompp.ClientOffsetTop(), "$x"),
-							new dompp.ComposedFunction(new dompp.DimensionHeight(), "$x")
+							dompp.Height("$x")
 						),
 						new dompp.ComposedFunction(new dompp.ClientOffsetTop(), "$y")
 					)
@@ -326,14 +323,13 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		const result = await mb3dPage.evaluate(function() {
 
 			let body = document.querySelector(".body");
-			let f = new dompp.UniversalQuantifier(
+			let f = dompp.ForAll(
 				"$x",
-				new dompp.FindBySelector(".nav-link"),
-				new dompp.UniversalQuantifier(
+				dompp.Find(".nav-link"),
+				dompp.ForAll(
 					"$y",
-					new dompp.FindBySelector(".nav-link"),
-					new dompp.ComposedFunction(
-						new dompp.IsEqualTo(),
+					dompp.Find(".nav-link"),
+					dompp.Equals(
 						new dompp.ComposedFunction(new dompp.PageOffsetTop(), "$x"),
 						new dompp.ComposedFunction(new dompp.PageOffsetTop(), "$y")
 					)
@@ -356,11 +352,10 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		const result = await mb3dPage.evaluate(function() {
 
 			let body = document.querySelector(".body");
-			let f = new dompp.ExistentialQuantifier(
+			let f = dompp.Exists(
 				"$x",
-				new dompp.FindBySelector(".navbar-container"),
-				new dompp.ComposedFunction(
-					new dompp.IsEqualTo(),
+				dompp.Find(".navbar-container"),
+				dompp.Equals(
 					new dompp.ComposedFunction(new dompp.BackgroundColor(), "$x"),
 					new dompp.ConstantFunction("rgb(255, 255, 255)")
 				)

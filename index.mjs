@@ -45,6 +45,7 @@ import { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyl
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 import { isHtmlElement } from "./modules/util.mjs";
 import { Serialization } from "./modules/serialization.mjs";
+import { And, Equals, Exists, Find, ForAll, Height, Implies, IsGreaterOrEqual, IsGreaterThan, IsLessOrEqual, IsLessThan, Minus, Not, Or, Plus, Width } from './modules/syntax.mjs'
 
 
 /**
@@ -135,6 +136,7 @@ export {
     AbstractFunction,
     Addition,
     All,
+    And,
     AndNode,
     Argument,
     ArgumentValue,
@@ -170,25 +172,36 @@ export {
     ElementAttributeValue,
     Enumerate,
     EnumeratedValue,
+    Equals,
     ExistentialQuantifier,
+    Exists,
     Explainer,
+    Find,
     FindBySelector,
     Float,
     FontFamily,
     FontSize,
     FontWeight,
+    ForAll,
     FunctionNamedArgument,
     GreaterOrEqual,
     GreaterThan,
+    Height,
     Identity,
+    Implies,
     InputArgument,
     IsEqualTo,
+    IsGreaterOrEqual,
+    IsGreaterThan,
+    IsLessOrEqual,
+    IsLessThan,
     LesserThan,
     LesserOrEqual,
     MarginTop,
     MarginBottom,
     MarginLeft,
     MarginRight,
+    Minus,
     Multiplication,
     NamedArgument,
     NamedArgumentValue,
@@ -196,9 +209,11 @@ export {
     NaryDisjunctiveVerdict,
     NaryValue,
     NthItem,
+    Not,
     Nothing,
     ObjectNode,
     Opacity,
+    Or,
     OrNode,
     PageOffsetTop,
     PageOffsetLeft,
@@ -208,6 +223,7 @@ export {
     PaddingBottom,
     PaddingRight,
     PaddingLeft,
+    Plus,
     Position,
     Quantifier,
     QuantifierConjunctiveVerdict,
@@ -227,6 +243,7 @@ export {
     Verdict,
     Visibility,
     WebElementFunction,
+    Width,
     Zindex
 };
 

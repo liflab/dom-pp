@@ -26,6 +26,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "AbstractFunction": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.AbstractFunction),
 /* harmony export */   "Addition": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Addition),
 /* harmony export */   "All": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.All),
+/* harmony export */   "And": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.And),
 /* harmony export */   "AndNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.AndNode),
 /* harmony export */   "Argument": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.Argument),
 /* harmony export */   "ArgumentValue": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.ArgumentValue),
@@ -61,25 +62,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "ElementAttributeValue": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.ElementAttributeValue),
 /* harmony export */   "Enumerate": () => (/* reexport safe */ _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__.Enumerate),
 /* harmony export */   "EnumeratedValue": () => (/* reexport safe */ _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__.EnumeratedValue),
+/* harmony export */   "Equals": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Equals),
 /* harmony export */   "ExistentialQuantifier": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.ExistentialQuantifier),
+/* harmony export */   "Exists": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Exists),
 /* harmony export */   "Explainer": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.Explainer),
+/* harmony export */   "Find": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Find),
 /* harmony export */   "FindBySelector": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FindBySelector),
 /* harmony export */   "Float": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Float),
 /* harmony export */   "FontFamily": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FontFamily),
 /* harmony export */   "FontSize": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FontSize),
 /* harmony export */   "FontWeight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.FontWeight),
+/* harmony export */   "ForAll": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.ForAll),
 /* harmony export */   "FunctionNamedArgument": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.FunctionNamedArgument),
 /* harmony export */   "GreaterOrEqual": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.GreaterOrEqual),
 /* harmony export */   "GreaterThan": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.GreaterThan),
+/* harmony export */   "Height": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Height),
 /* harmony export */   "Identity": () => (/* reexport safe */ _modules_atomic_function_mjs__WEBPACK_IMPORTED_MODULE_4__.Identity),
+/* harmony export */   "Implies": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Implies),
 /* harmony export */   "InputArgument": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.InputArgument),
 /* harmony export */   "IsEqualTo": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.IsEqualTo),
+/* harmony export */   "IsGreaterOrEqual": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.IsGreaterOrEqual),
+/* harmony export */   "IsGreaterThan": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.IsGreaterThan),
+/* harmony export */   "IsLessOrEqual": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.IsLessOrEqual),
+/* harmony export */   "IsLessThan": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.IsLessThan),
 /* harmony export */   "LesserThan": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.LesserThan),
 /* harmony export */   "LesserOrEqual": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.LesserOrEqual),
 /* harmony export */   "MarginTop": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginTop),
 /* harmony export */   "MarginBottom": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginBottom),
 /* harmony export */   "MarginLeft": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginLeft),
 /* harmony export */   "MarginRight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.MarginRight),
+/* harmony export */   "Minus": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Minus),
 /* harmony export */   "Multiplication": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Multiplication),
 /* harmony export */   "NamedArgument": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.NamedArgument),
 /* harmony export */   "NamedArgumentValue": () => (/* reexport safe */ _modules_composed_function_mjs__WEBPACK_IMPORTED_MODULE_9__.NamedArgumentValue),
@@ -87,9 +99,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "NaryDisjunctiveVerdict": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.NaryDisjunctiveVerdict),
 /* harmony export */   "NaryValue": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.NaryValue),
 /* harmony export */   "NthItem": () => (/* reexport safe */ _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__.NthItem),
+/* harmony export */   "Not": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Not),
 /* harmony export */   "Nothing": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.Nothing),
 /* harmony export */   "ObjectNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.ObjectNode),
 /* harmony export */   "Opacity": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Opacity),
+/* harmony export */   "Or": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Or),
 /* harmony export */   "OrNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.OrNode),
 /* harmony export */   "PageOffsetTop": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PageOffsetTop),
 /* harmony export */   "PageOffsetLeft": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PageOffsetLeft),
@@ -99,6 +113,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "PaddingBottom": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PaddingBottom),
 /* harmony export */   "PaddingRight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PaddingRight),
 /* harmony export */   "PaddingLeft": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.PaddingLeft),
+/* harmony export */   "Plus": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Plus),
 /* harmony export */   "Position": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Position),
 /* harmony export */   "Quantifier": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.Quantifier),
 /* harmony export */   "QuantifierConjunctiveVerdict": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.QuantifierConjunctiveVerdict),
@@ -118,6 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "Verdict": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.Verdict),
 /* harmony export */   "Visibility": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Visibility),
 /* harmony export */   "WebElementFunction": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.WebElementFunction),
+/* harmony export */   "Width": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Width),
 /* harmony export */   "Zindex": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.Zindex)
 /* harmony export */ });
 /* harmony import */ var data_tree__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! data-tree */ "./node_modules/data-tree/index.js");
@@ -135,6 +151,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/verdict.mjs */ "./modules/verdict.mjs");
 /* harmony import */ var _modules_util_mjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/util.mjs */ "./modules/util.mjs");
 /* harmony import */ var _modules_serialization_mjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./modules/serialization.mjs */ "./modules/serialization.mjs");
+/* harmony import */ var _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/syntax.mjs */ "./modules/syntax.mjs");
 /*
 	A lineage library for DOM nodes
 	MIT License
@@ -166,6 +183,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 // DataTree for tree management
  // Local imports
+
 
 
 
@@ -326,7 +344,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /**
  * Function that performs a direct computation on its input arguments. This is
- * opposed to a {@link ComposedFunction} that call(this)s other functions to produce
+ * opposed to a {@link ComposedFunction} that calls other functions to produce
  * its return value.
  * @param arity The input arity of the function
  * @extends AbstractFunction
@@ -1626,7 +1644,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _designator_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./designator.mjs */ "./modules/designator.mjs");
 /* harmony import */ var _value_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./value.mjs */ "./modules/value.mjs");
-/* harmony import */ var _index_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../index.mjs */ "./index.mjs");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /*
@@ -1656,8 +1673,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 */
 // Local imports
 
-
- //import { extractJSON } from "./extractJson.mjs";
 
 /**
  * Abstract class representing a function.
@@ -1982,7 +1997,7 @@ class Addition extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.AtomicF
 
 }
 /**
- * Function that substracts numbers.
+ * Function that subtracts numbers.
  * @extends AtomicFunction
  */
 
@@ -2020,7 +2035,7 @@ class Subtraction extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.Atom
 
 
 class Multiplication extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.AtomicFunction {
-  constructor(arity = 5) {
+  constructor(arity = 2) {
     super(arity);
   }
 
@@ -2071,7 +2086,7 @@ class Multiplication extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.A
 
 
 class Division extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.AtomicFunction {
-  constructor(arity = 4) {
+  constructor(arity = 2) {
     super(arity);
   }
 
@@ -2522,6 +2537,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "Serialization": () => (/* binding */ Serialization)
 /* harmony export */ });
 /* harmony import */ var _index_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index.mjs */ "./index.mjs");
+/*
+	A lineage library for DOM nodes
+	MIT License
+
+	Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
+	Eckinox Média and Université du Québec à Chicoutimi
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+*/
 
 
 class Serialization {
@@ -2542,6 +2582,180 @@ class Serialization {
   }
 
 }
+
+
+
+/***/ }),
+
+/***/ "./modules/syntax.mjs":
+/*!****************************!*\
+  !*** ./modules/syntax.mjs ***!
+  \****************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "And": () => (/* binding */ And),
+/* harmony export */   "Equals": () => (/* binding */ Equals),
+/* harmony export */   "Exists": () => (/* binding */ Exists),
+/* harmony export */   "Find": () => (/* binding */ Find),
+/* harmony export */   "ForAll": () => (/* binding */ ForAll),
+/* harmony export */   "Height": () => (/* binding */ Height),
+/* harmony export */   "Implies": () => (/* binding */ Implies),
+/* harmony export */   "IsGreaterOrEqual": () => (/* binding */ IsGreaterOrEqual),
+/* harmony export */   "IsGreaterThan": () => (/* binding */ IsGreaterThan),
+/* harmony export */   "IsLessOrEqual": () => (/* binding */ IsLessOrEqual),
+/* harmony export */   "IsLessThan": () => (/* binding */ IsLessThan),
+/* harmony export */   "Minus": () => (/* binding */ Minus),
+/* harmony export */   "Not": () => (/* binding */ Not),
+/* harmony export */   "Or": () => (/* binding */ Or),
+/* harmony export */   "Plus": () => (/* binding */ Plus),
+/* harmony export */   "Width": () => (/* binding */ Width)
+/* harmony export */ });
+/* harmony import */ var _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./composed-function.mjs */ "./modules/composed-function.mjs");
+/* harmony import */ var _booleans_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./booleans.mjs */ "./modules/booleans.mjs");
+/* harmony import */ var _quantifier_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./quantifier.mjs */ "./modules/quantifier.mjs");
+/* harmony import */ var _enumerate_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./enumerate.mjs */ "./modules/enumerate.mjs");
+/* harmony import */ var _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./numbers.mjs */ "./modules/numbers.mjs");
+/* harmony import */ var _web_element_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./web-element.mjs */ "./modules/web-element.mjs");
+/*
+	A lineage library for DOM nodes
+	MIT License
+
+	Copyright (c) 2020-2021 Amadou Ba, Sylvain Hallé
+	Eckinox Média and Université du Québec à Chicoutimi
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+*/
+// Local imports
+
+
+
+
+
+
+/**
+ * A module defining function methods that simplify the instantiation of common
+ * functions. These methods make constructors and the recurrent use of
+ * {@link ComposedFunction}s implicit, thereby shortening the expression of
+ * asssertions. Ultimately, the library should only expose the functions defined
+ * in this module to the end user.
+ */
+//class Syntax {
+
+function And() {
+  return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _booleans_mjs__WEBPACK_IMPORTED_MODULE_1__.BooleanAnd(arguments.length), ...arguments);
+}
+
+function Or() {
+  return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _booleans_mjs__WEBPACK_IMPORTED_MODULE_1__.BooleanOr(arguments.length), ...arguments);
+}
+
+function Implies(op1, op2) {
+  return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _booleans_mjs__WEBPACK_IMPORTED_MODULE_1__.BooleanOr(), new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _booleans_mjs__WEBPACK_IMPORTED_MODULE_1__.BooleanNot(), op1), op2);
+}
+
+function Not() {
+  return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _booleans_mjs__WEBPACK_IMPORTED_MODULE_1__.BooleanNot(), arguments[0]);
+}
+
+function ForAll() {
+  if (arguments.length == 2) {
+    return new _quantifier_mjs__WEBPACK_IMPORTED_MODULE_2__.UniversalQuantifier(arguments[0], new _enumerate_mjs__WEBPACK_IMPORTED_MODULE_3__.Enumerate(), arguments[1]);
+  }
+
+  return new _quantifier_mjs__WEBPACK_IMPORTED_MODULE_2__.UniversalQuantifier(arguments[0], arguments[1], arguments[2]);
+}
+
+function Exists() {
+  if (arguments.length == 2) {
+    return new _quantifier_mjs__WEBPACK_IMPORTED_MODULE_2__.ExistentialQuantifier(arguments[0], new _enumerate_mjs__WEBPACK_IMPORTED_MODULE_3__.Enumerate(), arguments[1]);
+  }
+
+  return new _quantifier_mjs__WEBPACK_IMPORTED_MODULE_2__.ExistentialQuantifier(arguments[0], arguments[1], arguments[2]);
+}
+
+function IsGreaterThan() {
+  if (arguments.length == 0) {
+    return new _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__.GreaterThan();
+  }
+
+  if (arguments.length == 2) {
+    return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__.GreaterThan(), arguments[0], arguments[1]);
+  }
+}
+
+function IsGreaterOrEqual() {
+  if (arguments.length == 0) {
+    return new _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__.GreaterOrEqual();
+  }
+
+  if (arguments.length == 2) {
+    return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__.GreaterOrEqual(), arguments[0], arguments[1]);
+  }
+}
+
+function IsLessThan() {
+  if (arguments.length == 0) {
+    return new LessThan();
+  }
+
+  if (arguments.length == 2) {
+    return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__.LesserThan(), arguments[0], arguments[1]);
+  }
+}
+
+function IsLessOrEqual() {
+  if (arguments.length == 0) {
+    return new _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__.LesserOrEqual();
+  }
+
+  if (arguments.length == 2) {
+    return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__.LesserOrEqual(), arguments[0], arguments[1]);
+  }
+}
+
+function Find(x) {
+  return new _web_element_mjs__WEBPACK_IMPORTED_MODULE_5__.FindBySelector(x);
+}
+
+function Width(o) {
+  return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _web_element_mjs__WEBPACK_IMPORTED_MODULE_5__.DimensionWidth(), o);
+}
+
+function Height(o) {
+  return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _web_element_mjs__WEBPACK_IMPORTED_MODULE_5__.DimensionHeight(), o);
+}
+
+function Equals(op1, op2) {
+  return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__.IsEqualTo(), op1, op2);
+}
+
+function Plus() {
+  return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__.Addition(arguments.length), ...arguments);
+}
+
+function Minus() {
+  return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__.Subtraction(arguments.length), ...arguments);
+} //}
+
 
 
 
