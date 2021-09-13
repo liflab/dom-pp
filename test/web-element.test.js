@@ -508,7 +508,6 @@ describe("Web element tests", () => {
             );
             var cond = new TestCondition("navbar container's z-index > 100", f);
             var tree = getVerdict(body, cond);
-            console.log(tree);
         });
         it("Condition of Font Weight on a page element", () => {
             //var dom = await load_dom("./test/pages/dev/about.html");
@@ -525,7 +524,6 @@ describe("Web element tests", () => {
 
             var cond = new TestCondition("body's Font Weight != lighter", f);
             var tree = getVerdict(body, cond);
-            //console.log(tree);
         });
         it("Condition of Display on a page element", () => {
             //var dom = await load_dom("./test/pages/mb3d/index.html");
@@ -541,7 +539,6 @@ describe("Web element tests", () => {
             );
             var cond = new TestCondition("Nav menu's Display", f);
             var tree = getVerdict(body, cond);
-            //console.log(tree);
         });
         it("Condition of footer Background color ", () => {
             //var dom = await load_dom("./test/pages/mb3d/index.html");
@@ -557,7 +554,6 @@ describe("Web element tests", () => {
             );
             var cond = new TestCondition("Footer's Background Color", f);
             var tree = getVerdict(body, cond);
-            //console.log(tree);
         });
 
     });

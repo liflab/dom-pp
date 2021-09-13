@@ -149,7 +149,6 @@ class Multiplication extends AtomicFunction {
         if (zero_values.length === 0) {
             return result;
         } else {
-            console.log(`Position of the returned Zero is ${zero_positions} in the array`)
             return parseFloat(zero_values);
         }
     }
