@@ -106,7 +106,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "QuantifierVerdict": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.QuantifierVerdict),
 /* harmony export */   "ReturnValue": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.ReturnValue),
 /* harmony export */   "Serialization": () => (/* reexport safe */ _modules_serialization_mjs__WEBPACK_IMPORTED_MODULE_14__.Serialization),
-/* harmony export */   "Substraction": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Substraction),
+/* harmony export */   "Subtraction": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Subtraction),
 /* harmony export */   "TestCondition": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.TestCondition),
 /* harmony export */   "TestDriver": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.TestDriver),
 /* harmony export */   "TestResult": () => (/* reexport safe */ _modules_verdict_mjs__WEBPACK_IMPORTED_MODULE_12__.TestResult),
@@ -1868,7 +1868,7 @@ class ConstantFunction extends AbstractFunction {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Addition": () => (/* binding */ Addition),
-/* harmony export */   "Substraction": () => (/* binding */ Substraction),
+/* harmony export */   "Subtraction": () => (/* binding */ Subtraction),
 /* harmony export */   "Division": () => (/* binding */ Division),
 /* harmony export */   "GreaterOrEqual": () => (/* binding */ GreaterOrEqual),
 /* harmony export */   "LesserOrEqual": () => (/* binding */ LesserOrEqual),
@@ -1987,7 +1987,7 @@ class Addition extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.AtomicF
  */
 
 
-class Substraction extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.AtomicFunction {
+class Subtraction extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.AtomicFunction {
   constructor(arity = 3) {
     super(arity);
   }
@@ -2009,7 +2009,7 @@ class Substraction extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.Ato
   }
 
   toString() {
-    return "Substraction";
+    return "Subtraction";
   }
 
 }
@@ -2055,7 +2055,6 @@ class Multiplication extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_0__.A
     if (zero_values.length === 0) {
       return result;
     } else {
-      console.log(`Position of the returned Zero is ${zero_positions} in the array`);
       return parseFloat(zero_values);
     }
   }

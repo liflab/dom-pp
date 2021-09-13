@@ -91,10 +91,10 @@ class Addition extends AtomicFunction {
     }
 }
 /**
- * Function that substracts numbers.
+ * Function that subtracts numbers.
  * @extends AtomicFunction
  */
-class Substraction extends AtomicFunction {
+class Subtraction extends AtomicFunction {
     constructor(arity = 3) {
         super(arity);
     }
@@ -112,7 +112,7 @@ class Substraction extends AtomicFunction {
     }
 
     toString() {
-        return "Substraction";
+        return "Subtraction";
     }
 }
 /**
@@ -291,6 +291,6 @@ class LesserOrEqual extends AtomicFunction {
 /**
  * Package exports
  */
-export { Addition, Substraction, Division, GreaterOrEqual, LesserOrEqual, GreaterThan, LesserThan, Multiplication, IsEqualTo };
+export { Addition, Subtraction, Division, GreaterOrEqual, LesserOrEqual, GreaterThan, LesserThan, Multiplication, IsEqualTo };
 
 // :wrap=soft:tabSize=2:indentWidth=2:

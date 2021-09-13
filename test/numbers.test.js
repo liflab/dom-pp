@@ -41,7 +41,7 @@ import {
     LesserThan,
     LesserOrEqual,
     Multiplication,
-    Substraction
+    Subtraction
 } from "../index.mjs";
 import { expect_to_throw } from "./test-util.mjs";
 
@@ -156,9 +156,9 @@ describe("Arithmetic function tests", () => {
             expect(v.getValue()).to.be.equal(6);
         });
     });
-    describe("Substracting numbers", () => {
-        it("Substraction", () => {
-            var f = new Substraction();
+    describe("Subtracting numbers", () => {
+        it("Subtraction", () => {
+            var f = new Subtraction();
             var v = f.evaluate(2, 0, 1);
             expect(v.getValue()).to.be.equal(1);
         });
