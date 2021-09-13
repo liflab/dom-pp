@@ -24,28 +24,37 @@
 	SOFTWARE.
 */
 
-import * as DomPPClasses from "../index.mjs";
+/**
+ * Imports
+ */
 
-class Serialization
-{
-    constructor() 
-    {
-    }
+// Chai for assertions
+import pkg_chai from "chai";
+const { expect } = pkg_chai;
 
-    /**
-     * Build method deserialize(j), j is a JSON structure,
-     * this method will produce a Function object
-     */
-    deserialize(j) 
-    {
-        const functionClass = DomPPClasses[j.name];
-        return functionClass.deserialize(this, j)
-    }
+// Syntax
+import { Find, ForAll, IsGreaterOrEqual, Minus, Plus, Width } from "../modules/syntax.mjs";
 
-    serialize(s)
-    {
-        return s.toJson()
-    }
-}
+// Utilities
+import { expect_to_throw } from "./test-util.mjs";
 
-export { Serialization };
+describe("Syntax tests", () => {
+
+    it("Arithmetic expression 1", () => {
+        var exp = Plus("@0", Minus(5, "@1"));
+        var v = exp.evaluate(10, 3);
+        expect(v.getValue()).to.equal(12);
+    })
+
+    it("Quantifier expression 1", () => {
+        var exp = ForAll("$x", IsGreaterOrEqual("$x", 10));
+        var v = exp.evaluate([11, 12, 3, 14]);
+        expect(v.getValue()).to.be.false;
+    })
+  
+    it("Quantifier expression 2", () => {
+        var exp = ForAll("$x", Find("li"),
+            IsGreaterOrEqual(Width("$x"), 100));
+        expect(exp).not.to.be.null;
+    })
+})

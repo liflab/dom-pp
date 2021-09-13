@@ -32,7 +32,7 @@ import { Value } from "./value.mjs";
 
 /**
  * Function that performs a direct computation on its input arguments. This is
- * opposed to a {@link ComposedFunction} that call(this)s other functions to produce
+ * opposed to a {@link ComposedFunction} that calls other functions to produce
  * its return value.
  * @param arity The input arity of the function
  * @extends AbstractFunction
