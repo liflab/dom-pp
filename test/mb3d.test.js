@@ -57,6 +57,7 @@ import {
     Color,
     ComposedFunction,
     ConstantFunction,
+    Current,
     DimensionHeight,
     DimensionWidth,
     Display,
@@ -76,9 +77,11 @@ import {
     IsLessThan,
     LesserOrEqual,
     Not,
+    NodeWrapper,
     Or,
     PageOffsetTop,
     Plus,
+    RegisterBySelector,
     TestCondition,
     UniversalQuantifier,
     Verdict,
@@ -368,5 +371,41 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		});
 		expect(result).to.equal(true);
 	});
+
+	it("test register", async() => {
+
+		mb3dPage.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
+
+		await mb3dPage.evaluate(function() { window.scroll(0,0); });
+		await delay(1000);
+
+		var elems = await mb3dPage.evaluate(function() {
+			let body = document.querySelector(".body");
+			let elems = new dompp.RegisterBySelector(".navlink", new dompp.Color()).evaluate(body).getValue();
+			return elems;
+		});
+
+		await mb3dPage.evaluate(function() { window.scroll(0,500); });
+		await delay(1000);
+
+		var result = await mb3dPage.evaluate(elems => {
+			let body = document.querySelector(".body");
+			let f = new dompp.ForAll(
+				"$x",
+				elems,
+				dompp.Equals(
+					new dompp.ComposedFunction(new dompp.Color(), "$x"),
+					new dompp.ComposedFunction(new dompp.Color(), dompp.Current("$x"))
+				)
+			)
+
+			let cond = new dompp.TestCondition("test xd", f);
+			//let result = cond.evaluate(body).getValue();
+			window.scroll(0,0);
+			//return result;
+		}, elems);
+		console.log(result);
+	});
+
 
 });

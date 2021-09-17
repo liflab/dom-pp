@@ -31,7 +31,7 @@ import { BooleanAnd, BooleanNot, BooleanOr } from "./booleans.mjs";
 import { ExistentialQuantifier, UniversalQuantifier } from "./quantifier.mjs";
 import { Enumerate } from "./enumerate.mjs";
 import { Addition, GreaterOrEqual, GreaterThan, IsEqualTo, LesserThan, LesserOrEqual, Subtraction } from "./numbers.mjs";
-import { DimensionHeight, DimensionWidth, FindBySelector } from "./web-element.mjs";
+import { CurrentNode, DimensionHeight, DimensionWidth, FindBySelector } from "./web-element.mjs";
 
 /**
  * A module defining function methods that simplify the instantiation of common
@@ -132,10 +132,15 @@ import { DimensionHeight, DimensionWidth, FindBySelector } from "./web-element.m
         return new ComposedFunction(new Subtraction(arguments.length), ...arguments);
     }
 
+    function Current(w) {
+        return new ComposedFunction(new CurrentNode(), w);
+    }
+
 //}
 
 export {
     And,
+    Current,
     Equals,
     Exists,
     Find,

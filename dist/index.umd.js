@@ -52,6 +52,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "ConstantFunction": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.ConstantFunction),
 /* harmony export */   "ConstantDesignator": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.ConstantDesignator),
 /* harmony export */   "ConstantValue": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.ConstantValue),
+/* harmony export */   "Current": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Current),
+/* harmony export */   "CurrentNode": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.CurrentNode),
 /* harmony export */   "Designator": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.Designator),
 /* harmony export */   "DesignatedObject": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.DesignatedObject),
 /* harmony export */   "DimensionHeight": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.DimensionHeight),
@@ -99,6 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "NaryDisjunctiveVerdict": () => (/* reexport safe */ _modules_booleans_mjs__WEBPACK_IMPORTED_MODULE_5__.NaryDisjunctiveVerdict),
 /* harmony export */   "NaryValue": () => (/* reexport safe */ _modules_value_mjs__WEBPACK_IMPORTED_MODULE_3__.NaryValue),
 /* harmony export */   "NthItem": () => (/* reexport safe */ _modules_enumerate_mjs__WEBPACK_IMPORTED_MODULE_8__.NthItem),
+/* harmony export */   "NodeWrapper": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.NodeWrapper),
 /* harmony export */   "Not": () => (/* reexport safe */ _modules_syntax_mjs__WEBPACK_IMPORTED_MODULE_15__.Not),
 /* harmony export */   "Nothing": () => (/* reexport safe */ _modules_designator_mjs__WEBPACK_IMPORTED_MODULE_1__.Nothing),
 /* harmony export */   "ObjectNode": () => (/* reexport safe */ _modules_tracer_mjs__WEBPACK_IMPORTED_MODULE_6__.ObjectNode),
@@ -119,6 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "QuantifierConjunctiveVerdict": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.QuantifierConjunctiveVerdict),
 /* harmony export */   "QuantifierDisjunctiveVerdict": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.QuantifierDisjunctiveVerdict),
 /* harmony export */   "QuantifierVerdict": () => (/* reexport safe */ _modules_quantifier_mjs__WEBPACK_IMPORTED_MODULE_10__.QuantifierVerdict),
+/* harmony export */   "RegisterBySelector": () => (/* reexport safe */ _modules_web_element_mjs__WEBPACK_IMPORTED_MODULE_11__.RegisterBySelector),
 /* harmony export */   "ReturnValue": () => (/* reexport safe */ _modules_function_mjs__WEBPACK_IMPORTED_MODULE_2__.ReturnValue),
 /* harmony export */   "Serialization": () => (/* reexport safe */ _modules_serialization_mjs__WEBPACK_IMPORTED_MODULE_14__.Serialization),
 /* harmony export */   "Subtraction": () => (/* reexport safe */ _modules_numbers_mjs__WEBPACK_IMPORTED_MODULE_7__.Subtraction),
@@ -2597,6 +2601,7 @@ class Serialization {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "And": () => (/* binding */ And),
+/* harmony export */   "Current": () => (/* binding */ Current),
 /* harmony export */   "Equals": () => (/* binding */ Equals),
 /* harmony export */   "Exists": () => (/* binding */ Exists),
 /* harmony export */   "Find": () => (/* binding */ Find),
@@ -2754,6 +2759,10 @@ function Plus() {
 
 function Minus() {
   return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _numbers_mjs__WEBPACK_IMPORTED_MODULE_4__.Subtraction(arguments.length), ...arguments);
+}
+
+function Current(w) {
+  return new _composed_function_mjs__WEBPACK_IMPORTED_MODULE_0__.ComposedFunction(new _web_element_mjs__WEBPACK_IMPORTED_MODULE_5__.CurrentNode(), w);
 } //}
 
 
@@ -3838,9 +3847,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "BorderWidth": () => (/* binding */ BorderWidth),
 /* harmony export */   "ClientOffsetTop": () => (/* binding */ ClientOffsetTop),
 /* harmony export */   "ClientOffsetLeft": () => (/* binding */ ClientOffsetLeft),
+/* harmony export */   "Color": () => (/* binding */ Color),
 /* harmony export */   "CssPropertyFunction": () => (/* binding */ CssPropertyFunction),
 /* harmony export */   "CssRecursivePropertyFunction": () => (/* binding */ CssRecursivePropertyFunction),
-/* harmony export */   "Color": () => (/* binding */ Color),
+/* harmony export */   "CurrentNode": () => (/* binding */ CurrentNode),
 /* harmony export */   "DimensionHeight": () => (/* binding */ DimensionHeight),
 /* harmony export */   "DimensionWidth": () => (/* binding */ DimensionWidth),
 /* harmony export */   "Display": () => (/* binding */ Display),
@@ -3855,6 +3865,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MarginBottom": () => (/* binding */ MarginBottom),
 /* harmony export */   "MarginRight": () => (/* binding */ MarginRight),
 /* harmony export */   "MarginLeft": () => (/* binding */ MarginLeft),
+/* harmony export */   "NodeWrapper": () => (/* binding */ NodeWrapper),
 /* harmony export */   "Opacity": () => (/* binding */ Opacity),
 /* harmony export */   "PageOffsetTop": () => (/* binding */ PageOffsetTop),
 /* harmony export */   "PageOffsetLeft": () => (/* binding */ PageOffsetLeft),
@@ -3865,6 +3876,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "PaddingRight": () => (/* binding */ PaddingRight),
 /* harmony export */   "PaddingLeft": () => (/* binding */ PaddingLeft),
 /* harmony export */   "Position": () => (/* binding */ Position),
+/* harmony export */   "RegisterBySelector": () => (/* binding */ RegisterBySelector),
 /* harmony export */   "Visibility": () => (/* binding */ Visibility),
 /* harmony export */   "WebElementFunction": () => (/* binding */ WebElementFunction),
 /* harmony export */   "Zindex": () => (/* binding */ Zindex)
@@ -3918,7 +3930,9 @@ class WebElementFunction extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_1
   }
 
   compute() {
-    var val = this.get(arguments[0].getValue());
+    var element = arguments[0].getValue();
+    var val;
+    if (element.isWrapper) val = this.getWrapperValue(element);else val = this.get(element);
     return new ElementAttributeValue(this.name, arguments[0], val);
   }
 
@@ -3934,6 +3948,15 @@ class WebElementFunction extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_1
   getElementComputedStyle(element) {
     const window = this.getOwnerWindow(element);
     return window.getComputedStyle(element);
+  }
+
+  getWrapperValue(wrapper) {
+    for (let i = 0; i < wrapper.propertyNames.length; i++) {
+      if (wrapper.propertyNames[i] == this.name) return wrapper.propertyValues[i];
+    }
+
+    var node = document.evaluate(wrapper.path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    return this.get(node);
   }
 
 }
@@ -4128,7 +4151,7 @@ class PageOffsetTop extends WebElementFunction {
    * Creates a new instance of the function.
    */
   constructor() {
-    super("PageOffsetTop");
+    super("pageOffsetTop");
   }
 
   get(element) {
@@ -4152,7 +4175,7 @@ class PageOffsetLeft extends WebElementFunction {
   * Creates a new instance of the function.
   */
   constructor() {
-    super("PageOffsetLeft");
+    super("pageOffsetLeft");
   }
 
   get(element) {
@@ -4603,7 +4626,7 @@ class FindBySelector extends _enumerate_mjs__WEBPACK_IMPORTED_MODULE_3__.Enumera
     }
 
     if (element.tagName === "BODY") {
-      return element.tagName;
+      return element.tagName.toLowerCase();
     }
 
     var ix = 0;
@@ -4613,13 +4636,108 @@ class FindBySelector extends _enumerate_mjs__WEBPACK_IMPORTED_MODULE_3__.Enumera
       var sibling = siblings[i];
 
       if (sibling === element) {
-        return this.getPathTo(element.parentNode) + "/" + element.tagName + "[" + (ix + 1) + "]";
+        return this.getPathTo(element.parentNode) + "/" + element.tagName.toLowerCase() + "[" + (ix + 1) + "]";
       }
 
       if (sibling.nodeType === 1 && sibling.tagName === element.tagName) {
         ix++;
       }
     }
+  }
+
+}
+/**
+ *
+ *
+ */
+
+
+class NodeWrapper {
+  /**
+   *
+   *
+   */
+  constructor(element, path, ...properties) {
+    this.isWrapper = true;
+    this.path = path;
+    this.propertyNames = [];
+    this.propertyValues = [];
+
+    for (let i = 0; i < properties.length; i++) {
+      this.propertyNames[i] = properties[i].name;
+      this.propertyValues[i] = properties[i].get(element);
+    }
+  }
+
+}
+/**
+ *
+ *
+ */
+
+
+class CurrentNode extends _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_1__.AtomicFunction {
+  /**
+   *
+   *
+   */
+  constructor() {
+    super(1);
+  }
+
+  getValue() {
+    var wrapper = arguments[0];
+    if (!wrapper.isWrapper) throw "Invalid argument type";
+    return document.evaluate(wrapper.path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  }
+
+}
+/**
+ * 
+ * @extends Enumerate
+ */
+
+
+class RegisterBySelector extends _enumerate_mjs__WEBPACK_IMPORTED_MODULE_3__.Enumerate {
+  /**
+   * Creates a new instance of the function.
+   * @param selector The CSS selector used to fetch elements
+   */
+  constructor(selector, ...properties) {
+    super();
+    this.selector = selector;
+    this.properties = properties;
+    this.members = [selector, properties];
+  }
+  /**
+   *
+   *
+   */
+
+
+  evaluate() {
+    if (arguments.length !== 1) {
+      throw "Invalid number of arguments";
+    }
+
+    var v = _value_mjs__WEBPACK_IMPORTED_MODULE_2__.Value.lift(arguments[0]);
+    var root = v.getValue();
+    var elm_list = root.querySelectorAll(this.selector);
+    var val_list = [];
+    var out_list = [];
+
+    for (let i = 0; i < elm_list.length; i++) {
+      var path = FindBySelector.getPathTo(elm_list[i]);
+      var wrapper = new NodeWrapper(elm_list[i], path, ...this.properties);
+      var pv = new PathValue(new Path(path), root, wrapper);
+      val_list.push(pv);
+    }
+
+    for (let i = 0; i < val_list.length; i++) {
+      out_list.push(new _enumerate_mjs__WEBPACK_IMPORTED_MODULE_3__.EnumeratedValue(i, val_list));
+    }
+
+    return new _atomic_function_mjs__WEBPACK_IMPORTED_MODULE_1__.AtomicFunctionReturnValue(this, out_list, v);
   }
 
 }

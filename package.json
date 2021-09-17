@@ -5,7 +5,7 @@
     "main": "index.mjs",
     "type": "module",
     "scripts": {
-        "test": "mocha",
+        "test": "mocha --timeout 5000",
         "coverage": "NODE_ENV=test c8 mocha test/*.test.js",
         "doc": "jsdoc -c jsdoc.conf.json",
         "lint": "eslint --format html index.mjs modules/*.mjs > eslint.html",

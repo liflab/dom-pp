@@ -43,7 +43,12 @@ class WebElementFunction extends AtomicFunction {
     }
 
     compute() {
-        var val = this.get(arguments[0].getValue());
+        var element = arguments[0].getValue();
+        var val;
+        if(element.isWrapper)
+            val = this.getWrapperValue(element);
+        else
+            val = this.get(element);
         return new ElementAttributeValue(this.name, arguments[0], val);
     }
 
@@ -57,6 +62,14 @@ class WebElementFunction extends AtomicFunction {
     getElementComputedStyle(element) {
         const window = this.getOwnerWindow(element);
         return window.getComputedStyle(element);
+    }
+    getWrapperValue(wrapper) {
+        for(let i = 0; i < wrapper.propertyNames.length; i++) {
+            if(wrapper.propertyNames[i] == this.name)
+                return wrapper.propertyValues[i];
+        }
+        var node = document.evaluate(wrapper.path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+        return this.get(node);
     }
 }
 
@@ -241,7 +254,7 @@ class PageOffsetTop extends WebElementFunction {
      * Creates a new instance of the function.
      */
     constructor() {
-        super("PageOffsetTop");
+        super("pageOffsetTop");
     }
 
     get(element) {
@@ -263,7 +276,7 @@ class PageOffsetLeft extends WebElementFunction {
     * Creates a new instance of the function.
     */
     constructor() {
-        super("PageOffsetLeft");
+        super("pageOffsetLeft");
     }
 
     get(element) {
@@ -624,21 +637,106 @@ class FindBySelector extends Enumerate {
 
     static getPathTo(element) {
         if (element.id !== "") { return "id(\"" + element.id + "\")"; }
-        if (element.tagName === "BODY") { return element.tagName; }
+        if (element.tagName === "BODY") { return element.tagName.toLowerCase(); }
 
         var ix = 0;
         var siblings = element.parentNode.childNodes;
         for (let i = 0; i < siblings.length; i++) {
             var sibling = siblings[i];
-            if (sibling === element) { return this.getPathTo(element.parentNode) + "/" + element.tagName + "[" + (ix + 1) + "]"; }
+            if (sibling === element) { return this.getPathTo(element.parentNode) + "/" + element.tagName.toLowerCase() + "[" + (ix + 1) + "]"; }
             if (sibling.nodeType === 1 && sibling.tagName === element.tagName) { ix++; }
         }
     }
 }
 
 /**
+ *
+ *
+ */
+class NodeWrapper {
+    /**
+     *
+     *
+     */
+    constructor(element, path, ...properties) {
+        this.isWrapper = true;
+        this.path = path;
+        this.propertyNames = [];
+        this.propertyValues = [];
+
+        for(let i = 0; i < properties.length; i++) {
+            this.propertyNames[i] = properties[i].name;
+            this.propertyValues[i] = properties[i].get(element);
+        }
+    }
+}
+
+/**
+ *
+ *
+ */
+class CurrentNode extends AtomicFunction {
+    /**
+     *
+     *
+     */
+    constructor() {
+        super(1);
+    }
+
+    getValue() {
+        var wrapper = arguments[0];
+        if(!wrapper.isWrapper)
+            throw "Invalid argument type";
+        return document.evaluate(wrapper.path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    }
+}
+
+/**
+ * 
+ * @extends Enumerate
+ */
+class RegisterBySelector extends Enumerate {
+    /**
+     * Creates a new instance of the function.
+     * @param selector The CSS selector used to fetch elements
+     */
+    constructor(selector, ...properties) {
+        super();
+        this.selector = selector;
+        this.properties = properties;
+        this.members = [selector, properties]
+    }
+
+    /**
+     *
+     *
+     */
+    evaluate() {
+        if (arguments.length !== 1) {
+            throw "Invalid number of arguments";
+        }
+        var v = Value.lift(arguments[0]);
+        var root = v.getValue();
+        var elm_list = root.querySelectorAll(this.selector);
+        var val_list = [];
+        var out_list = [];
+        for (let i = 0; i < elm_list.length; i++) {
+            var path = FindBySelector.getPathTo(elm_list[i]);
+            var wrapper = new NodeWrapper(elm_list[i], path, ...this.properties);
+            var pv = new PathValue(new Path(path), root, wrapper);
+            val_list.push(pv);
+        }
+        for (let i = 0; i < val_list.length; i++) {
+            out_list.push(new EnumeratedValue(i, val_list));
+        }
+        return new AtomicFunctionReturnValue(this, out_list, v);
+    }
+}
+
+/**
  * Package exports
  */
-export { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyle, BorderWidth, ClientOffsetTop, ClientOffsetLeft, CssPropertyFunction, CssRecursivePropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, FontWeight, MarginTop, MarginBottom, MarginRight, MarginLeft, Opacity, PageOffsetTop, PageOffsetLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction, Zindex };
+export { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyle, BorderWidth, ClientOffsetTop, ClientOffsetLeft, Color, CssPropertyFunction, CssRecursivePropertyFunction, CurrentNode, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, FontWeight, MarginTop, MarginBottom, MarginRight, MarginLeft, NodeWrapper, Opacity, PageOffsetTop, PageOffsetLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, RegisterBySelector, Visibility, WebElementFunction, Zindex };
 
 // :wrap=soft:tabSize=2:indentWidth=2:
