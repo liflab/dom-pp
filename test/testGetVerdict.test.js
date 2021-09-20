@@ -16,7 +16,17 @@ const { dataTree } = pkg_datatree;
 
 // Local imports
 import { getVerdict } from "../index.mjs";
-import { ComposedFunction, DimensionWidth, FindBySelector, GreaterThan, TestCondition, UniversalQuantifier } from "../index.mjs";
+import {
+    BackgroundColor,
+    ComposedFunction,
+    ConstantFunction,
+    DimensionWidth,
+    FindBySelector,
+    IsEqualTo,
+    GreaterThan,
+    TestCondition,
+    UniversalQuantifier,
+} from "../index.mjs";
 
 describe("Test getVerdict return", () => {
     it("True condition on a page element", async() => {
@@ -26,13 +36,13 @@ describe("Test getVerdict return", () => {
             "$x",
             new FindBySelector("#h2"),
             new ComposedFunction(
-                new GreaterThan(),
-                new ComposedFunction(new DimensionWidth(), "$x"),
-                50
+                new IsEqualTo(),
+                new ComposedFunction(new BackgroundColor(), "$x"),
+                new ConstantFunction("yellow")
             )
-        );
-        var cond = new TestCondition("h2's width > 50", f);
-        var tree = getVerdict(body, cond);
+        );        var cond = new TestCondition("h2's width > 50", f);
+        let tree = getVerdict(body, cond);
+        expect(tree).to.equal(null);
     });
     it("False condition on a page element", async() => {
         var dom = await load_dom("./test/pages/stub-1.html");
@@ -41,16 +51,16 @@ describe("Test getVerdict return", () => {
             "$x",
             new FindBySelector("#h2"),
             new ComposedFunction(
-                new GreaterThan(),
-                new ComposedFunction(new DimensionWidth(), "$x"),
-                350
+                new IsEqualTo(),
+                new ComposedFunction(new BackgroundColor(), "$x"),
+                new ConstantFunction("red")
             )
         );
         var cond = new TestCondition("h2's width > 350", f);
-        var tree = getVerdict(body, cond);
+        let tree = getVerdict(body, cond);
+        expect(tree).to.not.equal(null);
     });
 });
-
 
 
 /**

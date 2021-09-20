@@ -41,13 +41,16 @@ import pkg_datatree from "data-tree";
 const { dataTree } = pkg_datatree;
 
 // Local imports
-import { evaluateDom } from "../index.mjs";
+import { evaluateDom, getVerdict } from "../index.mjs";
 
 //  Get tree from witness
 import {
+    BackgroundColor,
     ComposedFunction,
+    ConstantFunction,
     DimensionWidth,
     FindBySelector,
+    IsEqualTo,
     GreaterThan,
     TestCondition,
     UniversalQuantifier,
@@ -61,13 +64,13 @@ describe("Stub tests", () => {
             "$x",
             new FindBySelector("#h2"),
             new ComposedFunction(
-                new GreaterThan(),
-                new ComposedFunction(new DimensionWidth(), "$x"),
-                50
+                new IsEqualTo(),
+                new ComposedFunction(new BackgroundColor(), "$x"),
+                new ConstantFunction("yellow")
             )
-        );
-        var cond = new TestCondition("h2's width > 50", f);
-        evaluateDom(body, [cond])
+        );        var cond = new TestCondition("h2's width > 50", f);
+        let tree = getVerdict(body, cond);
+        expect(tree).to.equal(null);
     });
     it("False condition on a page element", async() => {
         var dom = await load_dom("./test/pages/stub-1.html");
@@ -76,13 +79,14 @@ describe("Stub tests", () => {
             "$x",
             new FindBySelector("#h2"),
             new ComposedFunction(
-                new GreaterThan(),
-                new ComposedFunction(new DimensionWidth(), "$x"),
-                350
+                new IsEqualTo(),
+                new ComposedFunction(new BackgroundColor(), "$x"),
+                new ConstantFunction("red")
             )
         );
         var cond = new TestCondition("h2's width > 350", f);
-        evaluateDom(body, [cond])
+        let tree = getVerdict(body, cond);
+        expect(tree).to.not.equal(null);
     });
 });
 

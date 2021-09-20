@@ -404,7 +404,6 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 			window.scroll(0,0);
 			//return result;
 		}, elems);
-		console.log(result);
 	});
 
 
