@@ -47,7 +47,7 @@ class BooleanConnective extends AtomicFunction {
         for (var i = 0; i < arguments.length; i++) {
             var o = arguments[i].getValue();
             if (typeof(o) !== "boolean") {
-                throw "Invalid argument type";
+                throw "BooleanConnective: Invalid argument type";
             }
             if (o === true) {
                 true_values.push(arguments[i]);
@@ -176,7 +176,7 @@ class BooleanNot extends AtomicFunction {
 
     getValue() {
         if (typeof(arguments[0]) !== "boolean") {
-            throw "Invalid argument type";
+            throw "BooleanNot: Invalid argument type";
         }
         return !arguments[0];
     }

@@ -57,4 +57,12 @@ describe("Syntax tests", () => {
             IsGreaterOrEqual(Width("$x"), 100));
         expect(exp).not.to.be.null;
     })
+
+	it("Quantifier expression 3", () => {
+		var elements = [11, 12, 3, 14];
+        var exp = ForAll("$x", elements,
+            IsGreaterOrEqual("$x", 10));
+        var v = exp.evaluate("foo");
+		expect(v.getValue()).to.be.false;
+    })
 })
