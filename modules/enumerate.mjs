@@ -40,7 +40,7 @@ class Enumerate extends AtomicFunction {
   compute() {
     var list = arguments[0].getValue();
     if (!Array.isArray(list)) {
-      throw "Invalid argument type";
+      throw "Enumerate: Invalid argument type";
     }
     var val_list = [];
     var out_list = [];

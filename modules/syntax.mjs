@@ -26,6 +26,7 @@
 
 // Local imports
 
+import { AbstractFunction, ConstantFunction } from "./function.mjs";
 import { ComposedFunction } from "./composed-function.mjs";
 import { BooleanAnd, BooleanNot, BooleanOr } from "./booleans.mjs";
 import { ExistentialQuantifier, UniversalQuantifier } from "./quantifier.mjs";
@@ -62,14 +63,22 @@ import { DimensionHeight, DimensionWidth, FindBySelector } from "./web-element.m
         if (arguments.length == 2) {
             return new UniversalQuantifier(arguments[0], new Enumerate(), arguments[1]);
         }
-        return new UniversalQuantifier(arguments[0], arguments[1], arguments[2]);
+        var domain = arguments[1];
+        if (!(domain instanceof AbstractFunction)) {
+            domain = new ComposedFunction(new Enumerate(), new ConstantFunction(domain));
+        }
+        return new UniversalQuantifier(arguments[0], domain, arguments[2]);
     }
     
     function Exists() {
         if (arguments.length == 2) {
             return new ExistentialQuantifier(arguments[0], new Enumerate(), arguments[1]);
         }
-        return new ExistentialQuantifier(arguments[0], arguments[1], arguments[2]);
+        var domain = arguments[1];
+        if (!(domain instanceof AbstractFunction)) {
+            domain = new ComposedFunction(new Enumerate(), new ConstantFunction(domain));
+        }
+        return new ExistentialQuantifier(arguments[0], domain, arguments[2]);
     }
     
     function IsGreaterThan() {
