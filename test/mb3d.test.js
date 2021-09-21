@@ -372,6 +372,39 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		expect(result).to.equal(true);
 	});
 
+	// it("After scrolling, the navigation links should have the same width as before", async() => {
+
+	// 	await mb3dPage.evaluate(function() { window.scroll(0,0); });
+	// 	await delay(1000);
+
+	// 	var elements = await mb3dPage.evaluate(function() {
+	// 		let body = document.querySelector(".body");
+	// 		let r = new dompp.RegisterBySelector(".navlink", dompp.Width());
+	// 		let elements = r.evaluate(body).getValue();
+	// 	});
+
+	// 	await mb3dPage.evaluate(function() { window.scroll(0,500); });
+	// 	await delay(1000);
+
+	// 	var result = await mb3dPage.evaluate(function(elements) {
+	// 		let body = document.querySelector(".body");
+	// 		let f = dompp.ForAll(
+	// 			"$x",
+	// 			elements,
+	// 			dompp.Equals(
+	// 				dompp.Width("$x"),
+	// 				dompp.Width(dompp.Current("$x"))
+	// 			)
+	// 		)
+
+	// 		let cond = new dompp.TestCondition("test xd", f);
+	// 		let result = cond.evaluate(body).getValue();
+	// 		window.scroll(0,0);
+	// 		return result;
+	// 	}, elements);
+	// 	expect(result).to.equal(true);
+	// });
+
 	it("test register", async() => {
 
 		mb3dPage.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
@@ -390,7 +423,7 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 
 		var result = await mb3dPage.evaluate(elems => {
 			let body = document.querySelector(".body");
-			let f = new dompp.ForAll(
+			let f = dompp.ForAll(
 				"$x",
 				elems,
 				dompp.Equals(

@@ -650,13 +650,14 @@ class FindBySelector extends Enumerate {
 }
 
 /**
- *
- *
+ * Wrapper that enclose the path to a DOM Node and register a number of CSS property values determined by the user.
  */
 class NodeWrapper {
     /**
-     *
-     *
+     * Creates a new instance of the wrapper.
+     * @param element Reference to the DOM Node used to fetch values
+     * @param path Xpath corresponding to element
+     * @param properties The list of CSS properties to be registered
      */
     constructor(element, path, ...properties) {
         this.isWrapper = true;
@@ -672,13 +673,12 @@ class NodeWrapper {
 }
 
 /**
- *
- *
+ * Function that finds a DOM Node from the Xpath stored in a NodeWrapper
+ * @extends AtomicFunction
  */
 class CurrentNode extends AtomicFunction {
     /**
-     *
-     *
+     * Creates a new instance of the function.
      */
     constructor() {
         super(1);
@@ -693,13 +693,14 @@ class CurrentNode extends AtomicFunction {
 }
 
 /**
- * 
+ * Function that produces a list of NodeWrapper from nodes that match a given CSS selector.
  * @extends Enumerate
  */
 class RegisterBySelector extends Enumerate {
     /**
      * Creates a new instance of the function.
      * @param selector The CSS selector used to fetch elements
+     * @param properties The list of CSS attributes to be registered in the wrappers
      */
     constructor(selector, ...properties) {
         super();
@@ -708,10 +709,6 @@ class RegisterBySelector extends Enumerate {
         this.members = [selector, properties]
     }
 
-    /**
-     *
-     *
-     */
     evaluate() {
         if (arguments.length !== 1) {
             throw "Invalid number of arguments";

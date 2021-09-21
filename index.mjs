@@ -45,7 +45,7 @@ import { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyl
 import { TestCondition, TestDriver, TestResult, Verdict } from "./modules/verdict.mjs";
 import { isHtmlElement } from "./modules/util.mjs";
 import { Serialization } from "./modules/serialization.mjs";
-import { And, Current, Equals, Exists, Find, ForAll, Height, Implies, IsGreaterOrEqual, IsGreaterThan, IsLessOrEqual, IsLessThan, Minus, Not, Or, Plus, Width } from './modules/syntax.mjs'
+import { And, Current, Equals, Exists, Find, ForAll, Height, Implies, IsGreaterOrEqual, IsGreaterThan, IsLessOrEqual, IsLessThan, Minus, Not, Or, Plus, Register, Width } from './modules/syntax.mjs'
 
 
 /**
@@ -232,6 +232,7 @@ export {
     QuantifierConjunctiveVerdict,
     QuantifierDisjunctiveVerdict,
     QuantifierVerdict,
+    Register,
     RegisterBySelector,
     ReturnValue,
     Serialization,
