@@ -61,6 +61,57 @@ class Value {
         // To be overridden by descendants
     }
 
+    // d is a deserializer and j is a JSON structure
+    static deserialize(d, j) {
+        const params = [];
+
+        for (const serializedParam of j.contents) {
+
+            if(typeof serializedParam == "object" && Object.keys(serializedParam).length == 2 
+            && typeof serializedParam.name != "undefined" && typeof serializedParam.contents != "undefined") {
+                params.push(d.deserialize(serializedParam));
+            } 
+            else if(Array.isArray(serializedParam)) {
+                for(var i = 0; i<serializedParam.length; i++) {
+                    if(typeof serializedParam[i] == "object" && Object.keys(serializedParam[i]).length == 2 
+                    && typeof serializedParam[i].name != "undefined" && typeof serializedParam[i].contents != "undefined")
+                        serializedParam[i] = d.deserialize(serializedParam[i]);
+                }
+                params.push(serializedParam);
+            } 
+            else {
+                params.push(serializedParam);
+            }
+        }
+
+        return new this(...params);
+    }
+
+    toJson() {
+        const serializedMembers = [];
+
+        for (var member of this.members) {
+            if(typeof member == "object" && Value.isPrototypeOf(member.constructor)) {
+                serializedMembers.push(member.toJson());
+            } 
+            else if(Array.isArray(member)) {
+                for(var i = 0; i<member.length; i++) {
+                    if(typeof member[i] == "object" && Value.isPrototypeOf(member[i].constructor))
+                        member[i] = member[i].toJson();
+                }
+                serializedMembers.push(member);
+            } 
+            else {
+                serializedMembers.push(member);
+            }
+        }
+
+        return {
+            "name": this.constructor.name,
+            "contents": serializedMembers
+        }
+    }
+
     /**
      * Converts an arbitrary object into a {@link Value}.
      * @param o The object to convert. If o is a {@link Value}, it is returned as
@@ -114,6 +165,7 @@ class ConstantValue extends Value {
          * The value represented by this constant
          */
         this.value = o;
+        this.members = [o];
     }
 
     query(q, d, root, factory) {

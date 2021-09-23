@@ -65,7 +65,7 @@ import { CurrentNode, DimensionHeight, DimensionWidth, FindBySelector, RegisterB
         }
         var domain = arguments[1];
         if (!(domain instanceof AbstractFunction)) {
-            domain = new ComposedFunction(new Enumerate(), new ConstantFunction(domain));
+            domain = new ConstantFunction(domain);
         }
         return new UniversalQuantifier(arguments[0], domain, arguments[2]);
     }
@@ -76,7 +76,7 @@ import { CurrentNode, DimensionHeight, DimensionWidth, FindBySelector, RegisterB
         }
         var domain = arguments[1];
         if (!(domain instanceof AbstractFunction)) {
-            domain = new ComposedFunction(new Enumerate(), new ConstantFunction(domain));
+            domain = new ConstantFunction(domain);
         }
         return new ExistentialQuantifier(arguments[0], domain, arguments[2]);
     }

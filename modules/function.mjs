@@ -92,7 +92,8 @@ class AbstractFunction {
         for (const serializedParam of j.contents) {
             if (typeof serializedParam == "object" && Object.keys(serializedParam).length == 2 && typeof serializedParam.name != "undefined" && typeof serializedParam.contents != "undefined") {
                 params.push(d.deserialize(serializedParam));
-            } else {
+            } 
+            else {
                 params.push(serializedParam);
             }
         }
@@ -105,8 +106,9 @@ class AbstractFunction {
 
         for (const member of this.members) {
             if (typeof member == "object" && AbstractFunction.isPrototypeOf(member.constructor)) {
-                serializedMembers.push(member.toJson())
-            } else {
+                serializedMembers.push(member.toJson());
+            } 
+            else {
                 serializedMembers.push(member);
             }
         }

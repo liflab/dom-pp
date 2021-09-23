@@ -45,10 +45,12 @@ class WebElementFunction extends AtomicFunction {
     compute() {
         var element = arguments[0].getValue();
         var val;
-        if(element.isWrapper)
+        if(element.isWrapper) {
             val = this.getWrapperValue(element);
-        else
+        }
+        else {
             val = this.get(element);
+        }
         return new ElementAttributeValue(this.name, arguments[0], val);
     }
 
@@ -65,8 +67,9 @@ class WebElementFunction extends AtomicFunction {
     }
     getWrapperValue(wrapper) {
         for(let i = 0; i < wrapper.propertyNames.length; i++) {
-            if(wrapper.propertyNames[i] == this.name)
+            if(wrapper.propertyNames[i] == this.name){
                 return wrapper.propertyValues[i];
+            }
         }
         var node = document.evaluate(wrapper.path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
         return this.get(node);
@@ -580,6 +583,7 @@ class PathValue extends Value {
         this.value = Value.lift(value);
         this.root = Value.lift(root);
         this.path = p;
+        this.members = [p, root, value];
     }
 
     query(q, d, root, factory) {
@@ -637,7 +641,7 @@ class FindBySelector extends Enumerate {
 
     static getPathTo(element) {
         if (element.id !== "") { return "id(\"" + element.id + "\")"; }
-        if (element.tagName === "BODY") { return element.tagName.toLowerCase(); }
+        if (element.tagName === "BODY") { return "html/body"; }
 
         var ix = 0;
         var siblings = element.parentNode.childNodes;
@@ -684,11 +688,13 @@ class CurrentNode extends AtomicFunction {
         super(1);
     }
 
-    getValue() {
+    getValue() { 
         var wrapper = arguments[0];
+        //wrapper = wrapper.inputList[wrapper.index].value.value;
         if(!wrapper.isWrapper)
-            throw "Invalid argument type";
-        return document.evaluate(wrapper.path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+            throw "CurrentNode : Invalid argument type";
+        var node = document.evaluate(wrapper.path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+        return node;
     }
 }
 

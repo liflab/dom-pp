@@ -66,6 +66,7 @@ class EnumeratedValue extends Value {
     super();
     this.index = index;
     this.inputList = input_list;
+    this.members = [index, input_list];
   }
 
   query(q, d, root, factory) {

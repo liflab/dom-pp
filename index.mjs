@@ -126,6 +126,24 @@ function getTreeFromWitness(witnesses = []) {
     return tree;
 }
 
+function serializeArray(array) {
+    var res = [];
+    var s = new Serialization();
+    for(let i=0; i<array.length; i++ ) {
+        res.push(s.serialize(array[i]));
+    }
+    return res;
+}
+
+function deserializeArray(array) {
+    var res = [];
+    var s = new Serialization();
+    for(let i=0; i<array.length; i++) {
+        res.push(s.deserialize(array[i]));
+    }
+    return res;
+}
+
 /**
  * Export public API
  */
@@ -133,6 +151,8 @@ export {
     getVerdict,
     evaluateDom,
     getTreeFromWitness,
+    serializeArray,
+    deserializeArray,
     AbstractFunction,
     Addition,
     All,
