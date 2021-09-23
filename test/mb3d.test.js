@@ -375,7 +375,6 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 
 	it("After scrolling, the navigation links should have the same width as before the scroll", async() => {
 
-		mb3dPage.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
 		await mb3dPage.evaluate(function() { window.scroll(0,0); });
 		await delay(1000);
 
