@@ -7,7 +7,7 @@
 		exports["dompp"] = factory();
 	else
 		root["dompp"] = factory();
-})(self, function() {
+})(this, function() {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
