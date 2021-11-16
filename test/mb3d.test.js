@@ -172,30 +172,6 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 		expect(result).to.equal(true);
 	});
 
-
-	/*it("Check if the .navbar-container gets wider than the viewport", async() => {
-
-		await mb3dPage.setViewport({ width: 320, height: 640 })
-		await mb3dPage.screenshot({ path: 'screen1.png' })
-		const result = await mb3dPage.evaluate(function() {
-			let navbar = document.querySelector(".navbar-container");
-			let f = new dompp.ComposedFunction(
-				new dompp.LesserOrEqual(),
-				new dompp.ComposedFunction(new dompp.DimensionWidth(), "$x"),
-				320
-			)
-
-			let cond = new dompp.TestCondition(".navbar-container width <= viewport", f);
-			let result = cond.evaluate(navbar).getValue();
-			return result;
-		});
-
-		expect(result).to.equal(true);
-        await mb3dPage.setViewport({ width: 1920, height: 1080 })
-	});*/
-
-	//Le test suivant permet de remplacer la vérification du viewport ?
-
 	it("The body width and scrollWidth should always be the same", async() => {
 
 		await mb3dPage.setViewport({ width: 320, height: 640 })
@@ -255,8 +231,6 @@ describe("Checking for bugs on MB3D using DOM-PP", () => {
 
 		expect(result).to.equal(true);
 	});
-
-	//Besoin de la gestion de l'hérédité
 
 	it("Navigation logo should have a higher Zindex than the hero title", async() => {
 
