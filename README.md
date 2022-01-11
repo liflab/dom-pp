@@ -1,7 +1,7 @@
 A flexible assertion framework for web pages
 ============================================
 
-![Build status](https://api.travis-ci.org/liflab/dom-pp.svg?branch=main)
+[![Build Status](https://app.travis-ci.com/liflab/dom-pp.svg?branch=main)](https://app.travis-ci.com/liflab/dom-pp)
 [SonarCloud Dashboard](https://sonarcloud.io/dashboard?id=liflab_dom-pp)
 
 DOM-PP is a library for writing assertions about elements in a web page.
