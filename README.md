@@ -416,6 +416,6 @@ Grant, in collaboration with [Eckinox Média](https://eckinox.ca).
 
 The author would like to acknowledge the participation of
 [Amadou Ba](https://github.com/amadouba9),
-[Papa Alioune Fall](https://github.com/ppalioune) and
-[Émile Perron](https://github.com/EmilePerron) to the development of this
+[Papa Alioune Fall](https://github.com/ppalioune), Abdoul Kader
+Kassa  and [Émile Perron](https://github.com/EmilePerron) to the development of this
 library.
