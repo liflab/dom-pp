@@ -110,7 +110,7 @@ function getTreeFromWitness(witnesses = []) {
             subject = designatedObject.getObject();
             lastPartType = "ConstantDesignator";
         }
-        // Build the leaf's "part"
+        //  
         for (const element of designatedObject.getDesignator().elements) {
             if (element.constructor.name === lastPartType) {
                 break;
@@ -126,6 +126,36 @@ function getTreeFromWitness(witnesses = []) {
     return tree;
 }
 
+async function assertDomppCondition(func, page, selector)
+{   
+    const serializer = new Serialization();
+    const result = await page.evaluate((condName,serializedFunction,selector) => {
+        const serializer = new dompp.Serialization();
+        const func = serializer.deserialize(serializedFunction);
+        const cond = new dompp.TestCondition(condName,func);
+        let element = document.querySelector(selector);
+        let result = cond.evaluate(element);
+        console.log(result);
+        const passed = result.getValue();
+        const explanation = result.getStaticExplanation();
+    
+    return { passed: passed, explanation: explanation };
+        
+    },func.name, serializer.serialize(func.function),selector);
+// pas le message exact juste pour un test 
+
+if (!result.passed) {
+    const mess = "l'erreur est due a " + result.explanation.elementAttribute + "qui se trouve " + result.explanation.part + "ABC" + result.explanation.subject; 
+    throw new assert.AssertionError({
+        name: "dom-pp assertion error", 
+        message: mess,
+        operator: 'Equal',
+        actual: true,
+        expected: false,
+    });
+}
+} 
+
 function serializeArray(array) {
     var res = [];
     var s = new Serialization();
@@ -133,7 +163,7 @@ function serializeArray(array) {
         res.push(s.serialize(array[i]));
     }
     return res;
-}
+} 
 
 function deserializeArray(array) {
     var res = [];
@@ -153,6 +183,7 @@ export {
     getTreeFromWitness,
     serializeArray,
     deserializeArray,
+    assertDomppCondition,
     AbstractFunction,
     Addition,
     All,

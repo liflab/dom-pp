@@ -124,6 +124,15 @@ class Value {
         }
         return new ConstantValue(o);
     }
+
+     getStaticExplanation() {
+
+        var tree = Explainer.explain(this);
+        var list = Verdict.getWitness(tree);
+        var T = getTreeFromWitness(list);
+        
+        return T.toString();
+}
 }
 
 /**
