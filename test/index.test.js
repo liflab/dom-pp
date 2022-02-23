@@ -43,6 +43,7 @@ const { dataTree } = pkg_datatree;
 // Local imports
 import { getTreeFromWitness } from "../index.mjs";
 import {
+    ConstantFunction,
     ComposedFunction,
     CompoundDesignator,
     DimensionWidth,
@@ -52,7 +53,11 @@ import {
     TestDriver,
     TestResult,
     UniversalQuantifier,
+    assertDomppCondition,
+    BackgroundColor,
+    IsEqualTo,
 } from "../index.mjs";
+import { load_file_in_puppeteer, terminate_puppeteer_browser } from "./test-util.mjs";
 
 describe("Witness tests", () => {
     it("Simple condition true", async() => {
@@ -112,6 +117,62 @@ describe("Witness tests", () => {
         expect(Array.isArray(witness)).to.be.true;
         expect(witness.length).to.equal(2);
         var tree = getTreeFromWitness(witness);
+    });
+});
+
+describe("Testing utility (assertDomppCondition)", () => {
+    
+    it("No error is thrown when the condition is respected.", async () => {
+        after(terminate_puppeteer_browser);
+
+        // No error is thrown when the condition is respected.
+        const page = await load_file_in_puppeteer("./test/pages/stub-1.html");
+        const condition = new TestCondition(
+            "Background should be red",
+            new ComposedFunction(
+                new IsEqualTo(),
+                new ComposedFunction(new BackgroundColor(), "$x"),
+                new ConstantFunction("rgb(255, 0, 0)")
+            )
+        );
+        let error;
+        
+        try {
+            await assertDomppCondition(condition, page, "#div1");
+        } catch (err) {
+            error = err;
+        }
+
+        await page.close();
+        
+        expect(error).to.not.be.an("Error");
+    });
+
+    it("No error is thrown when the condition is respected.", async () => {
+        after(terminate_puppeteer_browser);
+        
+        const page = await load_file_in_puppeteer("./test/pages/stub-1.html");
+        
+        // An error is thrown when the condition isn't respected.
+        const condition = new TestCondition(
+            "Background should be green",
+            new ComposedFunction(
+                new IsEqualTo(),
+                new ComposedFunction(new BackgroundColor(), "$x"),
+                new ConstantFunction("rgb(0, 255, 0)")
+            )
+        );
+        let error;
+
+        try {
+            await assertDomppCondition(condition, page, "#div1");
+        } catch (err) {
+            error = err;
+        }
+
+        await page.close();
+
+        expect(error).to.be.an("Error");
     });
 });
 
