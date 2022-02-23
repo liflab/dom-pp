@@ -125,7 +125,6 @@ describe("Testing utility (assertDomppCondition)", () => {
     it("No error is thrown when the condition is respected.", async () => {
         after(terminate_puppeteer_browser);
 
-        // No error is thrown when the condition is respected.
         const page = await load_file_in_puppeteer("./test/pages/stub-1.html");
         const condition = new TestCondition(
             "Background should be red",
@@ -148,12 +147,10 @@ describe("Testing utility (assertDomppCondition)", () => {
         expect(error).to.not.be.an("Error");
     });
 
-    it("No error is thrown when the condition is respected.", async () => {
+    it("An error is thrown when the condition isn't respected.", async () => {
         after(terminate_puppeteer_browser);
         
         const page = await load_file_in_puppeteer("./test/pages/stub-1.html");
-        
-        // An error is thrown when the condition isn't respected.
         const condition = new TestCondition(
             "Background should be green",
             new ComposedFunction(
