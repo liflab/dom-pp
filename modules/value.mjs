@@ -132,11 +132,13 @@ class Value {
         var list = [];
         var root = Explainer.explain(this);
         Verdict.pick(root, list);
-        var T = getTreeFromWitness(list);
+        var tree = getTreeFromWitness(list);
 
+        var standardizedTree = tree.export(function(data){
+            return { elementAttribute: data.elementAttribute, part: data.part, subject: data.subject };
+        });
 
-
-        return T.toString();
+        return standardizedTree;
     }
 }
 

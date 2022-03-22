@@ -71,7 +71,14 @@ class WebElementFunction extends AtomicFunction {
     }
 
     compute() {
-        var val = this.get(arguments[0].getValue());
+        var element = arguments[0].getValue();
+        var val;
+        if(element.isWrapper) {
+            val = this.getWrapperValue(element);
+        }
+        else {
+            val = this.get(element);
+        }
         return new ElementAttributeValue(this.name, arguments[0], val);
     }
 
@@ -85,6 +92,15 @@ class WebElementFunction extends AtomicFunction {
     getElementComputedStyle(element) {
         const window = this.getOwnerWindow(element);
         return window.getComputedStyle(element);
+    }
+    getWrapperValue(wrapper) {
+        for(let i = 0; i &lt; wrapper.propertyNames.length; i++) {
+            if(wrapper.propertyNames[i] == this.name){
+                return wrapper.propertyValues[i];
+            }
+        }
+        var node = document.evaluate(wrapper.path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+        return this.get(node);
     }
 }
 
@@ -176,10 +192,60 @@ class CssPropertyFunction extends WebElementFunction {
     }
 }
 
+/**
+ * value of a css attribute, but in case the value is undefined or does not meet certain criteria, retrieve the value of the parent element
+ * @extends WebElementFunction
+ */
+class CssRecursivePropertyFunction extends WebElementFunction {
+    constructor(name, returnType = null, defaultValue = null) {
+        if (["float", "int", "string", null].indexOf(returnType) == -1) {
+            throw new Error(`CssPropertyFunction returnType expects one of the following values: "float", "int", "string", null. Received ${returnType} instead.`);
+        }
+
+        super(name);
+        this.returnType = returnType;
+        this.defaultValue = defaultValue;
+    }
+
+    get(element) {
+        const value = this.getRecursive(element);
+
+        switch (this.returnType) {
+            case "float":
+                return parseFloat(value);
+
+            case "int":
+                return parseInt(value);
+
+            case "string":
+                return typeof value == "string" ? value : value.toString();
+        }
+
+        return value;   
+    }
+
+    getRecursive(element) {
+        if(!element) return this.defaultValue;
+
+        const style = this.getElementComputedStyle(element);
+        const value = style.getPropertyValue(this.name);
+
+        if(this.filter(value))
+            return this.getRecursive(element.parentElement);
+        else
+            return value;
+    }
+
+    //to be overridden by descendants to add additionnal filters depending on property
+    filter(value) {
+        return value == "";
+    }
+}
+
 
 /**
  * Function that extracts the width of a DOM node.
- * @extends CssPropertyFunction
+ * @extends WebElementFunction
  */
 class DimensionWidth extends WebElementFunction {
     /**
@@ -208,6 +274,81 @@ class DimensionHeight extends WebElementFunction {
 
     get(element) {
         return element.offsetHeight;
+    }
+}
+/** 
+ * Function that extracts the offset from the top of the page of a DOM node.
+ * @extends WebElementFunction
+ */
+class PageOffsetTop extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("pageOffsetTop");
+    }
+
+    get(element) {
+        return this.getOffsetTop(element);
+    }
+
+    getOffsetTop(element) {
+        if(!element) return 0;
+        return this.getOffsetTop(element.offsetParent) + element.offsetTop;
+    }
+
+}
+/**
+ * Function that extracts the offset from the left of the page of a DOM node.
+ * @extends WebElementFunction
+ */
+class PageOffsetLeft extends WebElementFunction {
+    /**
+    * Creates a new instance of the function.
+    */
+    constructor() {
+        super("pageOffsetLeft");
+    }
+
+    get(element) {
+        return this.getOffsetLeft(element);
+    }
+
+    getOffsetLeft(element) {
+        if(!element) return 0;
+        return this.getOffsetLeft(element.offsetParent) + element.offsetLeft;
+    }
+}
+/** 
+ * Function that extracts the offset from the top of the viewport of a DOM node.
+ * @extends WebElementFunction
+ */
+class ClientOffsetTop extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("clientOffsetTop");
+    }
+
+    get(element) {
+        return element.getBoundingClientRect().top;
+    }
+}
+/** 
+ * Function that extracts the offset from the left of the viewport of a DOM node.
+ * @extends WebElementFunction
+ */
+class ClientOffsetLeft extends WebElementFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super("clientOffsetLeft");
+    }
+
+    get(element) {
+        return element.getBoundingClientRect().left;
     }
 }
 /**
@@ -259,12 +400,16 @@ class Opacity extends CssPropertyFunction {
  * Function that extracts the background-color of a DOM.
  * @extends CssPropertyFunction
  */
-class BackgroundColor extends CssPropertyFunction {
+class BackgroundColor extends CssRecursivePropertyFunction {
     /**
      * Creates a new instance of the function.
      */
     constructor() {
-        super("background-color");
+        super("background-color", null, "rgba(0, 0, 0, 0)");
+    }
+
+    filter(value) {
+        return (value == "" || value == "transparent" || value == "rgba(0, 0, 0, 0)")
     }
 }
 /**
@@ -423,13 +568,18 @@ class BackgroundImage extends CssPropertyFunction {
 
 /**
  * Function that extract Z-index
- * @extends CssPropertyFunction
+ * @extends CssRecursivePropertyFunction
  */
-class Zindex extends CssPropertyFunction {
+class Zindex extends CssRecursivePropertyFunction {
     constructor() {
-        super("z-index", "float")
+        super("z-index", "float", 0);
+    }
+
+    filter(value) {
+        return value == "" || value == "auto";
     }
 }
+
 /**
  * Designator that points to an element in a DOM tree based on
  * an XPath expression.
@@ -448,6 +598,7 @@ class Path extends Designator {
     toString() {
         return this.path;
     }
+
 }
 
 /**
@@ -460,6 +611,7 @@ class PathValue extends Value {
         this.value = Value.lift(value);
         this.root = Value.lift(root);
         this.path = p;
+        this.members = [p, root, value];
     }
 
     query(q, d, root, factory) {
@@ -517,22 +669,106 @@ class FindBySelector extends Enumerate {
 
     static getPathTo(element) {
         if (element.id !== "") { return "id(\"" + element.id + "\")"; }
-        if (element.tagName === "BODY") { return element.tagName; }
+        if (element.tagName === "BODY") { return "html/body"; }
 
         var ix = 0;
         var siblings = element.parentNode.childNodes;
         for (let i = 0; i &lt; siblings.length; i++) {
             var sibling = siblings[i];
-            if (sibling === element) { return this.getPathTo(element.parentNode) + "/" + element.tagName + "[" + (ix + 1) + "]"; }
+            if (sibling === element) { return this.getPathTo(element.parentNode) + "/" + element.tagName.toLowerCase() + "[" + (ix + 1) + "]"; }
             if (sibling.nodeType === 1 &amp;&amp; sibling.tagName === element.tagName) { ix++; }
         }
     }
 }
 
 /**
+ * Wrapper that enclose the path to a DOM Node and register a number of CSS property values determined by the user.
+ */
+class NodeWrapper {
+    /**
+     * Creates a new instance of the wrapper.
+     * @param element Reference to the DOM Node used to fetch values
+     * @param path Xpath corresponding to element
+     * @param properties The list of CSS properties to be registered
+     */
+    constructor(element, path, ...properties) {
+        this.isWrapper = true;
+        this.path = path;
+        this.propertyNames = [];
+        this.propertyValues = [];
+
+        for(let i = 0; i &lt; properties.length; i++) {
+            this.propertyNames[i] = properties[i].name;
+            this.propertyValues[i] = properties[i].get(element);
+        }
+    }
+}
+
+/**
+ * Function that finds a DOM Node from the Xpath stored in a NodeWrapper
+ * @extends AtomicFunction
+ */
+class CurrentNode extends AtomicFunction {
+    /**
+     * Creates a new instance of the function.
+     */
+    constructor() {
+        super(1);
+    }
+
+    getValue() { 
+        var wrapper = arguments[0];
+        //wrapper = wrapper.inputList[wrapper.index].value.value;
+        if(!wrapper.isWrapper)
+            throw "CurrentNode : Invalid argument type";
+        var node = document.evaluate(wrapper.path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+        return node;
+    }
+}
+
+/**
+ * Function that produces a list of NodeWrapper from nodes that match a given CSS selector.
+ * @extends Enumerate
+ */
+class RegisterBySelector extends Enumerate {
+    /**
+     * Creates a new instance of the function.
+     * @param selector The CSS selector used to fetch elements
+     * @param properties The list of CSS attributes to be registered in the wrappers
+     */
+    constructor(selector, ...properties) {
+        super();
+        this.selector = selector;
+        this.properties = properties;
+        this.members = [selector, properties]
+    }
+
+    evaluate() {
+        if (arguments.length !== 1) {
+            throw "Invalid number of arguments";
+        }
+        var v = Value.lift(arguments[0]);
+        var root = v.getValue();
+        var elm_list = root.querySelectorAll(this.selector);
+        var val_list = [];
+        var out_list = [];
+        for (let i = 0; i &lt; elm_list.length; i++) {
+            var path = FindBySelector.getPathTo(elm_list[i]);
+            var wrapper = new NodeWrapper(elm_list[i], path, ...this.properties);
+            var pv = new PathValue(new Path(path), root, wrapper);
+            val_list.push(pv);
+        }
+        for (let i = 0; i &lt; val_list.length; i++) {
+            out_list.push(new EnumeratedValue(i, val_list));
+        }
+        return new AtomicFunctionReturnValue(this, out_list, v);
+    }
+}
+
+/**
  * Package exports
  */
-export { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyle, BorderWidth, CssPropertyFunction, Color, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, FontWeight, MarginTop, MarginBottom, MarginRight, MarginLeft, Opacity, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, Visibility, WebElementFunction, Zindex };
+export { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyle, BorderWidth, ClientOffsetTop, ClientOffsetLeft, Color, CssPropertyFunction, CssRecursivePropertyFunction, CurrentNode, DimensionHeight, DimensionWidth, Display, ElementAttribute, ElementAttributeValue, FindBySelector, Float, FontFamily, FontSize, FontWeight, MarginTop, MarginBottom, MarginRight, MarginLeft, NodeWrapper, Opacity, PageOffsetTop, PageOffsetLeft, Path, PathValue, PaddingTop, PaddingBottom, PaddingRight, PaddingLeft, Position, RegisterBySelector, Visibility, WebElementFunction, Zindex };
 
 // :wrap=soft:tabSize=2:indentWidth=2:</code></pre>
         </article>
@@ -544,13 +780,13 @@ export { BackgroundColor, BackgroundImage, BorderColor, BorderRadius, BorderStyl
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractFunction.html">AbstractFunction</a></li><li><a href="Addition.html">Addition</a></li><li><a href="All.html">All</a></li><li><a href="AndNode.html">AndNode</a></li><li><a href="Argument.html">Argument</a></li><li><a href="ArgumentValue.html">ArgumentValue</a></li><li><a href="AtomicFunction.html">AtomicFunction</a></li><li><a href="AtomicFunctionReturnValue.html">AtomicFunctionReturnValue</a></li><li><a href="BackgroundColor.html">BackgroundColor</a></li><li><a href="BackgroundImage.html">BackgroundImage</a></li><li><a href="BooleanAnd.html">BooleanAnd</a></li><li><a href="BooleanConnective.html">BooleanConnective</a></li><li><a href="BooleanNot.html">BooleanNot</a></li><li><a href="BooleanOr.html">BooleanOr</a></li><li><a href="BorderColor.html">BorderColor</a></li><li><a href="BorderRadius.html">BorderRadius</a></li><li><a href="BorderStyle.html">BorderStyle</a></li><li><a href="BorderWidth.html">BorderWidth</a></li><li><a href="Color.html">Color</a></li><li><a href="ComposedFunction.html">ComposedFunction</a></li><li><a href="ComposedFunctionValue.html">ComposedFunctionValue</a></li><li><a href="CompoundDesignator.html">CompoundDesignator</a></li><li><a href="ConstantDesignator.html">ConstantDesignator</a></li><li><a href="ConstantFunction.html">ConstantFunction</a></li><li><a href="ConstantValue.html">ConstantValue</a></li><li><a href="CssPropertyFunction.html">CssPropertyFunction</a></li><li><a href="DesignatedObject.html">DesignatedObject</a></li><li><a href="Designator.html">Designator</a></li><li><a href="DimensionHeight.html">DimensionHeight</a></li><li><a href="DimensionWidth.html">DimensionWidth</a></li><li><a href="Display.html">Display</a></li><li><a href="Division.html">Division</a></li><li><a href="ElementAttribute.html">ElementAttribute</a></li><li><a href="ElementAttributeValue.html">ElementAttributeValue</a></li><li><a href="Enumerate.html">Enumerate</a></li><li><a href="EnumeratedValue.html">EnumeratedValue</a></li><li><a href="ExistentialQuantifier.html">ExistentialQuantifier</a></li><li><a href="Explainer.html">Explainer</a></li><li><a href="FindBySelector.html">FindBySelector</a></li><li><a href="Float.html">Float</a></li><li><a href="FontFamily.html">FontFamily</a></li><li><a href="FontSize.html">FontSize</a></li><li><a href="FontWeight.html">FontWeight</a></li><li><a href="FunctionNamedArgument.html">FunctionNamedArgument</a></li><li><a href="GreaterOrEqual.html">GreaterOrEqual</a></li><li><a href="GreaterThan.html">GreaterThan</a></li><li><a href="Identity.html">Identity</a></li><li><a href="InputArgument.html">InputArgument</a></li><li><a href="IsEqualTo.html">IsEqualTo</a></li><li><a href="LesserOrEqual.html">LesserOrEqual</a></li><li><a href="LesserThan.html">LesserThan</a></li><li><a href="MarginBottom.html">MarginBottom</a></li><li><a href="MarginLeft.html">MarginLeft</a></li><li><a href="MarginRight.html">MarginRight</a></li><li><a href="MarginTop.html">MarginTop</a></li><li><a href="Multiplication.html">Multiplication</a></li><li><a href="NamedArgument.html">NamedArgument</a></li><li><a href="NamedArgumentValue.html">NamedArgumentValue</a></li><li><a href="NaryConjunctiveVerdict.html">NaryConjunctiveVerdict</a></li><li><a href="NaryDisjunctiveVerdict.html">NaryDisjunctiveVerdict</a></li><li><a href="NaryValue.html">NaryValue</a></li><li><a href="Nothing.html">Nothing</a></li><li><a href="NthItem.html">NthItem</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="Opacity.html">Opacity</a></li><li><a href="OrNode.html">OrNode</a></li><li><a href="PaddingBottom.html">PaddingBottom</a></li><li><a href="PaddingLeft.html">PaddingLeft</a></li><li><a href="PaddingRight.html">PaddingRight</a></li><li><a href="PaddingTop.html">PaddingTop</a></li><li><a href="Path.html">Path</a></li><li><a href="PathValue.html">PathValue</a></li><li><a href="Position.html">Position</a></li><li><a href="Quantifier.html">Quantifier</a></li><li><a href="QuantifierConjunctiveVerdict.html">QuantifierConjunctiveVerdict</a></li><li><a href="QuantifierDisjunctiveVerdict.html">QuantifierDisjunctiveVerdict</a></li><li><a href="QuantifierVerdict.html">QuantifierVerdict</a></li><li><a href="ReturnValue.html">ReturnValue</a></li><li><a href="Substraction.html">Substraction</a></li><li><a href="TraceabilityNode.html">TraceabilityNode</a></li><li><a href="Tracer.html">Tracer</a></li><li><a href="UniversalQuantifier.html">UniversalQuantifier</a></li><li><a href="Unknown.html">Unknown</a></li><li><a href="UnknownNode.html">UnknownNode</a></li><li><a href="Value.html">Value</a></li><li><a href="Verdict.html">Verdict</a></li><li><a href="Visibility.html">Visibility</a></li><li><a href="WebElementFunction.html">WebElementFunction</a></li><li><a href="Zindex.html">Zindex</a></li></ul><h3>Global</h3><ul><li><a href="global.html#evaluateDom">evaluateDom</a></li><li><a href="global.html#getVerdict">getVerdict</a></li><li><a href="global.html#same_object">same_object</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractFunction.html">AbstractFunction</a></li><li><a href="Addition.html">Addition</a></li><li><a href="All.html">All</a></li><li><a href="AndNode.html">AndNode</a></li><li><a href="Argument.html">Argument</a></li><li><a href="ArgumentValue.html">ArgumentValue</a></li><li><a href="AtomicFunction.html">AtomicFunction</a></li><li><a href="AtomicFunctionReturnValue.html">AtomicFunctionReturnValue</a></li><li><a href="BackgroundColor.html">BackgroundColor</a></li><li><a href="BackgroundImage.html">BackgroundImage</a></li><li><a href="BooleanAnd.html">BooleanAnd</a></li><li><a href="BooleanConnective.html">BooleanConnective</a></li><li><a href="BooleanNot.html">BooleanNot</a></li><li><a href="BooleanOr.html">BooleanOr</a></li><li><a href="BorderColor.html">BorderColor</a></li><li><a href="BorderRadius.html">BorderRadius</a></li><li><a href="BorderStyle.html">BorderStyle</a></li><li><a href="BorderWidth.html">BorderWidth</a></li><li><a href="ClientOffsetLeft.html">ClientOffsetLeft</a></li><li><a href="ClientOffsetTop.html">ClientOffsetTop</a></li><li><a href="Color.html">Color</a></li><li><a href="ComposedFunction.html">ComposedFunction</a></li><li><a href="ComposedFunctionValue.html">ComposedFunctionValue</a></li><li><a href="CompoundDesignator.html">CompoundDesignator</a></li><li><a href="ConstantDesignator.html">ConstantDesignator</a></li><li><a href="ConstantFunction.html">ConstantFunction</a></li><li><a href="ConstantValue.html">ConstantValue</a></li><li><a href="CssPropertyFunction.html">CssPropertyFunction</a></li><li><a href="CssRecursivePropertyFunction.html">CssRecursivePropertyFunction</a></li><li><a href="CurrentNode.html">CurrentNode</a></li><li><a href="DesignatedObject.html">DesignatedObject</a></li><li><a href="Designator.html">Designator</a></li><li><a href="DimensionHeight.html">DimensionHeight</a></li><li><a href="DimensionWidth.html">DimensionWidth</a></li><li><a href="Display.html">Display</a></li><li><a href="Division.html">Division</a></li><li><a href="ElementAttribute.html">ElementAttribute</a></li><li><a href="ElementAttributeValue.html">ElementAttributeValue</a></li><li><a href="Enumerate.html">Enumerate</a></li><li><a href="EnumeratedValue.html">EnumeratedValue</a></li><li><a href="ExistentialQuantifier.html">ExistentialQuantifier</a></li><li><a href="Explainer.html">Explainer</a></li><li><a href="FindBySelector.html">FindBySelector</a></li><li><a href="Float.html">Float</a></li><li><a href="FontFamily.html">FontFamily</a></li><li><a href="FontSize.html">FontSize</a></li><li><a href="FontWeight.html">FontWeight</a></li><li><a href="FunctionNamedArgument.html">FunctionNamedArgument</a></li><li><a href="GreaterOrEqual.html">GreaterOrEqual</a></li><li><a href="GreaterThan.html">GreaterThan</a></li><li><a href="Identity.html">Identity</a></li><li><a href="InputArgument.html">InputArgument</a></li><li><a href="IsEqualTo.html">IsEqualTo</a></li><li><a href="LesserOrEqual.html">LesserOrEqual</a></li><li><a href="LesserThan.html">LesserThan</a></li><li><a href="MarginBottom.html">MarginBottom</a></li><li><a href="MarginLeft.html">MarginLeft</a></li><li><a href="MarginRight.html">MarginRight</a></li><li><a href="MarginTop.html">MarginTop</a></li><li><a href="Multiplication.html">Multiplication</a></li><li><a href="NamedArgument.html">NamedArgument</a></li><li><a href="NamedArgumentValue.html">NamedArgumentValue</a></li><li><a href="NaryConjunctiveVerdict.html">NaryConjunctiveVerdict</a></li><li><a href="NaryDisjunctiveVerdict.html">NaryDisjunctiveVerdict</a></li><li><a href="NaryValue.html">NaryValue</a></li><li><a href="NodeWrapper.html">NodeWrapper</a></li><li><a href="Nothing.html">Nothing</a></li><li><a href="NthItem.html">NthItem</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="Opacity.html">Opacity</a></li><li><a href="OrNode.html">OrNode</a></li><li><a href="PaddingBottom.html">PaddingBottom</a></li><li><a href="PaddingLeft.html">PaddingLeft</a></li><li><a href="PaddingRight.html">PaddingRight</a></li><li><a href="PaddingTop.html">PaddingTop</a></li><li><a href="PageOffsetLeft.html">PageOffsetLeft</a></li><li><a href="PageOffsetTop.html">PageOffsetTop</a></li><li><a href="Path.html">Path</a></li><li><a href="PathValue.html">PathValue</a></li><li><a href="Position.html">Position</a></li><li><a href="Quantifier.html">Quantifier</a></li><li><a href="QuantifierConjunctiveVerdict.html">QuantifierConjunctiveVerdict</a></li><li><a href="QuantifierDisjunctiveVerdict.html">QuantifierDisjunctiveVerdict</a></li><li><a href="QuantifierVerdict.html">QuantifierVerdict</a></li><li><a href="RegisterBySelector.html">RegisterBySelector</a></li><li><a href="ReturnValue.html">ReturnValue</a></li><li><a href="Subtraction.html">Subtraction</a></li><li><a href="TraceabilityNode.html">TraceabilityNode</a></li><li><a href="Tracer.html">Tracer</a></li><li><a href="UniversalQuantifier.html">UniversalQuantifier</a></li><li><a href="Unknown.html">Unknown</a></li><li><a href="UnknownNode.html">UnknownNode</a></li><li><a href="Value.html">Value</a></li><li><a href="Verdict.html">Verdict</a></li><li><a href="Visibility.html">Visibility</a></li><li><a href="WebElementFunction.html">WebElementFunction</a></li><li><a href="Zindex.html">Zindex</a></li></ul><h3>Global</h3><ul><li><a href="global.html#And">And</a></li><li><a href="global.html#evaluateDom">evaluateDom</a></li><li><a href="global.html#getVerdict">getVerdict</a></li><li><a href="global.html#same_object">same_object</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Jun 23 2021 09:32:19 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Tue Mar 22 2022 10:16:39 GMT-0400 (heure d’été de l’Est)
 </footer>
 
 <script> prettyPrint(); </script>
