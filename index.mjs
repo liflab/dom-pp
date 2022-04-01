@@ -144,7 +144,8 @@ async function assertDomppCondition(condition, page, selector) {
     
 
     if (!result.passed) {
-        const mess = "l'erreur est due à " + result.explanation.subject + " dont l'attribut est  " + result.explanation.elementAttribute + " qui se trouve à  " + result.explanation.part ;
+        const mess = "l'erreur est due à " + result.explanation.subject + " dont l'attribut est  " + result.explanation.elementAttribute 
+        + " qui se trouve à  " + result.explanation.part ;
         throw new assert.AssertionError({
             name: "dom-pp assertion error",
             message: mess,
@@ -154,6 +155,7 @@ async function assertDomppCondition(condition, page, selector) {
         });
     }
 }
+
 
 function serializeArray(array) {
     var res = [];

@@ -94,7 +94,7 @@ koalatiPage = await load_file_in_puppeteer("./test/Koalati/index.html");
 koalatiPricingPage = await load_file_in_puppeteer("./test/Koalati/pricing.html");
 koalatiloadingspeedPage =await load_file_in_puppeteer("./test/Koalati/features/loading-speed.html");
 
-describe.only("Checking for bugs on Koalati website index page", () => {
+describe("Checking for bugs on Koalati website index page", () => {
 
     const dom = fs.readFileSync('./test/Koalati/index.html', 'utf-8')
     const url = 'file://${__dirname}/koalati/index.html'
