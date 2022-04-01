@@ -6199,10 +6199,10 @@ async function assertDomppCondition(condition, page, selector) {
       passed: passed,
       explanation: explanation
     };
-  }, condition.name, serializer.serialize(condition.function), selector); // pas le message exact juste pour un test 
+  }, condition.name, serializer.serialize(condition.function), selector);
 
   if (!result.passed) {
-    const mess = "l'erreur est due a " + result.explanation.elementAttribute + "qui se trouve " + result.explanation.part + "ABC" + result.explanation.subject;
+    const mess = "l'erreur est due à " + result.explanation.subject + " dont l'attribut est  " + result.explanation.elementAttribute + " qui se trouve à  " + result.explanation.part;
     throw new assert__WEBPACK_IMPORTED_MODULE_16__.strict.AssertionError({
       name: "dom-pp assertion error",
       message: mess,
